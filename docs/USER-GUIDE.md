@@ -133,7 +133,20 @@ All 5 can run the whole thing. A practical split:
 
 Because everything is in `docs/`, you can switch at any point.
 
-## 6. Where to look in your project
+## 6. Long projects and fresh sessions
+
+One chat session can't hold a whole project, because AI agents have limited memory per session. The team handles this:
+- It saves progress to `docs/` after every task.
+- It hands heavy work to helper agents.
+- It tells you when it's a good moment to start fresh.
+
+When it says **"Good point to start a fresh session"**, or right after you approve a gate:
+1. Start a new session (`/clear` in Claude Code, or close the agent and reopen it).
+2. Say **continue**.
+
+You lose nothing. It re-reads its notes and checks the code before carrying on.
+
+## 7. Where to look in your project
 
 | File | What it is |
 |---|---|
@@ -145,7 +158,7 @@ Because everything is in `docs/`, you can switch at any point.
 | `docs/ARCHITECTURE.md`, `docs/adr/` | How it's built and why |
 | `docs/LAUNCH.md`, `docs/RUNBOOK.md` | The go-live checklist and how to operate it |
 
-## 7. Keeping the skills up to date
+## 8. Keeping the skills up to date
 
 ```bash
 cd ~/dev/SWE-Orchestrator-Skills
@@ -154,7 +167,7 @@ cd ~/dev/SWE-Orchestrator-Skills
 
 If you edit a skill yourself (e.g. your preferred technologies in `skills/swe-orchestrator/references/decision-policy.md`), the change is live in all agents immediately. Run `git commit` and `git push` to save it to GitHub.
 
-## 8. Troubleshooting
+## 9. Troubleshooting
 
 | Problem | Fix |
 |---|---|

@@ -69,6 +69,7 @@ See [RESEARCH.md](RESEARCH.md). In summary, no existing project met G1, G2, G5 a
 | D4 | **Roles as separate skills** with an `swe-` prefix | Focused context per role, runnable as sub-agents, and no name clashes with other packs. |
 | D5 | **Progressive disclosure** | Each SKILL.md is short (≤ ~75 lines) and detail lives in `references/`. This keeps the agent's context lean. |
 | D6 | **Symlink install** from this repo | One source of truth. `git pull` updates every agent at once. |
+| D8 | **Context window is a disposable scratchpad** | The orchestrator stays thin, delegates heavy work to fresh-context sub-agents, checkpoints STATUS per task, and restarts sessions at gates or milestones. Long projects can't fit in one context |
 | D7 | **Toolbox is optional** | Each role carries enough fallback guidance to work without superpowers or addy. |
 
 ## 5. Lifecycle (state machine)

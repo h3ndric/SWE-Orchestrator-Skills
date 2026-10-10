@@ -58,6 +58,25 @@ Toolbox skills you should use when installed (they're optional, and you degrade 
 
 When a toolbox skill would stop to ask the owner a technical question (superpowers' brainstorming does this, for example), **you answer it yourself** as tech lead, based on the PRD and the architecture. Only gate-level questions go to the owner.
 
+## Context management (long projects outlive one context window)
+
+A whole project won't fit in one session's context. Treat the context window as a scratchpad that can be wiped at any moment, and treat `docs/` as the real memory.
+
+1. **Stay a thin coordinator.** Read `docs/STATUS.md` in full, but only the sections of the other docs you need right now: the REQs for this milestone, not the whole PRD. Don't read source files yourself when a sub-agent can do it and report back.
+2. **Delegate the heavy work.** Research, implementation, review and security run as sub-agents with fresh context whenever the harness supports them. Ask each one for a report of at most 15 lines, with details written to files: plans, review notes, eval reports.
+3. **Checkpoint before you need to.** Update `docs/STATUS.md` after every completed task, not just every phase. Include the exact next step, e.g. "M2 task 4 of 9: write test for REQ-014". Commit code at each task. If the context is compressed or the session dies, nothing is lost.
+4. **Keep STATUS short.** Under about 60 lines, holding only the current state. Move finished history to `docs/STATUS-HISTORY.md`.
+5. **Session boundaries.**
+   - Gates are natural restart points. After the owner approves a gate, recommend continuing in a fresh session (e.g. `/clear`, or a new chat), then saying "continue".
+   - Within the build loop, aim for **one milestone per session**.
+   - In single-agent harnesses with no sub-agents (e.g. pi), aim for **a batch of about 3–5 plan tasks per session**.
+6. **Notice when context is running low.** Signs: the session is very long, the agent says it compressed or summarized earlier context, or early details are getting fuzzy. When that happens:
+   - Finish the current task.
+   - Checkpoint STATUS and commit.
+   - Tell the owner: "Good point to start a fresh session. Open a new one and say *continue*."
+   - Never start a large new task when context is nearly full.
+7. **After a reset or compression:** don't trust your memory of earlier work. Re-read STATUS and the current plan file, and run `git log --oneline -10` and the test suite to confirm the real state before continuing.
+
 ## Gates
 
 At each gate: write the brief to `docs/REVIEWS/gate-N[-milestone].md` using [references/gates.md](references/gates.md). Show the owner a short summary in chat, then **stop and wait**. Never skip a gate. Never continue past one without explicit approval ("approved", "go", "lgtm", or similar). If the owner gives feedback instead, follow the change-request procedure in [references/gates.md](references/gates.md).
