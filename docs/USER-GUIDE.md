@@ -9,7 +9,7 @@ This guide is for the **owner**: the person with the idea. You don't need to kno
 | Describe the idea and the end result you want | Research the market and similar products |
 | Answer simple multiple-choice questions about *what* and *why* | Turn your answers into a precise, testable spec |
 | Read 4 short briefs and say "approved" or comment | Pick the technology, design, build, test, secure and launch |
-| Create accounts or paste keys when asked (rare) | Record every decision and explain it in plain words |
+| Do the few things only a human can (accounts, payments, keys), using step-by-step instructions in `docs/OWNER-TODO.md` | Record every decision and explain it in plain words |
 
 ---
 
@@ -31,7 +31,7 @@ That covers all 5 agents in one go. Plugin commands for installing into a single
 git clone https://github.com/h3ndric/SWE-Orchestrator-Skills.git ~/dev/SWE-Orchestrator-Skills
 cd ~/dev/SWE-Orchestrator-Skills
 ./install.sh            # installs into every agent it finds
-./install.sh status     # each folder should show 10/10
+./install.sh status     # each folder should show 11/11
 ```
 
 If you use **Kimi**, also run this once inside Kimi: `/plugins install https://github.com/obra/superpowers`
@@ -88,6 +88,10 @@ It writes `docs/PRD.md` (the full spec) and `docs/REVIEWS/gate-1.md` (a one-page
 A picture of the system, the technology choices (each with a one-line plain reason), the **monthly cost estimate**, risks, and the milestone plan.
 - Check: is the cost OK? Are the risks acceptable? Does the milestone order make sense to you?
 - You can override any decision, e.g. *"I already have an AWS account, use that."*
+- It also asks you to confirm two budgets: what you'll spend on AI agents while building, and the monthly running cost once live.
+- It lists **every account or key it will need from you** for the whole project in `docs/OWNER-TODO.md`, so you can do them all in one sitting. It keeps building in the meantime.
+
+**Keys and passwords never go in the chat.** Each task tells you exactly where to paste them (usually a file called `.env` in your project, or a settings page on the provider's site). If you paste one into the chat by accident, it will tell you to replace it with a new one.
 
 ### Step 4: Building (automatic, milestone by milestone)
 For each milestone, the team plans, writes tests first, builds, reviews the code, checks security and verifies, all by itself. The first milestone is always a tiny version that's actually online, which proves deployment works.
@@ -124,6 +128,8 @@ Ask for changes anytime: *"Add a weekly email report."* It treats this as a **ch
 | Change something | Plain words: "I'd rather…", "Remove…", "Add…" |
 | Pause | Just close the agent. Everything is saved in `docs/` |
 | Switch to a different agent | Open the project in it and say `continue` |
+| See what it needs from you | `what do you need from me?` (or read `docs/OWNER-TODO.md`) |
+| Undo a milestone | `go back to how it was at gate 3`. It shows what would be lost and asks before doing anything |
 
 ## 5. Which agent to use when
 
@@ -158,6 +164,7 @@ You lose nothing. It re-reads its notes and checks the code before carrying on.
 | `docs/traceability.json` | Every requirement and whether it works yet |
 | `docs/ARCHITECTURE.md`, `docs/adr/` | How it's built and why |
 | `docs/LAUNCH.md`, `docs/RUNBOOK.md` | The go-live checklist and how to operate it |
+| `docs/OWNER-TODO.md` | **Things only you can do**, with click-by-click steps |
 
 ## 8. Keeping the skills up to date
 
@@ -182,6 +189,8 @@ That's how the skills get sharper with every project.
 |---|---|
 | The agent doesn't use the orchestrator | Say explicitly: "Use the swe-orchestrator skill". Check `./install.sh status` |
 | It asks you technical questions after Gate 1 | Reply "you decide, as the tech lead". That's its rule, and it'll comply |
+| It seems stuck on the same problem | It's supposed to stop after 3 tries and change approach, then after 5 mark it blocked and move on. If it doesn't, say "you're stuck, step back and try another approach" |
+| You don't like where a milestone went | Say "go back to gate N". Every approved gate is a saved restore point |
 | It went past a gate without asking | Say "stop. Go back to gate N and write the brief." Then tell me so the skill can be tightened |
 | Antigravity in `-p` (non-interactive) mode can't read files | Use it interactively, or add `--dangerously-skip-permissions` |
 | You want to remove everything | `./install.sh uninstall` |

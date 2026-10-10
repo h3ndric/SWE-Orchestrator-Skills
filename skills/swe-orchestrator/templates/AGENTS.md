@@ -17,4 +17,5 @@ Project facts that are always true (stack, commands, conventions) go below once 
 ## Conventions
 - Tests reference requirement IDs (e.g. `test_REQ_012_...` or `it("REQ-012: ...")`).
 - Commits: `<type>(<scope>): <summary> [REQ-xxx]`.
-- Secrets never go in git; use `.env` (gitignored) and keep `.env.example` current.
+- Secrets never go in git or chat; use `.env` (gitignored) and keep `.env.example` current.
+- Never delete, skip or weaken a test, threshold or lint rule to make a check pass. After 3 failed attempts on the same failure, stop and change approach or report it.

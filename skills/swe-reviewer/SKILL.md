@@ -40,6 +40,7 @@ Every finding cites a rule ID, e.g. `[CQ-06] empty catch swallows the DB error â
    - Do they cover edge and error cases from the criteria?
    - Do they all pass?
    - Are there tests that can never fail?
+   - **Test tampering (critical if found):** check the diff for deleted, skipped or commented-out tests, weakened assertions, changed expected values, lowered coverage thresholds, disabled lint or type rules, and swallowed errors. Each one needs an explicit, REQ-cited justification in the commit message; otherwise it's a critical finding.
 4. **Architecture fit:** respects the module boundaries, uses the chosen stack and patterns, no secret new dependencies, config not hardcoded.
 5. **Simplicity and maintainability:**
    - duplication

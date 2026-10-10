@@ -19,6 +19,8 @@ Definition of done: <tests to pass / file to produce / checks to run>
 Constraints:
 - Do not ask the owner anything; if blocked, stop and report the blocker.
 - Do not modify docs/STATUS.md (the orchestrator owns it).
+- Never delete, skip or weaken a test, assertion, threshold or lint rule to get green.
+- If the same failure persists after 3 attempts, stop and report what you tried.
 - Commit your work with message "<type>(<scope>): <summary> [REQ-xxx]".
 
 Report back (max 15 lines): what you did, files changed, test results (paste the

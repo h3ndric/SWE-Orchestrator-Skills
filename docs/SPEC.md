@@ -75,6 +75,9 @@ See [RESEARCH.md](RESEARCH.md). In summary, no existing project met G1, G2, G5 a
 | D10 | **Mechanical guardrails over prose** | Scripts, git hooks, CI and boundary checks work identically in all 5 agents, and are followed 100% of the time rather than "usually" (`references/guardrails.md`) |
 | D11 | **Independent verification, tamper-resistant JSON ledger** | Self-grading is unreliable, and agents edit Markdown tables too freely (`traceability.json`) |
 | D12 | **Standards rulebook (`swe-standards`) with rigor profiles** | Models know best practices but apply them inconsistently. ~140 rules with IDs, a minimum profile (P1 Prototype / P2 Production / P3 High-assurance) and a check method make quality binding, sized to the project's risk, and auditable. The owner picks the profile at Gate 2 |
+| D13 | **Owner tasks as a designed deliverable** (`OWNER-TODO.md`) | Non-engineers stall on accounts, payments and keys. All owner tasks are listed at Gate 2 with click-by-click steps and a "needed by" milestone, work continues against fakes, and secrets never pass through chat (`references/owner-tasks.md`) |
+| D14 | **Attempt limits, anti-cheat, budgets** | Unsupervised agents loop or weaken tests to get green. 3 attempts → change approach, 5 → blocked; tampering with tests is a critical review finding; milestones at 2× plan stop for a scope check; build and running budgets set at Gate 2 (`references/stuck-and-budget.md`) |
+| D15 | **Gate tags as restore points** | Code and docs are both in git, so tagging each approved gate makes "go back to Gate 3" a safe, confirmed one-sentence undo with a backup branch (`references/checkpoints-and-undo.md`) |
 | D7 | **Toolbox is optional** | Each role carries enough fallback guidance to work without superpowers or addy. |
 
 ## 5. Lifecycle (state machine)
@@ -211,4 +214,5 @@ skills/
   - run the end-to-end and cross-agent resume tests
   - tune the skills based on what happens
   - add `claude plugin eval` cases for the orchestrator's gate behavior
+  - after the pilot, adjusted by what it shows: a clickable prototype before building (Gate 1/2), a live preview link at every Gate 3, hard limits on live systems and money (production access needs owner approval), and a post-launch learning loop (user feedback and success metrics feeding v2)
 - **v1.2:** optional "lead + workers" mode, where the orchestrator dispatches build tasks to other agents' headless CLIs (`kimi -p`, `copilot -p`, `pi -p`).

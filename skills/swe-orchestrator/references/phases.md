@@ -63,6 +63,8 @@ Each phase also ends with a short **fallback** section. Use it when the role ski
   - guardrails
   - token cost and latency budget
 - Write one ADR per significant decision in `docs/adr/NNNN-title.md`.
+- List every owner task the design implies (accounts, keys, domains, payment, app stores) in `docs/OWNER-TODO.md`, each with a "needed by" milestone. See `references/owner-tasks.md`.
+- Propose the build and running budgets for the owner to confirm (`references/stuck-and-budget.md` §5).
 
 **Exit:** every MVP REQ maps to a component, and Gate 2 is approved.
 
@@ -97,7 +99,8 @@ For milestone M:
    - the test to write first
    - the verification command
    - Use superpowers `writing-plans` if available.
-2. **Branch:** create `m<n>-<slug>`. Use superpowers `using-git-worktrees` if available.
+   - Record the plan's size (task count and expected sessions) in STATUS → Budget.
+2. **Branch:** tag `m<n>-start` on main, then create `m<n>-<slug>`. Use superpowers `using-git-worktrees` if available.
 3. **Implement** (`swe-implementer`): TDD per task (red → green → refactor), commit per task.
    - Run independent tasks in parallel sub-agents if your harness supports it. Use superpowers `subagent-driven-development` if available.
    - Test names reference REQ IDs.
@@ -122,6 +125,7 @@ For milestone M:
 - reproduce → isolate → form a hypothesis → test it → fix → add a regression test
 - never guess-and-check more than twice without re-reading the evidence
 - after 3 failed fix attempts on the same issue, step back and question the design, then write an ADR if it changes.
+- after 5, mark it blocked and move on. Full rules: `references/stuck-and-budget.md`.
 
 ---
 

@@ -32,7 +32,7 @@ Date: <YYYY-MM-DD> · Status: ⏳ Waiting for owner
 |---|---|---|
 
 ## Things only you can do (if any)
-- <e.g. create an account at X and paste the API key into .env>
+- <open tasks from docs/OWNER-TODO.md, earliest "needed by" first, one line each, e.g. "Create a free Supabase account (5 min, needed by M2): see task 1 in docs/OWNER-TODO.md">
 
 ## Details (optional reading)
 - <links to PRD / ARCHITECTURE / ADRs / test report>
@@ -60,12 +60,15 @@ Date: <YYYY-MM-DD> · Status: ⏳ Waiting for owner
   - **the rigor profile** (P1/P2/P3), in plain words. For example: "Production level: real users and personal data, so full security baseline, backups and accessibility"
   - top risks
   - the roadmap preview (milestone list)
+  - **all owner tasks for the whole project** in `docs/OWNER-TODO.md`, each with a "needed by" milestone, including a private GitHub repository for off-machine backup
+  - **two budgets to confirm:** build budget (AI agent usage) and running budget (monthly hosting, database and AI APIs). See [stuck-and-budget.md](stuck-and-budget.md) §5
 - **Gate 3: Milestone demo.** Include the module "Health at a glance" block from `docs/MODULES.md`. Every 2–3 milestones, also include the increment review result and any proposed roadmap change. Also include:
   - what you can try now, with exact steps or a URL
   - a screenshot or terminal output if possible
   - a REQ table (REQ → built? → test passing?)
   - test, eval and security summary
-  - known issues
+  - known issues, including anything marked blocked after the attempt limit
+  - budget: sessions used versus planned for this milestone, if it ran over
   - the next milestone
 - **Gate 4: Go-live.** Include:
   - the launch checklist from `docs/LAUNCH.md`, every line ✅ or explained
@@ -86,4 +89,5 @@ Date: <YYYY-MM-DD> · Status: ⏳ Waiting for owner
    - **bug or quality issue:** add it to the current or next milestone plan
 3. Re-plan the affected roadmap milestones.
 4. If the change is large, re-issue the same gate with a short "What changed" section at the top. If it's small, note it in STATUS and continue.
-5. Mark the gate file status `✅ Approved <date>` once approved.
+5. Once approved: mark the gate file status `✅ Approved <date> · tag gate-<N>[-m<k>]-approved`, commit, create that tag, and push with tags if there's a remote. See [checkpoints-and-undo.md](checkpoints-and-undo.md).
+6. If the feedback is "undo" or "go back", follow [checkpoints-and-undo.md](checkpoints-and-undo.md) §2.

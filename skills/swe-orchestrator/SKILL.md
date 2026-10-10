@@ -36,7 +36,9 @@ The owner hands you a goal (an MVP or a full product vision). Your job is to del
   - mention it to the owner in one line
   - If the project has an old `docs/TRACEABILITY.md`, convert it to `docs/traceability.json` (template), keeping all IDs and statuses, then delete the old file.
   - If `scripts/init.sh`, `smoke.sh` or `check.sh` are missing, add them, plus the pre-commit hook, as the first task of the next milestone.
+  - If `docs/OWNER-TODO.md` is missing, create it from the template and move any owner tasks from STATUS or gate briefs into it. If there are no `gate-*-approved` git tags, tag the current committed state `baseline-<YYYY-MM-DD>` as a restore point.
 - If the owner left comments in a gate file (`docs/REVIEWS/gate-N.md` → "Owner feedback"), process them first. See [references/gates.md](references/gates.md).
+- Check `docs/OWNER-TODO.md` for tasks the owner has ticked, and verify each one works before marking it ✅.
 
 ## The lifecycle (state machine)
 
@@ -106,9 +108,15 @@ Follow [references/guardrails.md](references/guardrails.md). M0 sets up:
 
 User-facing requirements get Playwright end-to-end tests, and they're actually exercised in a browser. **Anything that must always hold gets a script or hook, not just a sentence in a doc.** A mistake seen twice becomes a check.
 
+## Owner tasks, limits and undo
+
+- **Owner tasks** ([references/owner-tasks.md](references/owner-tasks.md)): everything only the owner can do (accounts, payments, keys, domains) goes in `docs/OWNER-TODO.md` as click-by-click steps. List them all at Gate 2 with a "needed by" milestone, keep building against fakes until they're done, and **never let secrets pass through chat**.
+- **Stuck detection and budget** ([references/stuck-and-budget.md](references/stuck-and-budget.md)): 3 failed attempts on the same failure → stop patching and change approach; 5 → mark it blocked, revert to green, move on. Never delete, skip or weaken a test to get green. A milestone at 2× its planned size stops for a scope check. Build and running budgets are set at Gate 2 and recorded in STATUS.
+- **Checkpoints and undo** ([references/checkpoints-and-undo.md](references/checkpoints-and-undo.md)): tag every approved gate (`gate-3-m2-approved`) and every milestone start. When the owner says "go back to Gate N", show what would be lost, get a yes, keep a backup branch, then restore code **and** docs together.
+
 ## Gates
 
-At each gate: write the brief to `docs/REVIEWS/gate-N[-milestone].md` using [references/gates.md](references/gates.md). Show the owner a short summary in chat, then **stop and wait**. Never skip a gate. Never continue past one without explicit approval ("approved", "go", "lgtm", or similar). If the owner gives feedback instead, follow the change-request procedure in [references/gates.md](references/gates.md).
+At each gate: write the brief to `docs/REVIEWS/gate-N[-milestone].md` using [references/gates.md](references/gates.md). Show the owner a short summary in chat, then **stop and wait**. Never skip a gate. Never continue past one without explicit approval ("approved", "go", "lgtm", or similar). On approval, commit and tag the checkpoint (`gate-<N>[-m<k>]-approved`). If the owner gives feedback instead, follow the change-request procedure in [references/gates.md](references/gates.md).
 
 ## Decision policy (when you're unsure)
 
