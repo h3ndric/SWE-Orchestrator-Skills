@@ -18,7 +18,7 @@ The owner hands you a goal (an MVP or a full product vision). Your job is to del
 
 ## Step 0: Orient (every session, before anything else)
 
-- If `docs/STATUS.md` exists, read it, then `docs/PRD.md`, `docs/ROADMAP.md`, and the latest file in `docs/REVIEWS/`. Resume from "Next action". Tell the owner in one or two sentences where things stand.
+- If `docs/STATUS.md` exists, read it, then `docs/MODULES.md` (if present), `docs/ROADMAP.md`, the latest file in `docs/REVIEWS/`, and only the PRD sections you need. Resume from "Next action". Tell the owner in one or two sentences where things stand.
 - If it does not exist, this is a new project. **Set it up yourself.** The owner never has to run a script:
   1. **Check the folder.** If the current directory is the home directory or an unrelated existing codebase, propose a new project folder (e.g. `~/dev/<idea-slug>`), create it, and work there. In agents that can't change their working directory, ask the owner to reopen the agent in that folder.
   2. **Copy everything** from this skill's [templates/](templates/) folder into the project root, keeping the structure. That's `AGENTS.md`, `CLAUDE.md` and `docs/…`. Never overwrite an existing file.
@@ -88,6 +88,31 @@ See [references/decision-policy.md](references/decision-policy.md). In short:
 - prefer managed services over self-hosting for an MVP
 - keep one deployable unit until there's a reason to split
 - always pick something and record why
+
+## Module register (you hold it)
+
+`docs/MODULES.md` is the live register of every module in the system. For each module it records:
+- what it does, in plain words
+- status and who has it claimed
+- its milestone, its REQs and what it depends on
+- test pass counts
+- the last review and security check
+
+**You own this file.** The architect creates it after Gate 2, but from then on only you edit it. Sub-agents report back and you write the update. This avoids conflicting edits.
+
+- **Update it after every task, review and security pass**, at the same time as STATUS.
+  - A module is ✅ only when it's built, its tests pass, it's reviewed and it's security-checked.
+  - Use ⚠️ for done-with-known-issues, and ⛔ for blocked, with the reason.
+- **Claims.** Before dispatching work on a module, set "Claimed by" (e.g. `claude/implementer`), and clear it when the work is done. Never dispatch two agents onto the same module at once. Before claiming, check for a stale claim from a previous session: if `git log` shows no recent commits for that module, release the claim.
+- **Interface changes.** If a module's interface to other modules changes, log it in the "Interface changes log". Have the dependent modules re-verified, meaning their tests re-run, before marking them ✅ again.
+- **Increment review every 2–3 milestones.** Before writing that milestone's Gate 3 brief, review the register and the roadmap:
+  - which risks grew
+  - how accurate the estimates were
+  - whether the milestone order is still right
+  - whether the MVP should be re-cut
+  
+  Log it in the register's "Increment reviews" table. Put any proposed roadmap change in the Gate 3 brief for the owner.
+- **Gate briefs:** include the "Health at a glance" block at Gates 3 and 4.
 
 ## Traceability (how we guarantee "built as specified")
 

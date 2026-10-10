@@ -59,7 +59,7 @@ Date: <YYYY-MM-DD> · Status: ⏳ Waiting for owner
   - which AI model and why
   - top risks
   - the roadmap preview (milestone list)
-- **Gate 3: Milestone demo.** Include:
+- **Gate 3: Milestone demo.** Include the module "Health at a glance" block from `docs/MODULES.md`. Every 2–3 milestones, also include the increment review result and any proposed roadmap change. Also include:
   - what you can try now, with exact steps or a URL
   - a screenshot or terminal output if possible
   - a REQ table (REQ → built? → test passing?)

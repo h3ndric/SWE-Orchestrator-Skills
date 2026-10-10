@@ -83,7 +83,8 @@ Each phase also ends with a short **fallback** section. Use it when the role ski
   - have its own acceptance checks
 - Milestone 0 is always the **walking skeleton**: the repo, tooling, lint/format, test runner, a "hello world" deployed end to end, and a CI pipeline running tests.
 - Put full-vision items in later milestones, marked "post-MVP".
-- Output: `docs/ROADMAP.md`. There's no gate here; go straight to the build loop.
+- Output: `docs/ROADMAP.md` and `docs/MODULES.md`. The register has one row per component from the architecture, with milestone, REQs and dependencies filled in, and every status ⬜.
+- There's no gate here; go straight to the build loop.
 
 ---
 
@@ -107,8 +108,14 @@ For milestone M:
    - Actually run the app and exercise the milestone's user journey.
    - Run AI evals if the milestone touched AI.
    - Update `docs/TRACEABILITY.md`.
-7. **Merge:** merge to main and make sure CI is green. Use superpowers `finishing-a-development-branch` if available.
-8. **Gate 3:** write the milestone demo brief and stop.
+7. **Register:** update `docs/MODULES.md`:
+   - status, test counts and the reviewed/security dates for each module touched
+   - clear the claims
+   - log any interface changes
+   
+   Every 2–3 milestones, run the increment review (see SKILL.md → Module register).
+8. **Merge:** merge to main and make sure CI is green. Use superpowers `finishing-a-development-branch` if available.
+9. **Gate 3:** write the milestone demo brief and stop.
 
 **Debugging:** use superpowers `systematic-debugging` if available. Otherwise:
 - reproduce → isolate → form a hypothesis → test it → fix → add a regression test

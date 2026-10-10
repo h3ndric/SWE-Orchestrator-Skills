@@ -44,6 +44,8 @@ Use superpowers `subagent-driven-development` / `executing-plans` and `test-driv
 - **Done means verified:** paste the actual test output summary. Never say "should work".
 
 ## Report (to the orchestrator)
+- the module(s) touched (`MOD-NN`), with test pass/total per module
+- any interface change: what changed, and which modules are affected
 - tasks completed
 - commits
 - test summary line

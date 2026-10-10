@@ -49,6 +49,11 @@ Write `docs/ROADMAP.md`:
 - **A final MVP milestone** for production readiness (Phase 5).
 - **Later milestones** for full-vision REQs, marked post-MVP.
 - Fill in the Milestone column in `docs/TRACEABILITY.md`.
+- Create `docs/MODULES.md` from the template:
+  - one row per component in the architecture, using `MOD-NN` IDs and names that match the code folders
+  - each row's milestone, REQs and dependencies filled in
+  - every status ⬜
+  - From then on, the orchestrator maintains this file.
 
 Also fill in the "Commands" and "Conventions" sections of the project's `AGENTS.md`, once M0 defines them.
 

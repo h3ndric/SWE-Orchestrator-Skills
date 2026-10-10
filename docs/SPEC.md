@@ -70,6 +70,7 @@ See [RESEARCH.md](RESEARCH.md). In summary, no existing project met G1, G2, G5 a
 | D5 | **Progressive disclosure** | Each SKILL.md is short (≤ ~75 lines) and detail lives in `references/`. This keeps the agent's context lean. |
 | D6 | **Symlink install** from this repo | One source of truth. `git pull` updates every agent at once. |
 | D8 | **Context window is a disposable scratchpad** | The orchestrator stays thin, delegates heavy work to fresh-context sub-agents, checkpoints STATUS per task, and restarts sessions at gates or milestones. Long projects can't fit in one context |
+| D9 | **Module register (`docs/MODULES.md`) held by the orchestrator** | One place for every module's status, claim, REQs, dependencies, tests and reviews. Single writer, so no conflicting edits. Claims prepare for parallel agents. An increment review every 2–3 milestones keeps the roadmap honest |
 | D7 | **Toolbox is optional** | Each role carries enough fallback guidance to work without superpowers or addy. |
 
 ## 5. Lifecycle (state machine)

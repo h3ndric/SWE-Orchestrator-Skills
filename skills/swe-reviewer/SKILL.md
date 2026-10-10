@@ -41,6 +41,8 @@ You are the second pair of eyes the owner can't provide. Be specific, prioritize
 6. **Performance:** obvious N+1 queries, unbounded loops or loads, missing pagination, and blocking calls in hot paths, judged against the NFRs.
 
 ## Output
+Report the `MOD-NN` IDs reviewed and the verdict for each, so the orchestrator can update the register.
+
 ```
 ## Review: M<n>
 Verdict: ✅ Approve | 🔁 Changes required

@@ -154,6 +154,7 @@ You lose nothing. It re-reads its notes and checks the code before carrying on.
 | `docs/REVIEWS/` | Your gate briefs and your feedback |
 | `docs/PRD.md` | The spec: what's being built |
 | `docs/ROADMAP.md` | Milestones |
+| `docs/MODULES.md` | **Module register:** every part of the system, its status, who's working on it, and test and review results |
 | `docs/TRACEABILITY.md` | Every requirement and whether it works yet |
 | `docs/ARCHITECTURE.md`, `docs/adr/` | How it's built and why |
 | `docs/LAUNCH.md`, `docs/RUNBOOK.md` | The go-live checklist and how to operate it |

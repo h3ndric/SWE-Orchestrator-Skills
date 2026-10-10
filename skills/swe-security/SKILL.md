@@ -52,6 +52,8 @@ The owner can't judge security, so you must. Find real, exploitable issues, and 
 6. **Findings:** fix the critical and high ones before Gate 4. List the accepted medium and low risks in `docs/LAUNCH.md`.
 
 ## Output
+Report the `MOD-NN` IDs checked and the verdict for each, so the orchestrator can update the register.
+
 ```
 ## Security review: <M<n> | pre-launch>
 Verdict: ✅ Pass | 🔁 Fix required
