@@ -48,6 +48,21 @@ Sources:
 - [The State of AI Harness Engineering 2026 (marmelab)](https://marmelab.com/blog/2026/09/24/the-state-of-ai-harness-engineering-2026.html)
 - [Context engineering guide (latitude)](https://latitude.so/blog/context-engineering-guide-coding-agents)
 
+## Standards embedded in `swe-standards`
+
+| Area | Baseline | Rule IDs |
+|---|---|---|
+| Quality model / NFRs | ISO/IEC 25010:2023 (9 characteristics) | QA-01…09 |
+| Architecture | C4 model, 12-factor, modular monolith, RFC 9457 errors, ADRs | ARC-01…15 |
+| Code quality | Google engineering practices (code review standard), Conventional Commits, SemVer | CQ-01…16 |
+| Testing | Test pyramid, coverage floors, e2e journeys, contract and mutation testing | TST-01…15 |
+| Security | [OWASP Top 10:2025](https://owasp.org/Top10/2025/), [OWASP ASVS 5.0](https://owasp.org/www-project-application-security-verification-standard/) (L1/L2/L3 by profile) | SEC-01…16 |
+| AI / LLM | [OWASP Top 10 for LLM Apps 2025](https://genai.owasp.org/llm-top-10/), NIST AI RMF (P3) | AI-01…17 |
+| Supply chain | [SLSA](https://slsa.dev/), NIST SSDF (SP 800-218), OpenSSF Scorecard, SBOM (CycloneDX/SPDX) | SUP-01…11 |
+| Reliability / ops | Google SRE (SLOs, error budgets, symptom alerting), DORA four keys | OPS-01…15 |
+| Accessibility / UX | [WCAG 2.2](https://www.w3.org/TR/WCAG22/) AA | A11Y-01…08, UX-01…05 |
+| Privacy | GDPR principles / privacy by design (engineering guidance, not legal advice) | PRV-01…11 |
+
 ## Conclusion
 
 Nothing found combines all four requirements:

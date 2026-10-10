@@ -115,7 +115,8 @@ Open the project in **any** of the 5 agents and say **"continue"**. It picks up 
 
 | Skill | Role |
 |---|---|
-| `swe-orchestrator` | Tech lead: runs the lifecycle, owns `docs/STATUS.md`, runs the gates |
+| `swe-orchestrator` | Tech lead: runs the lifecycle, owns `docs/STATUS.md` and `docs/MODULES.md`, runs the gates |
+| `swe-standards` | The rulebook: ~140 rules with IDs from ISO 25010, OWASP Top 10:2025, ASVS 5.0, OWASP LLM Top 10, SLSA, SRE, WCAG 2.2, privacy by design. Includes rigor profiles P1–P3 and the Definition of Done |
 | `swe-researcher` | Market, competitor and feasibility research before the interview |
 | `swe-business-analyst` | Plain-language requirements interview with a clarity checklist |
 | `swe-requirements-engineer` | Testable PRD with REQ/NFR/AIQ IDs and traceability |

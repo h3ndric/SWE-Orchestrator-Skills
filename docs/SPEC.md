@@ -50,6 +50,7 @@ See [RESEARCH.md](RESEARCH.md). In summary, no existing project met G1, G2, G5 a
 │        │                    swe-requirements-engineer                             │
 │        ├── swe-architect  +  swe-ai-engineer                                      │
 │        ├── swe-implementer → swe-reviewer → swe-security                          │
+│        ├── all roles held to: swe-standards (rulebook + Definition of Done)        │
 │        └── swe-release-sre                                                        │
 │                 │ uses when installed (graceful fallback when not)                │
 │                 ├── obra/superpowers                                              │
@@ -73,6 +74,7 @@ See [RESEARCH.md](RESEARCH.md). In summary, no existing project met G1, G2, G5 a
 | D9 | **Module register (`docs/MODULES.md`) held by the orchestrator** | One place for every module's status, claim, REQs, dependencies, tests and reviews. Single writer, so no conflicting edits. Claims prepare for parallel agents. An increment review every 2–3 milestones keeps the roadmap honest |
 | D10 | **Mechanical guardrails over prose** | Scripts, git hooks, CI and boundary checks work identically in all 5 agents, and are followed 100% of the time rather than "usually" (`references/guardrails.md`) |
 | D11 | **Independent verification, tamper-resistant JSON ledger** | Self-grading is unreliable, and agents edit Markdown tables too freely (`traceability.json`) |
+| D12 | **Standards rulebook (`swe-standards`) with rigor profiles** | Models know best practices but apply them inconsistently. ~140 rules with IDs, a minimum profile (P1 Prototype / P2 Production / P3 High-assurance) and a check method make quality binding, sized to the project's risk, and auditable. The owner picks the profile at Gate 2 |
 | D7 | **Toolbox is optional** | Each role carries enough fallback guidance to work without superpowers or addy. |
 
 ## 5. Lifecycle (state machine)

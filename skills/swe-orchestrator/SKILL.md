@@ -87,6 +87,16 @@ A whole project won't fit in one session's context. Treat the context window as 
    - Never start a large new task when context is nearly full.
 7. **After a reset or compression:** don't trust your memory of earlier work. Re-read STATUS and the current plan file, and run `git log --oneline -10` and the test suite to confirm the real state before continuing.
 
+## Engineering standards (the rulebook)
+
+All work is held to `swe-standards`, the team's rulebook. Each rule has an ID, a minimum rigor profile and a check method.
+
+- **Rigor profile:** the architect proposes P1 Prototype, P2 Production (the default) or P3 High-assurance at Gate 2, and the owner approves it. Record it in ARCHITECTURE.md and AGENTS.md. Every role then applies the rules for that profile, no more and no less.
+- **Definition of Done:** `swe-standards` §3 decides when a task, milestone or release is done. Don't run a Gate 3 or Gate 4 until it's met.
+- **Cite rule IDs.** Plans, reviews, ADRs and gate briefs reference IDs like `SEC-01` and `TST-05`.
+- **Waivers:** a rule can only be waived through an ADR, plus a TECH-DEBT entry. Security and privacy waivers must also appear in the next gate brief.
+- If the `swe-standards` skill isn't installed, apply the same principles from your own knowledge, and say so in STATUS.
+
 ## Guardrails and verification
 
 Follow [references/guardrails.md](references/guardrails.md). M0 sets up:

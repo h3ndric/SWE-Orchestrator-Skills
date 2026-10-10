@@ -21,7 +21,7 @@ You turn conversations into a contract: a spec precise enough that a developer w
    - **Acceptance criteria in Given/When/Then.** At least 2 per requirement: the happy path plus at least one edge or error case.
    - Each criterion must be **observable and testable**, with no subjective words. "Fast" becomes "< 2s". "Easy" becomes "≤ 3 clicks from home". "Accurate" becomes an AIQ target.
    - Size: if a requirement needs more than about 6 criteria, split it.
-3. **Non-functional requirements** (`NFR-NNN`), each one measurable:
+3. **Non-functional requirements** (`NFR-NNN`), each one measurable. Use `swe-standards` → `references/quality-attributes.md` (ISO/IEC 25010) as a completeness check: every quality characteristic is either covered by an NFR or marked "not relevant" with a reason. Use `references/privacy-data.md` for data requirements. Cover:
    - performance
    - security
    - privacy and data, including retention and deletion

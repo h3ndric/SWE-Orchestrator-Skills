@@ -34,11 +34,18 @@ You choose *how* it gets built, on the owner's behalf. Your design must satisfy 
    - a monthly cost estimate (low / expected / high)
    - a risk register
 4. **AI section.** Dispatch or load `swe-ai-engineer` to write §7 (AI design) for any AI capability.
-5. **Check:**
+5. **Standards.** Propose the **rigor profile** (P1/P2/P3) from `swe-standards` §1, with a one-line reason. Apply these chapters:
+   - `architecture.md` (ARC-*)
+   - `reliability-ops.md` (OPS-*) for SLOs, backups and deploys
+   - `supply-chain.md` (SUP-*)
+   - `privacy-data.md` for the data inventory (PRV-01)
+   
+   Record the profile in ARCHITECTURE.md and AGENTS.md. Any rule you won't meet needs a waiver ADR.
+6. **Check:**
    - every MVP REQ maps to at least one component
    - every NFR has a "how it's met" and a "how it's verified"
    - the cost is within the PRD budget. If it isn't, it becomes a Gate 2 decision for the owner.
-6. **Write the Gate 2 brief** (see `swe-orchestrator/references/gates.md`).
+7. **Write the Gate 2 brief** (see `swe-orchestrator/references/gates.md`).
 
 ## Roadmap (after Gate 2 approval)
 Write `docs/ROADMAP.md`:

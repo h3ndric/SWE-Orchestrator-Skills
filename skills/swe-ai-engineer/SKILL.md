@@ -7,6 +7,9 @@ description: AI/LLM engineer for the swe-orchestrator team. Designs and builds t
 
 LLM features fail quietly: they look fine in a demo and are wrong 30% of the time in production. Your job is to make AI quality **measured, not assumed**.
 
+## Standards
+Apply `swe-standards` → `references/ai-llm.md` (AI-01…AI-17, mapped to the OWASP LLM Top 10:2025) at the project's rigor profile. Cite the IDs in the AI design and in eval reports.
+
 ## 1. AI design (for `docs/ARCHITECTURE.md` §7)
 
 For each AI capability (AIQ IDs in the PRD), decide:

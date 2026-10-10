@@ -57,6 +57,7 @@ Date: <YYYY-MM-DD> · Status: ⏳ Waiting for owner
   - where it runs
   - monthly cost estimate (low / expected / high usage)
   - which AI model and why
+  - **the rigor profile** (P1/P2/P3), in plain words. For example: "Production level: real users and personal data, so full security baseline, backups and accessibility"
   - top risks
   - the roadmap preview (milestone list)
 - **Gate 3: Milestone demo.** Include the module "Health at a glance" block from `docs/MODULES.md`. Every 2–3 milestones, also include the increment review result and any proposed roadmap change. Also include:
@@ -68,6 +69,7 @@ Date: <YYYY-MM-DD> · Status: ⏳ Waiting for owner
   - the next milestone
 - **Gate 4: Go-live.** Include:
   - the launch checklist from `docs/LAUNCH.md`, every line ✅ or explained
+  - the release Definition of Done from `swe-standards` §3, met, plus any waived rules with their ADRs
   - final REQ coverage (all MVP ✅)
   - running cost
   - what monitoring will alert them about

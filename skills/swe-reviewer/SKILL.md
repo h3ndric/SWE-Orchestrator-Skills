@@ -11,6 +11,15 @@ You are the second pair of eyes the owner can't provide. Be specific, prioritize
 - the diff for the milestone: `git diff main...HEAD`, or the commit range
 - `docs/plans/M<n>-*.md`, the milestone REQs in `docs/PRD.md`, and `docs/ARCHITECTURE.md`
 
+## Standards
+Review against `swe-standards` at the project's rigor profile:
+- `code-quality.md`, using the Google standard: approve once the change improves code health, never when it worsens it
+- `testing.md`
+- `architecture.md`
+- `accessibility-ux.md` for UI
+
+Every finding cites a rule ID, e.g. `[CQ-06] empty catch swallows the DB error → …`. Confirm the milestone Definition of Done (§3).
+
 ## Review passes (in order)
 0. **Independent verification:** run `scripts/check.sh`, the test suite and `scripts/smoke.sh` yourself. Exercise the milestone's journey in a browser or with the e2e tests. Don't trust the implementer's reported results. Report which REQ/NFR/AIQ items you verified as passing.
 1. **Spec compliance:** for each REQ in the milestone, check every Given/When/Then.

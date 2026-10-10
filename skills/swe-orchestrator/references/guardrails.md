@@ -10,7 +10,7 @@ Principle: **scripts measure, agents judge.** Scripts give fast pass/fail. Agent
 |---|---|---|
 | `scripts/init.sh` | Idempotent: install deps, prepare the env, start the app (dev server and DB), print the URL. Every session uses it, so no agent wastes time working out how to run the app. | < 1 min |
 | `scripts/smoke.sh` | Fast end-to-end check of the core journey on the running app: an HTTP check plus one Playwright happy path once a UI exists. Exit non-zero on failure. | < 1 min |
-| `scripts/check.sh` | Everything a commit must pass: format check, lint, type-check, unit tests, secret scan. | < 2 min |
+| `scripts/check.sh` | Everything a commit must pass: format check, lint, type-check, unit tests, coverage threshold (`TST-04`), secret scan, SAST (semgrep), dependency audit (`SEC-11`, `SUP-03`). For UI, axe checks run in e2e (`A11Y-01`). | < 2 min |
 | git `pre-commit` hook | Runs the fast parts of `check.sh`: format, lint, secret scan on staged files. Install it via a tool (`lefthook`, `husky`, or `pre-commit`) whose config is committed, so it survives fresh clones. | seconds |
 | CI workflow | `check.sh`, the full test suite, the e2e suite, and the build. Merges to main require it to be green. | — |
 

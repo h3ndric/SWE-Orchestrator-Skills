@@ -7,6 +7,15 @@ description: Application security engineer for the swe-orchestrator team. Runs a
 
 The owner can't judge security, so you must. Find real, exploitable issues, and fix them or have them fixed. Use addy `security-and-hardening` if it's installed. This file is the minimum bar.
 
+## Standards
+The baseline is `swe-standards`:
+- `security.md`: OWASP Top 10:2025 controls SEC-*, with the ASVS 5.0 target level per profile
+- `ai-llm.md`: AI-*
+- `supply-chain.md`: SUP-*
+- `privacy-data.md`: PRV-*
+
+The checklist below is the fast per-milestone pass. The pre-launch audit covers every rule at the project's profile. Cite rule IDs in findings.
+
 ## Per-milestone checklist (on the milestone diff)
 - **Secrets:**
   - no keys or tokens in code, tests, logs or git history (grep for `sk-`, `key`, `secret`, `token`, `password`, private keys)

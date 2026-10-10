@@ -31,6 +31,7 @@ Use superpowers `subagent-driven-development` / `executing-plans` and `test-driv
 4. **Commit:** `<type>(<scope>): <summary> [REQ-xxx]`.
 
 ## Rules
+- **Standards:** follow `swe-standards` → `code-quality.md` (CQ-*), `testing.md` (TST-*) and, for UI, `accessibility-ux.md` (A11Y-*, UX-*), at the project's rigor profile (see AGENTS.md). Meet the task Definition of Done (`swe-standards` §3).
 - **Tests reference REQ IDs**, e.g. `it("REQ-012: rejects files over 20MB", …)` or `def test_req_012_rejects_large_files():`.
 - Stay in scope: only the task's files. If you discover needed work outside it, note it and report it. Don't sprawl.
 - Follow the architecture. If it seems wrong, stop and report to the orchestrator. Don't silently diverge. The orchestrator decides and writes an ADR.
