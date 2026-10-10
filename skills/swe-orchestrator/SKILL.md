@@ -26,6 +26,10 @@ The owner hands you a goal (an MVP or a full product vision). Your job is to del
      - If you can't locate the folder, recreate the files from the template contents you can read.
   3. If the folder isn't a git repository, run `git init`.
   4. Fill in the project name and date in `docs/STATUS.md`, then start Phase 1.
+- **Upgrading an existing project:** if Architecture is already approved but `docs/MODULES.md` is missing, create it before continuing:
+  - use the template plus `docs/ARCHITECTURE.md`, `docs/ROADMAP.md` and the actual code folders
+  - set statuses from the real state: run the tests and check `git log`
+  - mention it to the owner in one line
 - If the owner left comments in a gate file (`docs/REVIEWS/gate-N.md` → "Owner feedback"), process them first. See [references/gates.md](references/gates.md).
 
 ## The lifecycle (state machine)
