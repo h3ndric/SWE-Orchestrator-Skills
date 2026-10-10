@@ -1,0 +1,13 @@
+{
+  "name": "swe-orchestrator",
+  "displayName": "SWE Orchestrator",
+  "version": "1.0.0",
+  "description": "Hire an AI engineering team: an autonomous tech-lead orchestrator with researcher, requirements interviewer, architect, AI engineer, implementer, reviewer, security and release roles. You review at 4 gates.",
+  "suggestedPrompts": ["I have an idea for an app I want to build", "Continue my project"],
+  "category": "Developer Tools",
+  "keywords": ["orchestrator", "requirements", "architecture", "skills"],
+  "author": { "name": "h3ndric" },
+  "homepage": "https://github.com/h3ndric/SWE-Orchestrator-Skills",
+  "repository": "https://github.com/h3ndric/SWE-Orchestrator-Skills",
+  "license": "MIT"
+}

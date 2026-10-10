@@ -186,7 +186,7 @@ init_project() {
     echo "   created: $rel"
   done < <(find "$TEMPLATES" -type f | sort)
   if [[ ! -d "$INIT_DIR/.git" ]] && command -v git >/dev/null 2>&1; then run git -C "$INIT_DIR" init -q; echo "   git repo initialized"; fi
-  info "Project ready. Open it in any agent and say:  /swe-orchestrator I want to build <your idea>"
+  info "Project ready (optional step: the orchestrator also does this itself). Open it in any agent and say:  /swe-orchestrator I want to build <your idea>"
 }
 
 status() {
@@ -208,7 +208,7 @@ case "$CMD" in
     ((SKIP_SP)) || install_superpowers
     ((SKIP_ADDY)) || install_addy
     status
-    info "Done. Start a new project with:  $0 init ~/dev/my-app"
+    info "Done. Make a folder, open any agent in it and say:  /swe-orchestrator I want to build <your idea>"
     ;;
   update)
     info "Pulling latest skills"

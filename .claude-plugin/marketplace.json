@@ -1,0 +1,8 @@
+{
+  "name": "swe-orchestrator",
+  "description": "SWE Orchestrator skills marketplace",
+  "owner": { "name": "h3ndric" },
+  "plugins": [
+    { "name": "swe-orchestrator", "description": "Hire an AI engineering team: an autonomous tech-lead orchestrator with researcher, requirements interviewer, architect, AI engineer, implementer, reviewer, security and release roles. You review at 4 gates.", "version": "1.0.0", "source": "./", "author": { "name": "h3ndric" } }
+  ]
+}

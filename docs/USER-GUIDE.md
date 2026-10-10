@@ -17,6 +17,16 @@ This guide is for the **owner**: the person with the idea. You don't need to kno
 
 Prerequisites: git, Node.js (for `npx`), and at least one of these agents installed and logged in: Claude Code, Copilot CLI, Kimi Code, Antigravity, pi.
 
+**Why install first?** An agent can only use skills that are already in its skills folder. Until they're installed, it doesn't know the orchestrator exists. You do this once per computer, not once per project.
+
+**Easiest: let an agent install it.** Open any agent and paste:
+
+> Install the skills from https://github.com/h3ndric/SWE-Orchestrator-Skills: clone it to ~/dev/SWE-Orchestrator-Skills and run its ./install.sh, then show me ./install.sh status.
+
+That covers all 5 agents in one go. Plugin commands for installing into a single agent are in the README.
+
+**Or from the terminal:**
+
 ```bash
 git clone https://github.com/h3ndric/SWE-Orchestrator-Skills.git ~/dev/SWE-Orchestrator-Skills
 cd ~/dev/SWE-Orchestrator-Skills
@@ -29,10 +39,16 @@ If you use **Kimi**, also run this once inside Kimi: `/plugins install https://g
 ## 2. Start a new project
 
 ```bash
-~/dev/SWE-Orchestrator-Skills/install.sh init ~/dev/my-app
-cd ~/dev/my-app
+mkdir -p ~/dev/my-app && cd ~/dev/my-app
 claude                  # or: copilot · kimi · agy · pi
 ```
+
+No setup step is needed. On its first run the orchestrator creates the project files by itself:
+- `docs/` (status, spec, roadmap…)
+- `AGENTS.md`, so any agent knows how to resume
+- a git repository
+
+If you open the agent in your home folder, it suggests a project folder for you.
 
 Type your idea. Be as rough as you like. For example:
 

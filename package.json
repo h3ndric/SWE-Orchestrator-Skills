@@ -1,0 +1,9 @@
+{
+  "name": "swe-orchestrator-skills",
+  "version": "1.0.0",
+  "description": "Autonomous SWE orchestrator skills for coding agents",
+  "private": true,
+  "license": "MIT",
+  "keywords": ["pi-package", "skills", "orchestrator", "workflow"],
+  "pi": { "skills": ["./skills"] }
+}

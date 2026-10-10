@@ -1,0 +1,17 @@
+{
+  "name": "swe-orchestrator",
+  "version": "1.0.0",
+  "description": "Autonomous tech-lead orchestrator and specialist SWE roles; the owner reviews at 4 gates.",
+  "homepage": "https://github.com/h3ndric/SWE-Orchestrator-Skills",
+  "license": "MIT",
+  "keywords": ["orchestrator", "requirements", "architecture", "skills", "workflow"],
+  "skills": "./skills/",
+  "skillInstructions": "Kimi Code tool mapping for swe-* skills:\n- When a skill says to ask the owner a multiple-choice question, use Kimi Code's `AskUserQuestion` tool (1 question, 2-4 options, recommended first with '(Recommended)').\n- When a skill says to dispatch a role as a sub-agent, use Kimi Code's `Agent` tool: `subagent_type: \"coder\"` for implementation/review, `\"explore\"` for read-only research of the codebase, `\"plan\"` for architecture/planning. Paste the full self-contained prompt.\n- Web research: use `WebSearch` and `FetchURL`. File search: `Grep` / `Glob`.\n- Load other skills with the native `Skill` tool.",
+  "interface": {
+    "displayName": "SWE Orchestrator",
+    "shortDescription": "Hire an AI engineering team: idea to production with 4 owner review gates",
+    "developerName": "h3ndric",
+    "capabilities": ["Interactive", "Read", "Write"],
+    "websiteURL": "https://github.com/h3ndric/SWE-Orchestrator-Skills"
+  }
+}

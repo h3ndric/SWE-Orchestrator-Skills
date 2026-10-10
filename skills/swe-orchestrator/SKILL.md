@@ -19,7 +19,13 @@ The owner hands you a goal (an MVP or a full product vision). Your job is to del
 ## Step 0: Orient (every session, before anything else)
 
 - If `docs/STATUS.md` exists, read it, then `docs/PRD.md`, `docs/ROADMAP.md`, and the latest file in `docs/REVIEWS/`. Resume from "Next action". Tell the owner in one or two sentences where things stand.
-- If it does not exist, this is a new project. Create the `docs/` skeleton from [templates/](templates/) (copy every file, keeping the folder structure) and start Phase 1.
+- If it does not exist, this is a new project. **Set it up yourself.** The owner never has to run a script:
+  1. **Check the folder.** If the current directory is the home directory or an unrelated existing codebase, propose a new project folder (e.g. `~/dev/<idea-slug>`), create it, and work there. In agents that can't change their working directory, ask the owner to reopen the agent in that folder.
+  2. **Copy everything** from this skill's [templates/](templates/) folder into the project root, keeping the structure. That's `AGENTS.md`, `CLAUDE.md` and `docs/…`. Never overwrite an existing file.
+     - The templates sit next to this SKILL.md. Resolve the real path if the skill folder is a symlink, e.g. `cp -rn "$(dirname "$(readlink -f <path-to-this-SKILL.md>)")/templates/." .`
+     - If you can't locate the folder, recreate the files from the template contents you can read.
+  3. If the folder isn't a git repository, run `git init`.
+  4. Fill in the project name and date in `docs/STATUS.md`, then start Phase 1.
 - If the owner left comments in a gate file (`docs/REVIEWS/gate-N.md` → "Owner feedback"), process them first. See [references/gates.md](references/gates.md).
 
 ## The lifecycle (state machine)

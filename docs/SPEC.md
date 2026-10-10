@@ -144,7 +144,7 @@ Escalate only for scope, budget, timeline, legal or user-visible changes, or for
 |---|---|
 | `install` (default) | Symlinks `skills/*` into each detected agent's global skills folder, installs superpowers via each agent's plugin manager, and installs the addy subset via `npx skills add` |
 | `update` | `git pull` this repo, re-link the skills, refresh the toolbox |
-| `init <dir>` | Scaffold `docs/`, `AGENTS.md` and `CLAUDE.md` into a project, and run `git init` |
+| `init <dir>` | Optional. Scaffold `docs/`, `AGENTS.md` and `CLAUDE.md` into a project, and run `git init`. The orchestrator does this itself on first run (Step 0), so the script is only a convenience |
 | `status` | Show the link counts per folder |
 | `uninstall` | Remove our symlinks (the toolbox packs are left alone) |
 
@@ -158,6 +158,18 @@ Skill folders:
 | Kimi Code, pi | `~/.agents/skills/` |
 
 It never overwrites a file it didn't create.
+
+### In-agent install (plugin manifests)
+Manifests let each agent install the repo straight from GitHub. Like superpowers, it uses the agent's own plugin format:
+
+| File | Used by |
+|---|---|
+| `.claude-plugin/plugin.json` + `marketplace.json` | Claude Code, Copilot CLI |
+| `.antigravity-plugin/plugin.json` | Antigravity |
+| `.kimi-plugin/plugin.json` | Kimi Code (includes the tool mapping: AskUserQuestion, Agent subagent types) |
+| `package.json` → `pi.skills` | pi |
+
+Use either the plugin route or the symlink route on a machine, not both, to avoid duplicate skills.
 
 ## 11. Repository layout
 
@@ -193,4 +205,3 @@ skills/
   - tune the skills based on what happens
   - add `claude plugin eval` cases for the orchestrator's gate behavior
 - **v1.2:** optional "lead + workers" mode, where the orchestrator dispatches build tasks to other agents' headless CLIs (`kimi -p`, `copilot -p`, `pi -p`).
-- **v1.3:** package as native plugins for each agent's marketplace, in addition to the symlink install.

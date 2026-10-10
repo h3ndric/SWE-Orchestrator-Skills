@@ -27,6 +27,26 @@ A skill pack that turns **Claude Code, GitHub Copilot CLI, Kimi Code, Antigravit
 
 ## Install (once)
 
+**Option A: let an agent do it (no terminal needed).** Open any one of your agents and paste:
+
+> Install the skills from https://github.com/h3ndric/SWE-Orchestrator-Skills: clone it to ~/dev/SWE-Orchestrator-Skills and run its ./install.sh, then show me ./install.sh status.
+
+That one agent installs the team into **all 5** agents, along with the toolbox packs.
+
+**Option B: install as a plugin, one agent at a time.** Type these inside each agent:
+
+| Agent | Command |
+|---|---|
+| Claude Code | `/plugin marketplace add h3ndric/SWE-Orchestrator-Skills` then `/plugin install swe-orchestrator@swe-orchestrator` |
+| Copilot CLI | `copilot plugin marketplace add h3ndric/SWE-Orchestrator-Skills` then `copilot plugin install swe-orchestrator@swe-orchestrator` |
+| Antigravity | `agy plugin install https://github.com/h3ndric/SWE-Orchestrator-Skills` |
+| Kimi Code | `/plugins install https://github.com/h3ndric/SWE-Orchestrator-Skills` |
+| pi | `pi install git:github.com/h3ndric/SWE-Orchestrator-Skills` |
+
+Option B installs only the `swe-*` skills, not the toolbox packs. **Use one option per machine, not both**, or each skill will show up twice.
+
+**Option C: run the script yourself:**
+
 ```bash
 git clone https://github.com/h3ndric/SWE-Orchestrator-Skills.git ~/dev/SWE-Orchestrator-Skills
 cd ~/dev/SWE-Orchestrator-Skills
@@ -60,8 +80,7 @@ Where the skills go:
 ## Start a project
 
 ```bash
-./install.sh init ~/dev/my-ai-app      # creates docs/ skeleton + AGENTS.md + git repo
-cd ~/dev/my-ai-app
+mkdir -p ~/dev/my-ai-app && cd ~/dev/my-ai-app
 claude          # or: copilot / kimi / agy / pi
 ```
 
@@ -69,7 +88,7 @@ Then say:
 
 > /swe-orchestrator I want to build an app that summarizes my meeting recordings and emails action items to attendees. MVP first.
 
-(`init` is optional. The orchestrator creates the `docs/` skeleton itself if it's missing.)
+There's nothing to set up first: on its first run the orchestrator creates `docs/`, `AGENTS.md` and a git repo by itself. Prefer a script? `./install.sh init <dir>` does the same thing ahead of time.
 
 What happens next:
 1. It **researches** similar products, then **interviews you** one simple multiple-choice question at a time, about *what* you want, never *how*. Answer "you decide" whenever you like.
