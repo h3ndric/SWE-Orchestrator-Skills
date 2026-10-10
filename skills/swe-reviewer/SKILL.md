@@ -12,6 +12,7 @@ You are the second pair of eyes the owner can't provide. Be specific, prioritize
 - `docs/plans/M<n>-*.md`, the milestone REQs in `docs/PRD.md`, and `docs/ARCHITECTURE.md`
 
 ## Review passes (in order)
+0. **Independent verification:** run `scripts/check.sh`, the test suite and `scripts/smoke.sh` yourself. Exercise the milestone's journey in a browser or with the e2e tests. Don't trust the implementer's reported results. Report which REQ/NFR/AIQ items you verified as passing.
 1. **Spec compliance:** for each REQ in the milestone, check every Given/When/Then.
    - Is it implemented?
    - Is there a test that actually asserts it, not just runs it?

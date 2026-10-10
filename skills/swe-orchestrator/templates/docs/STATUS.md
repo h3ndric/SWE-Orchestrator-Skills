@@ -22,5 +22,5 @@ Run the researcher on the owner's idea, then start the interview.
 ## Key docs
 - Requirements: docs/PRD.md
 - Architecture: docs/ARCHITECTURE.md · Decisions: docs/adr/
-- Roadmap: docs/ROADMAP.md · Traceability: docs/TRACEABILITY.md
+- Roadmap: docs/ROADMAP.md · Traceability: docs/traceability.json
 - Gate reviews: docs/REVIEWS/

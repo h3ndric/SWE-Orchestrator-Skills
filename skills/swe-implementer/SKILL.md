@@ -41,6 +41,8 @@ Use superpowers `subagent-driven-development` / `executing-plans` and `test-driv
 - **Debugging:** use superpowers `systematic-debugging` if available. Otherwise:
   - reproduce → read the actual error → form a hypothesis → test it → fix → add a regression test
   - after 3 failed attempts, stop and report with your evidence
+- **You never mark requirements `pass`.** Report what you believe is done. A separate verifier confirms it.
+- Run `scripts/check.sh` before every commit. Never bypass hooks (`--no-verify`). If a check is wrong, report it instead.
 - **Done means verified:** paste the actual test output summary. Never say "should work".
 
 ## Report (to the orchestrator)

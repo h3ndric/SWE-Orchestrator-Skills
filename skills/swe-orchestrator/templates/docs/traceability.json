@@ -1,0 +1,26 @@
+{
+  "_rules": [
+    "Source of truth for requirement status. Created by swe-requirements-engineer from docs/PRD.md.",
+    "Build agents may ONLY change: status, tests, verified_by, verified_on, milestone, modules.",
+    "Never delete an entry or edit id/title/criteria. Scope changes go through a change request (requirements engineer + PRD changelog); removed items get status 'withdrawn'.",
+    "status 'pass' only after the criteria were actually verified (tests run green AND, for user-facing items, the journey exercised end to end). verified_by must be a different agent/role than the implementer."
+  ],
+  "status_values": ["todo", "in_progress", "pass", "fail", "deferred", "withdrawn"],
+  "items": [
+    {
+      "id": "REQ-001",
+      "type": "functional",
+      "title": "<short title>",
+      "release": "MVP",
+      "criteria": [
+        "Given <context>, when <action>, then <observable result>"
+      ],
+      "milestone": null,
+      "modules": [],
+      "tests": [],
+      "status": "todo",
+      "verified_by": null,
+      "verified_on": null
+    }
+  ]
+}

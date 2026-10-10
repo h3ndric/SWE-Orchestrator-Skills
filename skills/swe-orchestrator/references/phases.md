@@ -20,7 +20,7 @@ Each phase also ends with a short **fallback** section. Use it when the role ski
    - non-functional requirements (NFRs) and AI quality bars
    - out-of-scope items
    - the MVP vs full-vision split
-   - Also seed `docs/TRACEABILITY.md` with every REQ, status ⬜.
+   - Also create `docs/traceability.json`, with every REQ, NFR and AIQ at status `todo`.
 
 **Exit:** the PRD passes the requirements engineer's quality check, and Gate 1 is approved.
 
@@ -81,7 +81,7 @@ Each phase also ends with a short **fallback** section. Use it when the role ski
   - produce something demo-able
   - list its REQ IDs
   - have its own acceptance checks
-- Milestone 0 is always the **walking skeleton**: the repo, tooling, lint/format, test runner, a "hello world" deployed end to end, and a CI pipeline running tests.
+- Milestone 0 is always the **walking skeleton**: the repo, tooling, lint/format, test runner, a "hello world" deployed end to end, and a CI pipeline running tests. It also sets up the guardrails in `references/guardrails.md`: `scripts/init.sh`, `smoke.sh`, `check.sh`, a pre-commit hook with secret scanning, and boundary checks.
 - Put full-vision items in later milestones, marked "post-MVP".
 - Output: `docs/ROADMAP.md` and `docs/MODULES.md`. The register has one row per component from the architecture, with milestone, REQs and dependencies filled in, and every status ⬜.
 - There's no gate here; go straight to the build loop.
@@ -105,9 +105,10 @@ For milestone M:
 5. **Security** (`swe-security`): run the per-milestone checklist (secrets, input validation, authz, dependencies, prompt injection for AI features). Fix the findings.
 6. **Verify:**
    - Run the full test suite, lint and type-check.
-   - Actually run the app and exercise the milestone's user journey.
+   - Actually run the app and exercise the milestone's user journey in a browser, as a user would. Add or extend the Playwright e2e test for it.
+   - Verification is done by the reviewer or a fresh-context verifier, **not the implementer**. Only then set items to `pass` in `docs/traceability.json`.
    - Run AI evals if the milestone touched AI.
-   - Update `docs/TRACEABILITY.md`.
+   - Update `docs/traceability.json`.
 7. **Register:** update `docs/MODULES.md`:
    - status, test counts and the reviewed/security dates for each module touched
    - clear the claims
@@ -137,7 +138,7 @@ For milestone M:
 - Performance sanity check against the NFRs.
 - Rollback plan + runbook: how to deploy, roll back, rotate a key, and what to do if it's down.
 - Legal basics as flagged in the PRD: privacy policy, terms, data deletion.
-- `docs/TRACEABILITY.md`: every MVP REQ is ✅.
+- `docs/traceability.json`: every MVP item is `pass`.
 
 **Exit:** Gate 4 is approved. Then deploy to production, verify it in production, and update STATUS to "Live".
 

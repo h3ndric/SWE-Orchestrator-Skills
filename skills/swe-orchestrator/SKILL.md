@@ -18,6 +18,10 @@ The owner hands you a goal (an MVP or a full product vision). Your job is to del
 
 ## Step 0: Orient (every session, before anything else)
 
+- **Session-start routine** (existing project):
+  1. Confirm the working directory, and look at `git log --oneline -10`.
+  2. Read the docs listed in the next bullet.
+  3. Once M0 exists, run `scripts/init.sh` and `scripts/smoke.sh`. **If smoke fails, fixing it is the first task**, before any new work. A previous session may have left things broken.
 - If `docs/STATUS.md` exists, read it, then `docs/MODULES.md` (if present), `docs/ROADMAP.md`, the latest file in `docs/REVIEWS/`, and only the PRD sections you need. Resume from "Next action". Tell the owner in one or two sentences where things stand.
 - If it does not exist, this is a new project. **Set it up yourself.** The owner never has to run a script:
   1. **Check the folder.** If the current directory is the home directory or an unrelated existing codebase, propose a new project folder (e.g. `~/dev/<idea-slug>`), create it, and work there. In agents that can't change their working directory, ask the owner to reopen the agent in that folder.
@@ -30,6 +34,8 @@ The owner hands you a goal (an MVP or a full product vision). Your job is to del
   - use the template plus `docs/ARCHITECTURE.md`, `docs/ROADMAP.md` and the actual code folders
   - set statuses from the real state: run the tests and check `git log`
   - mention it to the owner in one line
+  - If the project has an old `docs/TRACEABILITY.md`, convert it to `docs/traceability.json` (template), keeping all IDs and statuses, then delete the old file.
+  - If `scripts/init.sh`, `smoke.sh` or `check.sh` are missing, add them, plus the pre-commit hook, as the first task of the next milestone.
 - If the owner left comments in a gate file (`docs/REVIEWS/gate-N.md` → "Owner feedback"), process them first. See [references/gates.md](references/gates.md).
 
 ## The lifecycle (state machine)
@@ -81,6 +87,15 @@ A whole project won't fit in one session's context. Treat the context window as 
    - Never start a large new task when context is nearly full.
 7. **After a reset or compression:** don't trust your memory of earlier work. Re-read STATUS and the current plan file, and run `git log --oneline -10` and the test suite to confirm the real state before continuing.
 
+## Guardrails and verification
+
+Follow [references/guardrails.md](references/guardrails.md). M0 sets up:
+- `scripts/init.sh`, `scripts/smoke.sh` and `scripts/check.sh`
+- a pre-commit hook and CI
+- architecture-boundary checks generated from the module register
+
+User-facing requirements get Playwright end-to-end tests, and they're actually exercised in a browser. **Anything that must always hold gets a script or hook, not just a sentence in a doc.** A mistake seen twice becomes a check.
+
 ## Gates
 
 At each gate: write the brief to `docs/REVIEWS/gate-N[-milestone].md` using [references/gates.md](references/gates.md). Show the owner a short summary in chat, then **stop and wait**. Never skip a gate. Never continue past one without explicit approval ("approved", "go", "lgtm", or similar). If the owner gives feedback instead, follow the change-request procedure in [references/gates.md](references/gates.md).
@@ -115,7 +130,7 @@ See [references/decision-policy.md](references/decision-policy.md). In short:
   - whether the milestone order is still right
   - whether the MVP should be re-cut
   
-  Log it in the register's "Increment reviews" table. Put any proposed roadmap change in the Gate 3 brief for the owner.
+  Also run **doc gardening** (guardrails.md): check docs against code for drift, and log tech debt in `docs/TECH-DEBT.md`. Log the review in the register's "Increment reviews" table. Put any proposed roadmap change in the Gate 3 brief for the owner.
 - **Gate briefs:** include the "Health at a glance" block at Gates 3 and 4.
 
 ## Traceability (how we guarantee "built as specified")
@@ -123,5 +138,6 @@ See [references/decision-policy.md](references/decision-policy.md). In short:
 - Every requirement in `docs/PRD.md` has an ID (`REQ-001`…).
 - Every milestone in `docs/ROADMAP.md` lists the REQ IDs it delivers.
 - Every test name or docstring references the REQ ID it verifies.
-- `docs/TRACEABILITY.md` tracks REQ → milestone → test(s) → status. Update it at the end of every milestone.
-- Gate 4 is blocked while any MVP-scoped REQ is not ✅.
+- `docs/traceability.json` tracks REQ → milestone → modules → tests → status. It's JSON on purpose, so agents can't casually rewrite it. Build agents may only change the status, tests and verification fields, never the criteria. Update it after each verified task.
+- An item becomes `pass` only when someone *other than its implementer* has verified it: the reviewer or a verification sub-agent with fresh context. Self-grading is unreliable.
+- Gate 4 is blocked while any MVP item is not `pass`. Gate briefs render this file as a readable table for the owner.

@@ -34,6 +34,10 @@ summary line), anything left undone or risky.
 | Reviewer + security review of the same diff | Merge → deploy |
 | Writing tests for separate modules | Architecture decisions that depend on each other |
 
+## Keep handoff chains short
+
+Research found that tasks needing more than about 4 handoffs between agents usually fail, and that extra reviewer layers can *lower* success. Keep each chain to one or two hops: orchestrator → implementer → verifier/reviewer. Don't add more roles to a chain just because they exist. For a small milestone, the reviewer can do the security checklist in the same pass.
+
 ## Harness notes
 
 - **Claude Code:** use the Agent/Task tool. Use `isolation: worktree` for parallel implementers.

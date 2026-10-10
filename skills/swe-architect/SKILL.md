@@ -48,7 +48,7 @@ Write `docs/ROADMAP.md`:
   - Each should be roughly 1–3 days of agent work, with ≤ ~10 plan tasks.
 - **A final MVP milestone** for production readiness (Phase 5).
 - **Later milestones** for full-vision REQs, marked post-MVP.
-- Fill in the Milestone column in `docs/TRACEABILITY.md`.
+- Fill in the `milestone` field for each item in `docs/traceability.json`.
 - Create `docs/MODULES.md` from the template:
   - one row per component in the architecture, using `MOD-NN` IDs and names that match the code folders
   - each row's milestone, REQs and dependencies filled in

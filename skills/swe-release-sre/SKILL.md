@@ -54,7 +54,7 @@ Work through each item. For each one, mark ✅, or ⚠️ with a reason.
 - [ ] Custom domain plus HTTPS, if the PRD requires it.
 
 **Requirements**
-- [ ] `docs/TRACEABILITY.md`: every MVP REQ, NFR and AIQ is ✅.
+- [ ] `docs/traceability.json`: every MVP REQ, NFR and AIQ has status `pass`, verified by a role other than the implementer.
 
 Then the orchestrator writes the Gate 4 brief. After approval:
 1. Deploy to production.

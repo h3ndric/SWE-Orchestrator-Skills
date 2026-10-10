@@ -155,7 +155,7 @@ You lose nothing. It re-reads its notes and checks the code before carrying on.
 | `docs/PRD.md` | The spec: what's being built |
 | `docs/ROADMAP.md` | Milestones |
 | `docs/MODULES.md` | **Module register:** every part of the system, its status, who's working on it, and test and review results |
-| `docs/TRACEABILITY.md` | Every requirement and whether it works yet |
+| `docs/traceability.json` | Every requirement and whether it works yet |
 | `docs/ARCHITECTURE.md`, `docs/adr/` | How it's built and why |
 | `docs/LAUNCH.md`, `docs/RUNBOOK.md` | The go-live checklist and how to operate it |
 
@@ -168,7 +168,15 @@ cd ~/dev/SWE-Orchestrator-Skills
 
 If you edit a skill yourself (e.g. your preferred technologies in `skills/swe-orchestrator/references/decision-policy.md`), the change is live in all agents immediately. Run `git commit` and `git push` to save it to GitHub.
 
-## 9. Troubleshooting
+## 9. Making the team better over time
+
+When the team does something wrong, such as skipping a gate, asking you technical questions, or claiming something works when it doesn't:
+1. Tell it in the session, so it corrects course.
+2. Ask any agent: *"Add this to ~/dev/SWE-Orchestrator-Skills/docs/HARNESS-LOG.md and fix the skill so it doesn't happen again. Then commit and push."*
+
+That's how the skills get sharper with every project.
+
+## 10. Troubleshooting
 
 | Problem | Fix |
 |---|---|

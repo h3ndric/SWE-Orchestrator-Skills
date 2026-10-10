@@ -57,7 +57,7 @@ See [RESEARCH.md](RESEARCH.md). In summary, no existing project met G1, G2, G5 a
 └───────────────────────────────────┬───────────────────────────────────────────────┘
                                     │ reads/writes
                          project/docs/  (single source of truth)
-       STATUS · PRD · ARCHITECTURE · ROADMAP · TRACEABILITY · adr/ · REVIEWS/ · plans/
+       STATUS · PRD · ARCHITECTURE · ROADMAP · traceability.json · adr/ · REVIEWS/ · plans/
 ```
 
 ### Key design decisions
@@ -71,13 +71,15 @@ See [RESEARCH.md](RESEARCH.md). In summary, no existing project met G1, G2, G5 a
 | D6 | **Symlink install** from this repo | One source of truth. `git pull` updates every agent at once. |
 | D8 | **Context window is a disposable scratchpad** | The orchestrator stays thin, delegates heavy work to fresh-context sub-agents, checkpoints STATUS per task, and restarts sessions at gates or milestones. Long projects can't fit in one context |
 | D9 | **Module register (`docs/MODULES.md`) held by the orchestrator** | One place for every module's status, claim, REQs, dependencies, tests and reviews. Single writer, so no conflicting edits. Claims prepare for parallel agents. An increment review every 2–3 milestones keeps the roadmap honest |
+| D10 | **Mechanical guardrails over prose** | Scripts, git hooks, CI and boundary checks work identically in all 5 agents, and are followed 100% of the time rather than "usually" (`references/guardrails.md`) |
+| D11 | **Independent verification, tamper-resistant JSON ledger** | Self-grading is unreliable, and agents edit Markdown tables too freely (`traceability.json`) |
 | D7 | **Toolbox is optional** | Each role carries enough fallback guidance to work without superpowers or addy. |
 
 ## 5. Lifecycle (state machine)
 
 | # | Phase | Roles | Output | Gate |
 |---|---|---|---|---|
-| 1 | Discovery | researcher → business-analyst → requirements-engineer | `discovery/RESEARCH.md`, `discovery/INTERVIEW.md`, `PRD.md`, `TRACEABILITY.md` | ★ Gate 1: requirements sign-off |
+| 1 | Discovery | researcher → business-analyst → requirements-engineer | `discovery/RESEARCH.md`, `discovery/INTERVIEW.md`, `PRD.md`, `traceability.json` | ★ Gate 1: requirements sign-off |
 | 2 | Architecture | architect + ai-engineer | `ARCHITECTURE.md`, `adr/*` | ★ Gate 2: architecture and budget |
 | 3 | Roadmap | architect | `ROADMAP.md` (M0 walking skeleton first) | none |
 | 4 | Build loop (per milestone) | implementer → reviewer → security → verify | code, tests, `plans/M<n>.md` | ★ Gate 3: milestone demo |
@@ -106,7 +108,7 @@ Full playbooks: `skills/swe-orchestrator/references/phases.md`.
 
 ## 7. Traceability
 
-`REQ/NFR/AIQ` → milestone (ROADMAP) → test names containing the ID → status in `TRACEABILITY.md`.
+`REQ/NFR/AIQ` → milestone (ROADMAP) → test names containing the ID → status in `traceability.json`.
 - Every Gate 3 brief shows the coverage table.
 - Gate 4 is blocked while any MVP ID is not ✅.
 - AI quality is enforced by an eval suite: a golden set from the owner's examples, deterministic checks plus an LLM judge, and thresholds taken from the AIQ IDs.
@@ -203,6 +205,7 @@ skills/
 ## 13. Roadmap for this project
 
 - **v1.1:**
+  - record real failures in `docs/HARNESS-LOG.md` and build 20–50 frozen harness eval tasks from them
   - run the end-to-end and cross-agent resume tests
   - tune the skills based on what happens
   - add `claude plugin eval` cases for the orchestrator's gate behavior

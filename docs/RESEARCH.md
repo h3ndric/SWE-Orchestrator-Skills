@@ -23,6 +23,31 @@ All 5 target agents read the open **Agent Skills** format: a folder with a `SKIL
 - Antigravity IDE: `~/.gemini/antigravity/skills/`
 - Kimi Code and pi: `~/.agents/skills/`
 
+## Harness best practices (and how this project applies them)
+
+These come from Anthropic's long-running-agent harness, OpenAI's harness engineering, and a 2026 survey of 246 agent repositories:
+
+| Practice | Source | Applied here |
+|---|---|---|
+| Keep progress in files, not context. Every session starts by reading the progress log and git log, then running a basic e2e check | Anthropic | `docs/STATUS.md` plus the session-start routine (`scripts/init.sh`, then `smoke.sh`). A failing smoke test gets fixed first |
+| Work on one feature at a time, and leave a clean, committed state each session | Anthropic | Task-level checkpoints, one milestone per session, commit per task |
+| A feature list in **JSON** with a pass flag; agents may only flip the flag | Anthropic | `docs/traceability.json`: build agents may only change the status, tests and verification fields |
+| Verify as a human user would (browser automation), not just unit tests or curl | Anthropic | Playwright e2e test per user-facing REQ, with the journey exercised in a browser |
+| A short AGENTS.md (~100 lines) as a **map**, with `docs/` as the system of record | OpenAI | A template AGENTS.md that points to docs. Doc gardening keeps it short |
+| Enforce rules mechanically (linters, structural tests, hooks, CI). Write lint messages that explain the fix | OpenAI, survey | `references/guardrails.md`: `check.sh`, a pre-commit hook, boundary checks from the module register, and "mistake seen twice → check" |
+| Separate generation from evaluation; self-grading is unreliable | Survey, Anthropic | Only a verifier other than the implementer can mark an item `pass` |
+| Keep handoff chains short (more than 4 handoffs usually fails); extra reviewer layers can hurt | Survey (Microsoft, ablations) | Chains are limited to orchestrator → implementer → verifier |
+| Isolate parallel agents (worktree, port, DB) | Survey, OpenAI | Module claims plus per-worktree port and DB rules |
+| Garbage collection: recurring doc-drift and tech-debt sweeps | OpenAI | Doc gardening in every increment review, plus `docs/TECH-DEBT.md` |
+| Build the harness in reaction to failures, and test it like code | Survey, OpenAI | `docs/HARNESS-LOG.md` plus planned harness evals |
+| Fewer, shorter instructions; context is finite | Survey (ETH Zurich), OpenAI | Progressive disclosure: short SKILL.md files, with details in `references/` |
+
+Sources:
+- [Anthropic: Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
+- [OpenAI harness engineering (mirror)](https://github.com/celesteanders/harness/blob/main/docs/research/260211_openai_harness_engineering_codex.md)
+- [The State of AI Harness Engineering 2026 (marmelab)](https://marmelab.com/blog/2026/09/24/the-state-of-ai-harness-engineering-2026.html)
+- [Context engineering guide (latitude)](https://latitude.so/blog/context-engineering-guide-coding-agents)
+
 ## Conclusion
 
 Nothing found combines all four requirements:

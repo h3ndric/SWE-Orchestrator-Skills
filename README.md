@@ -99,7 +99,7 @@ What happens next:
 
 Everything lives in your project's `docs/` folder:
 - `STATUS.md` holds where things stand and the next action
-- `PRD.md`, `ARCHITECTURE.md`, `ROADMAP.md`, `TRACEABILITY.md`, `adr/`, `REVIEWS/`
+- `PRD.md`, `ARCHITECTURE.md`, `ROADMAP.md`, `traceability.json`, `adr/`, `REVIEWS/`
 
 Open the project in **any** of the 5 agents and say **"continue"**. It picks up where the last one stopped. A practical split: use Claude for discovery, architecture and reviews, and a cheaper agent for long build milestones.
 
