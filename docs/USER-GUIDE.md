@@ -36,9 +36,11 @@ cd ~/dev/SWE-Orchestrator-Skills
 
 If you use **Kimi**, also run this once inside Kimi: `/plugins install https://github.com/obra/superpowers`
 
-If you use **Cursor**, also run this once in Cursor Agent chat: `/add-plugin superpowers`. On Windows, Cursor works either way:
-- **You use WSL:** run `./install.sh` inside WSL as above. It also copies the skills to Windows for Cursor, and after updates `./install.sh update` refreshes those copies.
-- **No WSL:** install [Git for Windows](https://git-scm.com/download/win), then in PowerShell run:
+If you use **Cursor**, also run this once in Cursor Agent chat: `/add-plugin superpowers`.
+
+**On Windows**, agents installed on Windows itself (Claude Code, Copilot, Antigravity, Kimi, pi, Cursor) are covered either way:
+- **You use WSL:** run `./install.sh` inside WSL as above. It also sets up the agents installed on Windows, and after updates `./install.sh update` refreshes them.
+- **No WSL:** install [Git for Windows](https://git-scm.com/download/win) and [Node.js](https://nodejs.org), then in PowerShell run:
 
   ```powershell
   git clone https://github.com/h3ndric/SWE-Orchestrator-Skills.git $HOME\dev\SWE-Orchestrator-Skills

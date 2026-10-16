@@ -166,7 +166,7 @@ Skill folders:
 | Copilot CLI | `~/.copilot/skills/` |
 | Antigravity | `~/.gemini/config/skills/` (CLI) and `~/.gemini/antigravity/skills/` (IDE) |
 | Kimi Code, pi, Cursor | `~/.agents/skills/` |
-| Cursor on Windows | `%USERPROFILE%\.agents\skills\`: junctions from `install.ps1`, or marked copies made by `install.sh` from WSL |
+| Any of the above on Windows | The same folders under `%USERPROFILE%`. `install.ps1` links them with junctions; from WSL, `install.sh` runs `install.ps1`, which makes marked copies |
 
 It never overwrites a file it didn't create.
 
@@ -186,8 +186,8 @@ Use either the plugin route or the symlink route on a machine, not both, to avoi
 ## 11. Repository layout
 
 ```
-install.sh                    installer (Linux, macOS, WSL; also copies to Windows for Windows-side Cursor)
-install.ps1                   installer for Windows without WSL (Cursor)
+install.sh                    installer (Linux, macOS, WSL; from WSL it also runs install.ps1 for Windows-side agents)
+install.ps1                   installer for the Windows versions of all 6 agents
 README.md                     overview + quick start
 docs/SPEC.md                  this document
 docs/RESEARCH.md              prior-art research and build-vs-adopt rationale
@@ -208,7 +208,7 @@ skills/
 | `install.sh --dry-run`, then a real install, links skills into all 5 agents | ✅ |
 | superpowers installed: Claude, Copilot, Antigravity, pi | ✅. Kimi needs the manual `/plugins install` |
 | Discovery smoke test: each agent names `swe-orchestrator` and Step 0 | ✅ Claude, Copilot, Kimi, Antigravity, pi. ⬜ Cursor (added 2026-10-16, not installed on the dev machine) |
-| Windows installers: `install.ps1` (junctions; copy fallback from a WSL path; refresh; leaves foreign folders alone; uninstall) and `install.sh` copying to the Windows home for Windows-side Cursor | ✅ tested on Windows from WSL in temp folders (2026-10-16). ⬜ inside a real Cursor install |
+| Windows installers: `install.ps1` for all 6 agents (junctions; copy fallback from a WSL path; refresh; leaves foreign folders alone; `-Agents` filter; uninstall) and `install.sh` handing the Windows side to it | ✅ tested on Windows from WSL with temp home folders (2026-10-16). ⬜ with real Windows agent installs (none on the dev machine) and superpowers via Windows CLIs |
 | End-to-end: a real idea taken to Gate 1 → Gate 4 | ⬜ not yet run |
 | Resume across agents: stop in one agent, "continue" in another | ⬜ not yet run |
 

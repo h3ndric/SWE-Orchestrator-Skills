@@ -42,7 +42,7 @@ That one agent installs the team into **all 6** agents, along with the toolbox p
 | Antigravity | `agy plugin install https://github.com/h3ndric/SWE-Orchestrator-Skills` |
 | Kimi Code | `/plugins install https://github.com/h3ndric/SWE-Orchestrator-Skills` |
 | pi | `pi install git:github.com/h3ndric/SWE-Orchestrator-Skills` |
-| Cursor | Not needed: Cursor reads `~/.agents/skills/`, so Option A or C covers it (see **Cursor on Windows** below). A `.cursor-plugin/plugin.json` is included for a future Cursor Marketplace listing. |
+| Cursor | Not needed: Cursor reads `~/.agents/skills/`, so Option A or C covers it (see **Windows** below). A `.cursor-plugin/plugin.json` is included for a future Cursor Marketplace listing. |
 
 Option B installs only the `swe-*` skills, not the toolbox packs. **Use one option per machine, not both**, or each skill will show up twice.
 
@@ -78,9 +78,9 @@ Where the skills go:
 | Antigravity | `~/.gemini/config/skills/` (CLI) and `~/.gemini/antigravity/skills/` (IDE) |
 | Kimi Code, pi, Cursor | `~/.agents/skills/` |
 
-**Cursor on Windows.** Both setups are covered:
-- **Windows only (no WSL):** clone the repo with Git for Windows, then in PowerShell run `powershell -ExecutionPolicy Bypass -File install.ps1`. It links the skills into `%USERPROFILE%\.agents\skills` with directory junctions (no admin needed). Later: `install.ps1 update`, `status` or `uninstall`.
-- **WSL:** run `./install.sh` inside WSL. If Cursor is installed on Windows, it links the skills in WSL (for Cursor's WSL connection) and also copies them into the Windows `%USERPROFILE%\.agents\skills` (Windows apps can't follow WSL links). Run `./install.sh update` after pulling changes to refresh the copies.
+**Windows.** The Windows versions of all 6 agents are covered (same folders, under `%USERPROFILE%`), with or without WSL:
+- **Windows only (no WSL):** clone the repo with Git for Windows, then in PowerShell run `powershell -ExecutionPolicy Bypass -File install.ps1`. It works like `install.sh`: it detects each agent, links the skills into its folder with directory junctions (no admin needed), and installs the toolbox packs. Later: `install.ps1 update`, `status` or `uninstall`; `-Agents claude,cursor` targets only some agents.
+- **WSL:** run `./install.sh` inside WSL. It sets up the agents in WSL, then runs `install.ps1` for the agents installed on Windows, which get copies of the skills (Windows apps can't follow WSL links). Run `./install.sh update` after pulling changes to refresh the copies. `--no-windows` skips the Windows side.
 
 ## Start a project
 
