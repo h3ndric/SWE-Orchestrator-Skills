@@ -42,7 +42,7 @@ That one agent installs the team into **all 6** agents, along with the toolbox p
 | Antigravity | `agy plugin install https://github.com/h3ndric/SWE-Orchestrator-Skills` |
 | Kimi Code | `/plugins install https://github.com/h3ndric/SWE-Orchestrator-Skills` |
 | pi | `pi install git:github.com/h3ndric/SWE-Orchestrator-Skills` |
-| Cursor | Not needed: Cursor reads `~/.agents/skills/`, so Option A or C covers it. (A `.cursor-plugin/plugin.json` is included for a future Cursor Marketplace listing.) |
+| Cursor | Not needed: Cursor reads `~/.agents/skills/`, so Option A or C covers it (see **Cursor on Windows** below). A `.cursor-plugin/plugin.json` is included for a future Cursor Marketplace listing. |
 
 Option B installs only the `swe-*` skills, not the toolbox packs. **Use one option per machine, not both**, or each skill will show up twice.
 
@@ -77,6 +77,10 @@ Where the skills go:
 | GitHub Copilot CLI | `~/.copilot/skills/` |
 | Antigravity | `~/.gemini/config/skills/` (CLI) and `~/.gemini/antigravity/skills/` (IDE) |
 | Kimi Code, pi, Cursor | `~/.agents/skills/` |
+
+**Cursor on Windows.** Both setups are covered:
+- **Windows only (no WSL):** clone the repo with Git for Windows, then in PowerShell run `powershell -ExecutionPolicy Bypass -File install.ps1`. It links the skills into `%USERPROFILE%\.agents\skills` with directory junctions (no admin needed). Later: `install.ps1 update`, `status` or `uninstall`.
+- **WSL:** run `./install.sh` inside WSL. If Cursor is installed on Windows, it links the skills in WSL (for Cursor's WSL connection) and also copies them into the Windows `%USERPROFILE%\.agents\skills` (Windows apps can't follow WSL links). Run `./install.sh update` after pulling changes to refresh the copies.
 
 ## Start a project
 

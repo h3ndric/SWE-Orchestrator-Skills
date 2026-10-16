@@ -4,7 +4,7 @@
 # plus the toolbox packs (obra/superpowers, addyosmani/agent-skills subset).
 #
 # Usage:
-#   ./install.sh [install] [--dry-run] [--skip-superpowers] [--skip-addy] [--agents=claude,copilot,antigravity,kimi,pi,cursor]
+#   ./install.sh [install] [--dry-run] [--skip-superpowers] [--skip-addy] [--agents=claude,copilot,antigravity,kimi,pi,cursor,cursor-windows]
 #   ./install.sh init <project-dir> [--dry-run]     # scaffold docs/ + AGENTS.md in a project
 #   ./install.sh update [--dry-run]                  # git pull this repo, re-link skills, refresh toolbox packs
 #   ./install.sh status                              # show what is installed where
@@ -44,6 +44,20 @@ for arg in "$@"; do
 done
 
 # ---------- agent detection ----------
+# Windows user folder (as a WSL path) when running inside WSL; empty otherwise. SWE_WIN_HOME overrides.
+win_home() {
+  if [[ -n "${SWE_WIN_HOME:-}" ]]; then echo "$SWE_WIN_HOME"; return; fi
+  grep -qi microsoft /proc/version 2>/dev/null || return 0
+  local cmd p
+  cmd="$(command -v cmd.exe 2>/dev/null || echo /mnt/c/Windows/System32/cmd.exe)"
+  [[ -x "$cmd" ]] || return 0
+  p="$(cd /mnt/c 2>/dev/null && "$cmd" /c 'echo %USERPROFILE%' 2>/dev/null | tr -d '\r' | tail -1)"
+  [[ -n "$p" && "$p" != *%* ]] && wslpath "$p" 2>/dev/null || true
+}
+WIN_HOME="$(win_home)"
+WIN_SKILLS="${WIN_HOME:+$WIN_HOME/.agents/skills}"
+COPY_MARKER=".installed-by-swe-orchestrator"
+
 kimi_bin() { command -v kimi 2>/dev/null || { [[ -x "$HOME/.kimi-code/bin/kimi" ]] && echo "$HOME/.kimi-code/bin/kimi"; } || true; }
 
 agent_present() {
@@ -54,6 +68,8 @@ agent_present() {
     kimi)        [[ -n "$(kimi_bin)" ]] || [[ -d "$HOME/.kimi-code" ]] || [[ -d "$HOME/.kimi" ]] ;;
     pi)          command -v pi      >/dev/null 2>&1 || [[ -d "$HOME/.pi" ]] ;;
     cursor)      command -v cursor  >/dev/null 2>&1 || command -v cursor-agent >/dev/null 2>&1 || [[ -d "$HOME/.cursor" ]] ;;
+    # Cursor installed on Windows, seen from WSL
+    cursor-windows) [[ -n "$WIN_HOME" ]] && { [[ -d "$WIN_HOME/.cursor" ]] || [[ -d "$WIN_HOME/AppData/Local/Programs/cursor" ]]; } ;;
   esac
 }
 
@@ -68,11 +84,13 @@ skill_dirs_for() {
     claude)      echo "$HOME/.claude/skills" ;;
     copilot)     echo "$HOME/.copilot/skills" ;;
     antigravity) echo "$HOME/.gemini/config/skills"; echo "$HOME/.gemini/antigravity/skills" ;;
-    kimi|pi|cursor) echo "$HOME/.agents/skills" ;;
+    # cursor-windows also gets copies in the Windows home (see copy_skills_windows); the WSL link
+    # covers Cursor opening the project through its WSL connection.
+    kimi|pi|cursor|cursor-windows) echo "$HOME/.agents/skills" ;;
   esac
 }
 
-ALL_AGENTS=(claude copilot antigravity kimi pi cursor)
+ALL_AGENTS=(claude copilot antigravity kimi pi cursor cursor-windows)
 ACTIVE_AGENTS=()
 for a in "${ALL_AGENTS[@]}"; do
   if agent_selected "$a" && agent_present "$a"; then ACTIVE_AGENTS+=("$a"); fi
@@ -116,6 +134,39 @@ unlink_skills() {
   done
 }
 
+# ---------- Windows-side Cursor (from WSL) ----------
+# Windows apps can't follow WSL symlinks, so skills are copied and marked as ours.
+# `update` re-copies; `uninstall` removes only marked copies.
+agent_active() { [[ " ${ACTIVE_AGENTS[*]} " == *" $1 "* ]]; }
+
+copy_one_windows() { # <src dir> <name>
+  local src="$1" dest="$WIN_SKILLS/$2"
+  if [[ -e "$dest" && ! -e "$dest/$COPY_MARKER" ]]; then warn "$dest exists and is not ours; leaving it alone"; return; fi
+  run rm -rf "$dest"
+  run cp -rL "$src" "$dest"
+  ((DRY_RUN)) || { echo "Installed by $REPO_DIR (WSL). Re-run ./install.sh update to refresh." > "$dest/$COPY_MARKER"; printf '   copied %s -> %s\n' "$2" "$WIN_SKILLS"; }
+}
+
+copy_skills_windows() {
+  agent_active cursor-windows || return 0
+  info "Copying skills into the Windows home for Cursor on Windows"
+  run mkdir -p "$WIN_SKILLS"
+  local src s
+  while IFS= read -r src; do copy_one_windows "$src" "$(basename "$src")"; done < <(our_skills)
+  # toolbox skills installed on the WSL side, if any
+  for s in "${ADDY_SKILLS[@]}"; do [[ -d "$HOME/.agents/skills/$s" ]] && copy_one_windows "$HOME/.agents/skills/$s" "$s"; done
+  return 0
+}
+
+uncopy_skills_windows() {
+  [[ -n "$WIN_SKILLS" && -d "$WIN_SKILLS" ]] || return 0
+  local src dest
+  while IFS= read -r src; do
+    dest="$WIN_SKILLS/$(basename "$src")"
+    if [[ -e "$dest/$COPY_MARKER" ]]; then run rm -rf "$dest"; printf '   removed %s\n' "$dest"; fi
+  done < <(our_skills)
+}
+
 # ---------- toolbox: superpowers ----------
 try() { # run a command, but never abort the whole install on failure
   if ((DRY_RUN)); then printf '%s\n' "${c_dim}[dry-run]${c_off} $*"; return 0; fi
@@ -152,8 +203,8 @@ install_superpowers() {
         fi ;;
       kimi)
         warn "kimi: plugin install is interactive. Inside Kimi Code run:  /plugins install https://github.com/obra/superpowers" ;;
-      cursor)
-        warn "cursor: plugin install is interactive. In Cursor Agent chat run:  /add-plugin superpowers" ;;
+      cursor|cursor-windows)
+        warn "$a: plugin install is interactive. In Cursor Agent chat run:  /add-plugin superpowers" ;;
     esac
   done
 }
@@ -170,7 +221,7 @@ install_addy() {
       antigravity) args+=(-a antigravity) ;;
       kimi) args+=(-a kimi-code-cli) ;;
       pi) args+=(-a pi) ;;
-      cursor) args+=(-a cursor) ;;
+      cursor|cursor-windows) args+=(-a cursor) ;;
     esac
   done
   for s in "${ADDY_SKILLS[@]}"; do args+=(-s "$s"); done
@@ -201,6 +252,11 @@ status() {
     while IFS= read -r src; do [[ -L "$dir/$(basename "$src")" ]] && n=$((n+1)); done < <(our_skills)
     printf '   %-45s %d/%d swe skills linked\n' "$dir" "$n" "$(our_skills | wc -l)"
   done < <(target_dirs)
+  if agent_active cursor-windows; then
+    n=0
+    while IFS= read -r src; do [[ -e "$WIN_SKILLS/$(basename "$src")/$COPY_MARKER" ]] && n=$((n+1)); done < <(our_skills)
+    printf '   %-45s %d/%d swe skills copied (Windows)\n' "$WIN_SKILLS" "$n" "$(our_skills | wc -l)"
+  fi
 }
 
 case "$CMD" in
@@ -211,6 +267,7 @@ case "$CMD" in
     link_skills
     ((SKIP_SP)) || install_superpowers
     ((SKIP_ADDY)) || install_addy
+    copy_skills_windows
     status
     info "Done. Make a folder, open any agent in it and say:  /swe-orchestrator I want to build <your idea>"
     ;;
@@ -227,9 +284,10 @@ case "$CMD" in
       esac; done
     fi
     ((SKIP_ADDY)) || install_addy
+    copy_skills_windows
     status ;;
   init) init_project ;;
   status) status ;;
-  uninstall) info "Removing swe-* skill symlinks"; unlink_skills
+  uninstall) info "Removing swe-* skill symlinks"; unlink_skills; uncopy_skills_windows
              warn "Toolbox packs (superpowers, addy) were left installed; remove them with each agent's plugin/skills command if wanted." ;;
 esac

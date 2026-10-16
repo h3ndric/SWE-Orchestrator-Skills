@@ -166,6 +166,7 @@ Skill folders:
 | Copilot CLI | `~/.copilot/skills/` |
 | Antigravity | `~/.gemini/config/skills/` (CLI) and `~/.gemini/antigravity/skills/` (IDE) |
 | Kimi Code, pi, Cursor | `~/.agents/skills/` |
+| Cursor on Windows | `%USERPROFILE%\.agents\skills\`: junctions from `install.ps1`, or marked copies made by `install.sh` from WSL |
 
 It never overwrites a file it didn't create.
 
@@ -185,7 +186,8 @@ Use either the plugin route or the symlink route on a machine, not both, to avoi
 ## 11. Repository layout
 
 ```
-install.sh                    installer
+install.sh                    installer (Linux, macOS, WSL; also copies to Windows for Windows-side Cursor)
+install.ps1                   installer for Windows without WSL (Cursor)
 README.md                     overview + quick start
 docs/SPEC.md                  this document
 docs/RESEARCH.md              prior-art research and build-vs-adopt rationale
@@ -206,6 +208,7 @@ skills/
 | `install.sh --dry-run`, then a real install, links skills into all 5 agents | ✅ |
 | superpowers installed: Claude, Copilot, Antigravity, pi | ✅. Kimi needs the manual `/plugins install` |
 | Discovery smoke test: each agent names `swe-orchestrator` and Step 0 | ✅ Claude, Copilot, Kimi, Antigravity, pi. ⬜ Cursor (added 2026-10-16, not installed on the dev machine) |
+| Windows installers: `install.ps1` (junctions; copy fallback from a WSL path; refresh; leaves foreign folders alone; uninstall) and `install.sh` copying to the Windows home for Windows-side Cursor | ✅ tested on Windows from WSL in temp folders (2026-10-16). ⬜ inside a real Cursor install |
 | End-to-end: a real idea taken to Gate 1 → Gate 4 | ⬜ not yet run |
 | Resume across agents: stop in one agent, "continue" in another | ⬜ not yet run |
 
