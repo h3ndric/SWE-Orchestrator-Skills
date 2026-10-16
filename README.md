@@ -131,6 +131,7 @@ Open the project in **any** of the 6 agents and say **"continue"**. It picks up 
 | `swe-reviewer` | Spec compliance and code-quality review |
 | `swe-security` | Per-milestone security checks and pre-launch audit |
 | `swe-release-sre` | CI/CD, deploy, monitoring, backups, runbook, go-live checklist |
+| `swe-harness-review` | Improves the team itself: collects lessons logged in every project (local or GitHub) and turns them into skill fixes you approve. Runs weekly via `scripts/harness-review.sh schedule` |
 
 ## Uninstall
 

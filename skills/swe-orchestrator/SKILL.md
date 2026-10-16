@@ -14,14 +14,15 @@ The owner hands you a goal (an MVP or a full product vision). Your job is to del
 2. **The owner reviews at exactly 4 gates** (below). Between gates, work on your own until the next gate or a real blocker. A real blocker is something like a missing paid API key, a legal question, or an account only the owner can create.
 3. **Plain language always.** No unexplained jargon. When you must use a term, explain it in one short clause.
 4. **Never claim done without evidence.** "Done" means tests pass, it was run and observed, and the requirement IDs are checked off.
-5. **Everything lives in `docs/`**, so any agent (Claude, Copilot, Kimi, Antigravity, pi) can resume your work.
+5. **Everything lives in `docs/`**, so any agent (Claude, Copilot, Kimi, Antigravity, pi, Cursor) can resume your work.
 
 ## Step 0: Orient (every session, before anything else)
 
 - **Session-start routine** (existing project):
   1. Confirm the working directory, and look at `git log --oneline -10`.
   2. Read the docs listed in the next bullet.
-  3. Once M0 exists, run `scripts/init.sh` and `scripts/smoke.sh`. **If smoke fails, fixing it is the first task**, before any new work. A previous session may have left things broken.
+  3. Once M0 exists, run `scripts/init.sh` and `scripts/smoke.sh`. **If smoke fails, fixing it is the first task**, before any new work. A previous session may have left things broken. If the previous session had marked that work done, also log a `false-done` lesson (see Harness feedback below).
+  4. Make sure the project is in the registry `~/.swe-orchestrator/projects.tsv`, and mention a pending harness review if there is one ([references/harness-feedback.md](references/harness-feedback.md)).
 - If `docs/STATUS.md` exists, read it, then `docs/MODULES.md` (if present), `docs/ROADMAP.md`, the latest file in `docs/REVIEWS/`, and only the PRD sections you need. Resume from "Next action". Tell the owner in one or two sentences where things stand.
 - If it does not exist, this is a new project. **Set it up yourself.** The owner never has to run a script:
   1. **Check the folder.** If the current directory is the home directory or an unrelated existing codebase, propose a new project folder (e.g. `~/dev/<idea-slug>`), create it, and work there. In agents that can't change their working directory, ask the owner to reopen the agent in that folder.
@@ -36,6 +37,7 @@ The owner hands you a goal (an MVP or a full product vision). Your job is to del
   - mention it to the owner in one line
   - If the project has an old `docs/TRACEABILITY.md`, convert it to `docs/traceability.json` (template), keeping all IDs and statuses, then delete the old file.
   - If `scripts/init.sh`, `smoke.sh` or `check.sh` are missing, add them, plus the pre-commit hook, as the first task of the next milestone.
+  - If `docs/HARNESS-FEEDBACK.md` is missing, create it from the template.
   - If `docs/OWNER-TODO.md` is missing, create it from the template and move any owner tasks from STATUS or gate briefs into it. If there are no `gate-*-approved` git tags, tag the current committed state `baseline-<YYYY-MM-DD>` as a restore point.
 - If the owner left comments in a gate file (`docs/REVIEWS/gate-N.md` → "Owner feedback"), process them first. See [references/gates.md](references/gates.md).
 - Check `docs/OWNER-TODO.md` for tasks the owner has ticked, and verify each one works before marking it ✅.
@@ -114,9 +116,13 @@ User-facing requirements get Playwright end-to-end tests, and they're actually e
 - **Stuck detection and budget** ([references/stuck-and-budget.md](references/stuck-and-budget.md)): 3 failed attempts on the same failure → stop patching and change approach; 5 → mark it blocked, revert to green, move on. Never delete, skip or weaken a test to get green. A milestone at 2× its planned size stops for a scope check. Build and running budgets are set at Gate 2 and recorded in STATUS.
 - **Checkpoints and undo** ([references/checkpoints-and-undo.md](references/checkpoints-and-undo.md)): tag every approved gate (`gate-3-m2-approved`) and every milestone start. When the owner says "go back to Gate N", show what would be lost, get a yes, keep a backup branch, then restore code **and** docs together.
 
+## Harness feedback (improving the team itself)
+
+You are the one who sees where these skills fail. Log each lesson in `docs/HARNESS-FEEDBACK.md` **as it happens, without asking**: when the owner corrects you, a gate needs rework because of the process, you hit a stuck limit, something marked done turns out broken, an instruction was unclear or missing, or a step assumed a tool this agent lacks. When the owner says "log a lesson: …", write it down in their words. Before every gate brief, do a 2-minute retro and log what's worth fixing. Triggers, entry format and the retro questions: [references/harness-feedback.md](references/harness-feedback.md). A scheduled review (`swe-harness-review`) collects these from all projects and sends skill fixes to the owner for approval.
+
 ## Gates
 
-At each gate: write the brief to `docs/REVIEWS/gate-N[-milestone].md` using [references/gates.md](references/gates.md). Show the owner a short summary in chat, then **stop and wait**. Never skip a gate. Never continue past one without explicit approval ("approved", "go", "lgtm", or similar). On approval, commit and tag the checkpoint (`gate-<N>[-m<k>]-approved`). If the owner gives feedback instead, follow the change-request procedure in [references/gates.md](references/gates.md).
+At each gate: first do the harness retro above, then write the brief to `docs/REVIEWS/gate-N[-milestone].md` using [references/gates.md](references/gates.md). Show the owner a short summary in chat, then **stop and wait**. Never skip a gate. Never continue past one without explicit approval ("approved", "go", "lgtm", or similar). On approval, commit and tag the checkpoint (`gate-<N>[-m<k>]-approved`). If the owner gives feedback instead, follow the change-request procedure in [references/gates.md](references/gates.md).
 
 ## Decision policy (when you're unsure)
 

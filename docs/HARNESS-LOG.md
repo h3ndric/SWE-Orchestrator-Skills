@@ -1,6 +1,8 @@
 # Harness log: improving the team itself
 
-Best practice says to build a harness **in reaction to observed failures**, and to test it like code. When the orchestrator or a role misbehaves in a real project, record it here. Then fix the skill, or better, add a check.
+Best practice says to build a harness **in reaction to observed failures**, and to test it like code. Agents log lessons in each project's `docs/HARNESS-FEEDBACK.md`; the `swe-harness-review` skill (scheduled weekly by `scripts/harness-review.sh`) collects them, records each fix here, and sends it to the owner for approval. You can also add rows by hand.
+
+**This repo is public:** rows describe the harness failure in general terms. No project names, product details, code or personal data (refer to "Project A").
 
 | Date | Agent | Project / phase | What went wrong | Fix (skill edit / new check) | Commit |
 |------|-------|-----------------|-----------------|------------------------------|--------|

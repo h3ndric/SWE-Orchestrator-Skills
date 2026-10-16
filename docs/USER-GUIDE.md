@@ -31,7 +31,7 @@ That covers all 6 agents in one go. Plugin commands for installing into a single
 git clone https://github.com/h3ndric/SWE-Orchestrator-Skills.git ~/dev/SWE-Orchestrator-Skills
 cd ~/dev/SWE-Orchestrator-Skills
 ./install.sh            # installs into every agent it finds
-./install.sh status     # each folder should show 11/11
+./install.sh status     # each folder should show 12/12
 ```
 
 If you use **Kimi**, also run this once inside Kimi: `/plugins install https://github.com/obra/superpowers`
@@ -142,6 +142,7 @@ Ask for changes anytime: *"Add a weekly email report."* It treats this as a **ch
 | Switch to a different agent | Open the project in it and say `continue` |
 | See what it needs from you | `what do you need from me?` (or read `docs/OWNER-TODO.md`) |
 | Undo a milestone | `go back to how it was at gate 3`. It shows what would be lost and asks before doing anything |
+| Note something the team should do better | `log a lesson: <what went wrong>` |
 
 ## 5. Which agent to use when
 
@@ -177,6 +178,7 @@ You lose nothing. It re-reads its notes and checks the code before carrying on.
 | `docs/ARCHITECTURE.md`, `docs/adr/` | How it's built and why |
 | `docs/LAUNCH.md`, `docs/RUNBOOK.md` | The go-live checklist and how to operate it |
 | `docs/OWNER-TODO.md` | **Things only you can do**, with click-by-click steps |
+| `docs/HARNESS-FEEDBACK.md` | Lessons about the team's own process, collected by the harness review (section 9) |
 
 ## 8. Keeping the skills up to date
 
@@ -189,11 +191,29 @@ If you edit a skill yourself (e.g. your preferred technologies in `skills/swe-or
 
 ## 9. Making the team better over time
 
-When the team does something wrong, such as skipping a gate, asking you technical questions, or claiming something works when it doesn't:
-1. Tell it in the session, so it corrects course.
-2. Ask any agent: *"Add this to ~/dev/SWE-Orchestrator-Skills/docs/HARNESS-LOG.md and fix the skill so it doesn't happen again. Then commit and push."*
+The team improves itself from real mistakes, in three steps.
 
-That's how the skills get sharper with every project.
+**1. Lessons are logged automatically.** In every project, the agent writes to `docs/HARNESS-FEEDBACK.md` whenever the *process* goes wrong: you correct it, it gets stuck, something it called done turns out broken, or a skill's instructions didn't fit. It also does a short look-back before every gate. You can add your own any time: say **`log a lesson: <what went wrong>`**. (Just tell it in the session too, so it corrects course right away.)
+
+**2. A weekly review turns lessons into fixes.** It collects new lessons from all your projects, both folders on this computer and repos on GitHub. It groups repeated problems, drafts small fixes to the skills, and sends them to you for approval. It never changes the skills on its own.
+- **If this repo is on GitHub:** you get a pull request notification. Open it, read the plain-language summary, and click **Merge** to accept. As the owner you can merge without a second reviewer. Or ask any agent: *"review harness feedback"* to go through it with you.
+- **Without GitHub:** the fixes wait on a local branch with a report in `~/.swe-orchestrator/reports/`. The next time you start a project session, the agent mentions it. Open this repo in any agent and say *"review harness feedback"*.
+
+Fixes go live in every agent and every project as soon as you accept them.
+
+**3. Turn on the weekly schedule (once per computer):**
+
+```bash
+cd ~/dev/SWE-Orchestrator-Skills
+scripts/harness-review.sh schedule     # Linux, macOS, WSL (on WSL it uses Windows Task Scheduler)
+scripts/harness-review.sh status       # what it found, when it last ran
+scripts/harness-review.sh run --now    # run a review right now
+scripts/harness-review.sh unschedule   # turn it off
+```
+
+On Windows without WSL: `powershell -ExecutionPolicy Bypass -File scripts\harness-review.ps1 schedule` (same commands).
+
+It checks every day but only starts an agent once a week, and only if there are new lessons, so it costs nothing in quiet weeks. If your computer was off, it catches up at the next check. It uses Claude Code if installed, otherwise pi or Copilot; set `SWE_REVIEW_AGENT=pi` to use your local model instead. It looks for projects in `~/dev` and in every project the orchestrator has worked on. Set `SWE_PROJECT_ROOTS` if you keep projects elsewhere.
 
 ## 10. Troubleshooting
 

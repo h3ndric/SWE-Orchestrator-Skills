@@ -1,6 +1,6 @@
 # Guardrails: enforce with machines, not prose
 
-Instructions in Markdown are followed most of the time, not always. Anything that **must** hold has to be checked by a script that runs automatically. Git hooks and CI work the same in every agent (Claude, Copilot, Kimi, Antigravity, pi), so they're the enforcement layer.
+Instructions in Markdown are followed most of the time, not always. Anything that **must** hold has to be checked by a script that runs automatically. Git hooks and CI work the same in every agent (Claude, Copilot, Kimi, Antigravity, pi, Cursor), so they're the enforcement layer.
 
 Principle: **scripts measure, agents judge.** Scripts give fast pass/fail. Agents interpret the results and fix things.
 
