@@ -10,6 +10,7 @@ The owner is not a software engineer and has never worked through the full softw
 - Kimi Code
 - Antigravity
 - pi
+- Cursor
 
 Out of the box, these agents are good at writing code when told what to do. They are not good at owning a project: finding out what to build, designing it, testing it properly, securing it and launching it.
 
@@ -42,7 +43,7 @@ See [RESEARCH.md](RESEARCH.md). In summary, no existing project met G1, G2, G5 a
 ## 4. Architecture
 
 ```
-┌──────────────── any of: Claude · Copilot · Kimi · Antigravity · pi ───────────────┐
+┌─────────── any of: Claude · Copilot · Kimi · Antigravity · pi · Cursor ───────────┐
 │                                                                                   │
 │   swe-orchestrator  (tech lead: state machine, gates, decision policy)            │
 │        │ loads / dispatches as sub-agents                                         │
@@ -164,7 +165,7 @@ Skill folders:
 | Claude Code | `~/.claude/skills/` |
 | Copilot CLI | `~/.copilot/skills/` |
 | Antigravity | `~/.gemini/config/skills/` (CLI) and `~/.gemini/antigravity/skills/` (IDE) |
-| Kimi Code, pi | `~/.agents/skills/` |
+| Kimi Code, pi, Cursor | `~/.agents/skills/` |
 
 It never overwrites a file it didn't create.
 
@@ -177,6 +178,7 @@ Manifests let each agent install the repo straight from GitHub. Like superpowers
 | `.antigravity-plugin/plugin.json` | Antigravity |
 | `.kimi-plugin/plugin.json` | Kimi Code (includes the tool mapping: AskUserQuestion, Agent subagent types) |
 | `package.json` → `pi.skills` | pi |
+| `.cursor-plugin/plugin.json` | Cursor (for a Cursor Marketplace listing; local installs use `~/.agents/skills/`) |
 
 Use either the plugin route or the symlink route on a machine, not both, to avoid duplicate skills.
 
@@ -203,7 +205,7 @@ skills/
 | Frontmatter valid: name matches folder, description ≤ 1024 characters | ✅ all 10 |
 | `install.sh --dry-run`, then a real install, links skills into all 5 agents | ✅ |
 | superpowers installed: Claude, Copilot, Antigravity, pi | ✅. Kimi needs the manual `/plugins install` |
-| Discovery smoke test: each agent names `swe-orchestrator` and Step 0 | ✅ Claude, Copilot, Kimi, Antigravity, pi |
+| Discovery smoke test: each agent names `swe-orchestrator` and Step 0 | ✅ Claude, Copilot, Kimi, Antigravity, pi. ⬜ Cursor (added 2026-10-16, not installed on the dev machine) |
 | End-to-end: a real idea taken to Gate 1 → Gate 4 | ⬜ not yet run |
 | Resume across agents: stop in one agent, "continue" in another | ⬜ not yet run |
 

@@ -46,6 +46,7 @@ Research found that tasks needing more than about 4 handoffs between agents usua
 - **GitHub Copilot CLI:** use its sub-agent / delegate feature if available. Otherwise run the tasks in sequence.
 - **Kimi Code:** use agent profiles or sub-agents if available. Otherwise run in sequence.
 - **Antigravity:** use its agent manager / parallel agents if available.
+- **Cursor:** use its sub-agents if available. Otherwise run in sequence.
 - **pi:** typically single-agent. Run roles in sequence by loading each role skill in turn.
 
 Always verify sub-agent claims yourself: re-run the tests, and read the diff summary. Trust, but verify.

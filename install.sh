@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # SWE Orchestrator Skills installer
-# Installs the swe-* skills into Claude Code, GitHub Copilot CLI, Antigravity, Kimi Code and pi,
+# Installs the swe-* skills into Claude Code, GitHub Copilot CLI, Antigravity, Kimi Code, pi and Cursor,
 # plus the toolbox packs (obra/superpowers, addyosmani/agent-skills subset).
 #
 # Usage:
-#   ./install.sh [install] [--dry-run] [--skip-superpowers] [--skip-addy] [--agents=claude,copilot,antigravity,kimi,pi]
+#   ./install.sh [install] [--dry-run] [--skip-superpowers] [--skip-addy] [--agents=claude,copilot,antigravity,kimi,pi,cursor]
 #   ./install.sh init <project-dir> [--dry-run]     # scaffold docs/ + AGENTS.md in a project
 #   ./install.sh update [--dry-run]                  # git pull this repo, re-link skills, refresh toolbox packs
 #   ./install.sh status                              # show what is installed where
@@ -53,6 +53,7 @@ agent_present() {
     antigravity) command -v agy     >/dev/null 2>&1 || [[ -d "$HOME/.gemini" ]] ;;
     kimi)        [[ -n "$(kimi_bin)" ]] || [[ -d "$HOME/.kimi-code" ]] || [[ -d "$HOME/.kimi" ]] ;;
     pi)          command -v pi      >/dev/null 2>&1 || [[ -d "$HOME/.pi" ]] ;;
+    cursor)      command -v cursor  >/dev/null 2>&1 || command -v cursor-agent >/dev/null 2>&1 || [[ -d "$HOME/.cursor" ]] ;;
   esac
 }
 
@@ -61,17 +62,17 @@ agent_selected() {
   [[ ",$AGENTS_FILTER," == *",$1,"* ]]
 }
 
-# Global skill directories per agent (Kimi and pi share ~/.agents/skills)
+# Global skill directories per agent (Kimi, pi and Cursor share ~/.agents/skills)
 skill_dirs_for() {
   case "$1" in
     claude)      echo "$HOME/.claude/skills" ;;
     copilot)     echo "$HOME/.copilot/skills" ;;
     antigravity) echo "$HOME/.gemini/config/skills"; echo "$HOME/.gemini/antigravity/skills" ;;
-    kimi|pi)     echo "$HOME/.agents/skills" ;;
+    kimi|pi|cursor) echo "$HOME/.agents/skills" ;;
   esac
 }
 
-ALL_AGENTS=(claude copilot antigravity kimi pi)
+ALL_AGENTS=(claude copilot antigravity kimi pi cursor)
 ACTIVE_AGENTS=()
 for a in "${ALL_AGENTS[@]}"; do
   if agent_selected "$a" && agent_present "$a"; then ACTIVE_AGENTS+=("$a"); fi
@@ -151,6 +152,8 @@ install_superpowers() {
         fi ;;
       kimi)
         warn "kimi: plugin install is interactive. Inside Kimi Code run:  /plugins install https://github.com/obra/superpowers" ;;
+      cursor)
+        warn "cursor: plugin install is interactive. In Cursor Agent chat run:  /add-plugin superpowers" ;;
     esac
   done
 }
@@ -167,6 +170,7 @@ install_addy() {
       antigravity) args+=(-a antigravity) ;;
       kimi) args+=(-a kimi-code-cli) ;;
       pi) args+=(-a pi) ;;
+      cursor) args+=(-a cursor) ;;
     esac
   done
   for s in "${ADDY_SKILLS[@]}"; do args+=(-s "$s"); done

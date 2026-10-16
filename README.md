@@ -1,6 +1,6 @@
 # SWE Orchestrator Skills: hire an AI engineering team
 
-A skill pack that turns **Claude Code, GitHub Copilot CLI, Kimi Code, Antigravity, or pi** into an autonomous tech lead. It takes your idea from research and a requirements interview all the way to a tested, secured, production-ready product.
+A skill pack that turns **Claude Code, GitHub Copilot CLI, Kimi Code, Antigravity, pi, or Cursor** into an autonomous tech lead. It takes your idea from research and a requirements interview all the way to a tested, secured, production-ready product.
 
 **You** decide *what* and *why*. **It** decides *how*. You only review at 4 gates.
 
@@ -31,7 +31,7 @@ A skill pack that turns **Claude Code, GitHub Copilot CLI, Kimi Code, Antigravit
 
 > Install the skills from https://github.com/h3ndric/SWE-Orchestrator-Skills: clone it to ~/dev/SWE-Orchestrator-Skills and run its ./install.sh, then show me ./install.sh status.
 
-That one agent installs the team into **all 5** agents, along with the toolbox packs.
+That one agent installs the team into **all 6** agents, along with the toolbox packs.
 
 **Option B: install as a plugin, one agent at a time.** Type these inside each agent:
 
@@ -42,6 +42,7 @@ That one agent installs the team into **all 5** agents, along with the toolbox p
 | Antigravity | `agy plugin install https://github.com/h3ndric/SWE-Orchestrator-Skills` |
 | Kimi Code | `/plugins install https://github.com/h3ndric/SWE-Orchestrator-Skills` |
 | pi | `pi install git:github.com/h3ndric/SWE-Orchestrator-Skills` |
+| Cursor | Not needed: Cursor reads `~/.agents/skills/`, so Option A or C covers it. (A `.cursor-plugin/plugin.json` is included for a future Cursor Marketplace listing.) |
 
 Option B installs only the `swe-*` skills, not the toolbox packs. **Use one option per machine, not both**, or each skill will show up twice.
 
@@ -66,7 +67,7 @@ What it installs:
 
 The toolbox packs are optional. The `swe-*` skills fall back to their own guidance if they're missing. To skip them, use `--skip-superpowers` / `--skip-addy`. To target only some agents, use `--agents=claude,kimi`.
 
-**Kimi Code:** superpowers must be installed from inside Kimi with `/plugins install https://github.com/obra/superpowers`. The installer reminds you.
+**Kimi Code:** superpowers must be installed from inside Kimi with `/plugins install https://github.com/obra/superpowers`. **Cursor:** run `/add-plugin superpowers` in Cursor Agent chat. The installer reminds you.
 
 Where the skills go:
 
@@ -75,13 +76,13 @@ Where the skills go:
 | Claude Code | `~/.claude/skills/` |
 | GitHub Copilot CLI | `~/.copilot/skills/` |
 | Antigravity | `~/.gemini/config/skills/` (CLI) and `~/.gemini/antigravity/skills/` (IDE) |
-| Kimi Code, pi | `~/.agents/skills/` |
+| Kimi Code, pi, Cursor | `~/.agents/skills/` |
 
 ## Start a project
 
 ```bash
 mkdir -p ~/dev/my-ai-app && cd ~/dev/my-ai-app
-claude          # or: copilot / kimi / agy / pi
+claude          # or: copilot / kimi / agy / pi / cursor-agent (or open the folder in Cursor)
 ```
 
 Then say:
@@ -101,7 +102,7 @@ Everything lives in your project's `docs/` folder:
 - `STATUS.md` holds where things stand and the next action
 - `PRD.md`, `ARCHITECTURE.md`, `ROADMAP.md`, `traceability.json`, `adr/`, `REVIEWS/`
 
-Open the project in **any** of the 5 agents and say **"continue"**. It picks up where the last one stopped. A practical split: use Claude for discovery, architecture and reviews, and a cheaper agent for long build milestones.
+Open the project in **any** of the 6 agents and say **"continue"**. It picks up where the last one stopped. A practical split: use Claude for discovery, architecture and reviews, and a cheaper agent for long build milestones.
 
 ## How "built as specified" is enforced
 

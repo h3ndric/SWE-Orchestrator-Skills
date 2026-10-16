@@ -15,7 +15,7 @@ This guide is for the **owner**: the person with the idea. You don't need to kno
 
 ## 1. One-time setup on a new computer
 
-Prerequisites: git, Node.js (for `npx`), and at least one of these agents installed and logged in: Claude Code, Copilot CLI, Kimi Code, Antigravity, pi.
+Prerequisites: git, Node.js (for `npx`), and at least one of these agents installed and logged in: Claude Code, Copilot CLI, Kimi Code, Antigravity, pi, Cursor.
 
 **Why install first?** An agent can only use skills that are already in its skills folder. Until they're installed, it doesn't know the orchestrator exists. You do this once per computer, not once per project.
 
@@ -23,7 +23,7 @@ Prerequisites: git, Node.js (for `npx`), and at least one of these agents instal
 
 > Install the skills from https://github.com/h3ndric/SWE-Orchestrator-Skills: clone it to ~/dev/SWE-Orchestrator-Skills and run its ./install.sh, then show me ./install.sh status.
 
-That covers all 5 agents in one go. Plugin commands for installing into a single agent are in the README.
+That covers all 6 agents in one go. Plugin commands for installing into a single agent are in the README.
 
 **Or from the terminal:**
 
@@ -36,11 +36,13 @@ cd ~/dev/SWE-Orchestrator-Skills
 
 If you use **Kimi**, also run this once inside Kimi: `/plugins install https://github.com/obra/superpowers`
 
+If you use **Cursor**, also run this once in Cursor Agent chat: `/add-plugin superpowers`. Cursor must run where the skills were installed: on Windows with WSL, open the project through Cursor's WSL connection, or install from Windows too.
+
 ## 2. Start a new project
 
 ```bash
 mkdir -p ~/dev/my-app && cd ~/dev/my-app
-claude                  # or: copilot · kimi · agy · pi
+claude                  # or: copilot · kimi · agy · pi · cursor-agent (or open the folder in Cursor)
 ```
 
 No setup step is needed. On its first run the orchestrator creates the project files by itself:
@@ -133,9 +135,9 @@ Ask for changes anytime: *"Add a weekly email report."* It treats this as a **ch
 
 ## 5. Which agent to use when
 
-All 5 can run the whole thing. A practical split:
+All 6 can run the whole thing. A practical split:
 - **Claude Code:** Discovery, Architecture, reviews and gates, where reasoning quality matters most.
-- **Kimi / Copilot / pi / Antigravity:** long build milestones, if you want to spread cost or usage limits.
+- **Kimi / Copilot / pi / Antigravity / Cursor:** long build milestones, if you want to spread cost or usage limits.
 
 Because everything is in `docs/`, you can switch at any point.
 
