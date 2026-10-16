@@ -24,7 +24,7 @@ Don't log: the owner simply changing their mind, normal test failures fixed on t
 Append one entry per lesson to `docs/HARNESS-FEEDBACK.md`. Use the next `HF-` number, and never edit or delete earlier entries:
 
 ```markdown
-### HF-004 · 2026-10-16 · pi (qwen38-nvfp4) · Build M2
+### HF-004 · 2026-10-16 · pi (local model) · Build M2
 - **Trigger:** false-done
 - **What happened:** Marked REQ-012 pass after unit tests only; the page never loaded in a browser.
 - **Expected:** guardrails.md says user-facing REQs need a Playwright run before pass.

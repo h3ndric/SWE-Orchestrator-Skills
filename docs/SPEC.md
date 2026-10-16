@@ -4,7 +4,7 @@ Version 1.0 · 2026-10-10
 
 ## 1. Problem
 
-The owner is not a software engineer and has never worked through the full software lifecycle. They want to build serious AI software using the coding agents they already have:
+The target user ("the owner") is not a software engineer and hasn't worked through the full software lifecycle. They want to build serious AI software using coding agents they already have:
 - Claude Code
 - GitHub Copilot CLI
 - Kimi Code
@@ -211,8 +211,8 @@ skills/
 | Frontmatter valid: name matches folder, description ≤ 1024 characters | ✅ all 12 |
 | `install.sh --dry-run`, then a real install, links skills into all 5 agents | ✅ |
 | superpowers installed: Claude, Copilot, Antigravity, pi | ✅. Kimi needs the manual `/plugins install` |
-| Discovery smoke test: each agent names `swe-orchestrator` and Step 0 | ✅ Claude, Copilot, Kimi, Antigravity, pi. ⬜ Cursor (added 2026-10-16, not installed on the dev machine) |
-| Windows installers: `install.ps1` for all 6 agents (junctions; copy fallback from a WSL path; refresh; leaves foreign folders alone; `-Agents` filter; uninstall) and `install.sh` handing the Windows side to it | ✅ tested on Windows from WSL with temp home folders (2026-10-16). ⬜ with real Windows agent installs (none on the dev machine) and superpowers via Windows CLIs |
+| Discovery smoke test: each agent names `swe-orchestrator` and Step 0 | ✅ Claude, Copilot, Kimi, Antigravity, pi. ⬜ Cursor (added 2026-10-16, not yet tested in Cursor itself) |
+| Windows installers: `install.ps1` for all 6 agents (junctions; copy fallback from a WSL path; refresh; leaves foreign folders alone; `-Agents` filter; uninstall) and `install.sh` handing the Windows side to it | ✅ tested on Windows from WSL with temp home folders (2026-10-16). ⬜ with real Windows agent installs and superpowers via Windows CLIs |
 | Self-improvement loop: runners (due/no-change/dirty-repo/failure logic, cron, Windows Task Scheduler from WSL and native) | ✅ tested 2026-10-16 with a stand-in agent and test tasks |
 | End-to-end: a real idea taken to Gate 1 → Gate 4 | ⬜ not yet run |
 | Resume across agents: stop in one agent, "continue" in another | ⬜ not yet run |
@@ -224,5 +224,5 @@ skills/
   - run the end-to-end and cross-agent resume tests
   - tune the skills based on what happens
   - add `claude plugin eval` cases for the orchestrator's gate behavior
-  - after the pilot, adjusted by what it shows: a clickable prototype before building (Gate 1/2), a live preview link at every Gate 3, hard limits on live systems and money (production access needs owner approval), and a post-launch learning loop for the *product* (user feedback and success metrics feeding v2). The harness's own learning loop shipped in v1.0: HARNESS-FEEDBACK.md + `swe-harness-review`
+  - after the first real-project trial, adjusted by what it shows: a clickable prototype before building (Gate 1/2), a live preview link at every Gate 3, hard limits on live systems and money (production access needs owner approval), and a post-launch learning loop for the *product* (user feedback and success metrics feeding v2). The harness's own learning loop shipped in v1.0: HARNESS-FEEDBACK.md + `swe-harness-review`
 - **v1.2:** optional "lead + workers" mode, where the orchestrator dispatches build tasks to other agents' headless CLIs (`kimi -p`, `copilot -p`, `pi -p`).
