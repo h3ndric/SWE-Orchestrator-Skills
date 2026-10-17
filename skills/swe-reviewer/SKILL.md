@@ -21,7 +21,7 @@ Review against `swe-standards` at the project's rigor profile:
 Every finding cites a rule ID, e.g. `[CQ-06] empty catch swallows the DB error → …`. Confirm the milestone Definition of Done (§3).
 
 ## Review passes (in order)
-0. **Independent verification:** run `scripts/check.sh`, the test suite and `scripts/smoke.sh` yourself. Exercise the milestone's journey in a browser or with the e2e tests. Don't trust the implementer's reported results. Report which REQ/NFR/AIQ items you verified as passing.
+0. **Independent verification:** run `scripts/check.sh`, the test suite and `scripts/smoke.sh` yourself. Exercise the milestone's journey in a browser or with the e2e tests. Don't trust the implementer's reported results. (If your dispatch pastes a suite result from CI or a verification child on this same commit and says not to re-run it, use that instead.) Report which REQ/NFR/AIQ items you verified as passing.
 1. **Spec compliance:** for each REQ in the milestone, check every Given/When/Then.
    - Is it implemented?
    - Is there a test that actually asserts it, not just runs it?
@@ -72,4 +72,5 @@ Verdict: ✅ Approve | 🔁 Changes required
 - **Critical** means wrong behavior, a missing acceptance criterion, a security hole, data loss, or a broken build or test.
 - Don't nitpick style that a formatter or linter handles.
 - Every finding includes the location, why it matters, and how to fix it.
+- Before reporting a finding, open the file it cites. If the file or feature isn't in this repo, drop the finding, or list it under Minor as "outside this codebase". Never cite a path you haven't read.
 - Re-review after fixes. Only the critical and important items need re-checking.

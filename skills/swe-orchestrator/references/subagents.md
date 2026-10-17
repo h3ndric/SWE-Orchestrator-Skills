@@ -27,6 +27,23 @@ Report back (max 15 lines): what you did, files changed, test results (paste the
 summary line), anything left undone or risky.
 ```
 
+## Review and security children: pin the scope
+
+A review child told to "review this diff" wanders the repo and can time out; one given a short, pinned list finishes. Scope is the reliability knob, not the time limit. For every reviewer or security dispatch, add to the template:
+- **Files:** an explicit list of at most ~10 files. Split a bigger review into several children.
+- **Spec:** paste the relevant REQ criteria and plan extract into the prompt. "Don't go looking for other files."
+- **Tests:** say whether to run the suite. If the suite already ran on this commit (CI or a verification child), paste its summary line and say "do not re-run it".
+- **Answer cap:** findings only, at most ~40 lines.
+- **Where the report goes:** if the child can write files, give the path. If it is read-only, say "return the report in your reply; the orchestrator will write it to `<path>`". Then the review record says the child's report is reproduced and the dispositions are yours.
+
+If a child times out, retry once with a narrower scope. If it still fails, record the timeout in the review record. Never mark the module reviewed without a report.
+
+## Reading a child's results
+
+- **A child's findings exist only once you have read them**, from the file it wrote or the tool result it returned. Before you repeat, summarize or act on a delegated finding, name that file or tool result. If you can't, you haven't read it.
+- Async children often return only a stub at first. While a child is still running, say so and do work you can verify. Never narrate what its report "will say", and never write such numbers or claims into code, comments or docs.
+- Check that every file a finding cites exists in this repo. A finding about a file or feature that isn't here was pattern-matched from somewhere else: drop it, or log it as "outside this codebase".
+
 ## What to parallelize
 
 | Safe in parallel | Keep sequential |
