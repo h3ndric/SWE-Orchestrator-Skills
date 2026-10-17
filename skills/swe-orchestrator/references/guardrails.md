@@ -40,6 +40,10 @@ The agent that built something must not be the one that marks it `pass`. The ver
 - exercises the journey
 - only then reports the item as passing, which lets the orchestrator set `status: "pass"` and `verified_by` in `docs/traceability.json`
 
+## Verify your own writes
+
+A file-write tool can report success while the file on disk is unchanged. Before you build on a write to a tracked file that matters (a review record, STATUS, a plan), run `git diff --stat <path>` and confirm the change landed. Never stack an edit on top of an unverified write. If a write silently didn't land, retry with a different method (e.g. an edit, or a script that writes and reads back), and log it in `docs/HARNESS-FEEDBACK.md`.
+
 ## Parallel work isolation (when running several implementers)
 - Give each one its own git worktree, its own port (e.g. `PORT=30xx`), and its own database or schema.
 - A module claim in `docs/MODULES.md` must be held before starting. Never put two agents on one module.
