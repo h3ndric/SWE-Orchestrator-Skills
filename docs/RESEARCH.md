@@ -12,6 +12,7 @@ Question: is there an existing, well-reviewed orchestrator or SWE skill set that
 | [GSD / GSD Core](https://github.com/open-gsd/gsd-core) | ~64K (archived v1) / ~10K (Core) | A milestone loop: discuss → plan → execute → verify → ship | Claude, Copilot, Kimi, Antigravity, more | Semi-autonomous; its discuss step asks about implementation | Good build loop, limited production coverage |
 | [BMAD-METHOD](https://github.com/bmad-code-org/BMAD-METHOD) | ~47K | 12+ agile personas (Analyst, PM, Architect, SM, Dev, QA…) | Several | The user drives the personas. Token-heavy | Broad but heavyweight |
 | [oh-my-claudecode](https://github.com/yeachan-heo/oh-my-claudecode) | ~40K | Multi-agent orchestration; `/autopilot` goes from idea to tested code | Claude only (calls agy/Codex as helpers) | Fully autonomous, but with no review gates | No requirements sign-off or production readiness |
+| [ECC](https://github.com/affaan-m/ECC) (reviewed Oct 2026, v2.2.3) | ~287K | A large developer toolbox and runtime: 71 agents, 311 skills, 97 commands, hooks, memory, continuous learning, AgentShield scanner | Claude Code stable; Codex/Qoder native; Cursor, OpenCode, Copilot beta; Kimi, Antigravity, Pi minimal | Developer-driven commands; `orch-*` pipelines with two technical gates (approve plan, confirm commit) | Strong plan → TDD → review → commit; starts from an existing spec, no discovery interview or owner launch gate |
 
 ## Cross-agent compatibility
 
@@ -72,5 +73,11 @@ Nothing found combines all four requirements:
 - (d) support for all 5 agents
 
 **Decision:** build a thin custom orchestrator plus specialist roles, and reuse superpowers and part of addy's agent-skills as an optional toolbox. Spec-kit and BMAD were not adopted. Spec-kit overlaps superpowers, and BMAD's ceremony and token cost don't fit a non-engineer who only wants to review at gates.
+
+### ECC (reviewed October 2026)
+
+ECC is the most comprehensive *toolbox* found, but not a replacement for this project. It's built for developers who drive the agent with commands and approve each plan and commit. It doesn't find out what to build from a non-technical owner, and it doesn't run the lifecycle on its own behind a few plain-language gates. Installing it alongside these skills would add competing flows (`plan`, `code-review`, `orch-*` with their own gates). It would also add global hooks, which change agent behavior in every project, and a large context footprint, which hurts most on small local models where ECC's support is minimal. Its hook-based learning is Claude-Code-specific and has no approval step, while this project's lesson → reviewed-PR loop fits a public, multi-agent repo.
+
+Two ideas are worth borrowing if the pilot shows a need (see SPEC §13): **right-sizing** ceremony to the size of a change, and **AgentShield** (`ecc-agentshield`) as an optional scanner for AI-agent configs in the pre-launch security audit.
 
 Star counts are snapshots from public sources around late September and October 2026. They are popularity signals, not quality measures.

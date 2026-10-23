@@ -224,5 +224,8 @@ skills/
   - run the end-to-end and cross-agent resume tests
   - tune the skills based on what happens
   - add `claude plugin eval` cases for the orchestrator's gate behavior
+  - candidates borrowed from ECC (RESEARCH.md), only if the pilot shows a need:
+    - right-sizing: post-launch change requests get a lighter path by size (trivial / small / standard / large). Anything touching security or a public API counts as at least standard.
+    - an optional AgentShield (`ecc-agentshield`) scan in the pre-launch security audit when the product ships agent configs, hooks or MCP settings
   - after the first real-project trial, adjusted by what it shows: a clickable prototype before building (Gate 1/2), a live preview link at every Gate 3, hard limits on live systems and money (production access needs owner approval), and a post-launch learning loop for the *product* (user feedback and success metrics feeding v2). The harness's own learning loop shipped in v1.0: HARNESS-FEEDBACK.md + `swe-harness-review`
 - **v1.2:** optional "lead + workers" mode, where the orchestrator dispatches build tasks to other agents' headless CLIs (`kimi -p`, `copilot -p`, `pi -p`).
