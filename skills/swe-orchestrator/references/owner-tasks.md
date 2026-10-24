@@ -27,6 +27,10 @@ Use the template's format. Every task has:
 
 Before writing steps for a third-party site, **check its current docs or signup page.** Screens and plan names change, and wrong steps are worse than none. If you can't verify, say "the screen may look slightly different" and describe what to look for.
 
+- **Commands:** check that every command in the owner's steps exists on their machine (`command -v <cmd>`) before you promise it.
+- **Token scopes:** derive them from the exact API calls you'll make (your provisioning script), not from memory. A missing scope costs the owner another round trip.
+- **Anything billed:** right before creating a paid resource, ask one yes/no question that states the cost, even if an earlier task hand-back implied it. This is a business question, not a technical one.
+
 Prefer the options with the least risk to the owner:
 - free tiers first
 - spending limits or budget alerts turned on during setup
@@ -40,7 +44,9 @@ Chat transcripts are stored and may be sent to model providers. Treat anything p
 - **Local development:** tell the owner to open the project's `.env` file (create it from `.env.example` for them, with the variable name already present and empty), paste the value after the `=`, and save. Confirm `.env` is in `.gitignore` before asking.
 - **CI and hosting:** the owner pastes the value into the provider's dashboard (e.g. Vercel → Project → Settings → Environment Variables, or GitHub → repo → Settings → Secrets and variables → Actions). Give the exact path. Alternatively, have them run a command themselves that prompts for the value, such as `gh secret set NAME` (in Claude Code: type `! gh secret set NAME` so it runs in the session without the value ever reaching you).
 - **Verify without revealing.** Check that the variable is set and works, e.g. make one cheap API call or print only its length or first 4 characters. Never print, log or commit the full value.
-- **If a secret is pasted into chat or committed anyway:** say so plainly, treat it as compromised, add a task to rotate it (create a new key, delete the old one) and, if it was committed, remove it from git history. Do this before continuing.
+- **Keys you didn't ask for:** owners offer keys on their own, too. The standing rule at the top of OWNER-TODO covers any key: "paste it into `.env` and tell me its name".
+- **If a secret is pasted into chat or committed anyway:** say so plainly, and never repeat it back. Store it in `.env`, treat it as compromised, add a task to rotate it (create a new key, delete the old one) and, if it was committed, remove it from git history. Do this before continuing.
+- **If the owner can't rotate or restrict a credential** (e.g. a third party runs that system): first ask whether they *can*, before asking them to. If they can't, record the accepted risk in an ADR, and enforce least privilege in code instead: a gate script plus tests (see `guardrails.md` → Read-only access).
 
 ## 4. Follow up
 
