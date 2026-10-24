@@ -25,7 +25,7 @@ Use superpowers `writing-plans` if available. Otherwise, write `docs/plans/M<n>-
 ## Executing
 Use superpowers `subagent-driven-development` / `executing-plans` and `test-driven-development` if available. Otherwise, for each task:
 
-1. **Red:** write the test for the acceptance criterion (Given/When/Then maps to arrange/act/assert). Run it and **see it fail** for the right reason.
+1. **Red:** write the test for the acceptance criterion (Given/When/Then maps to arrange/act/assert). Run it and **see it fail** for the right reason. If the code under test connects to anything, make sure the red run can't reach a real system, including when it runs against an older version of the script (see `swe-orchestrator` → `references/guardrails.md` → Read-only access).
 2. **Green:** write the minimum code to pass. Run the test and see it pass.
 3. **Refactor:** clean up while it stays green. Run the whole suite plus lint and type-check.
 4. **Commit:** `<type>(<scope>): <summary> [REQ-xxx]`.
