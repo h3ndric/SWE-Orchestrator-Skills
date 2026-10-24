@@ -43,6 +43,7 @@ The checklist below is the fast per-milestone pass. The pre-launch audit covers 
 - **Dependencies:**
   - run `npm audit` / `pip-audit` / `uv pip audit` (or equivalent) and fix high and critical issues
   - new dependencies are popular and maintained, and not typo-squats
+- **Gates in front of live systems** (e.g. a read-only query wrapper): it's an allow-list, not a deny-list. Try to bypass it with Unicode whitespace, executable or optimizer comments, client commands (backslash) and stacked statements. Confirm its tests can't reach the real system.
 - **Errors:** no stack traces or internals shown to users. Errors are logged server-side.
 
 ## Pre-launch audit (Phase 5)

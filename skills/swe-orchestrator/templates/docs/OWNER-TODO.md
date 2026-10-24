@@ -2,7 +2,7 @@
 
 Your AI team can't create accounts, pay for things or accept terms for you. Everything it needs from you is listed here, earliest first. Each task has step-by-step instructions.
 
-**Never paste passwords or keys into the chat.** Each task tells you exactly where to put them instead.
+**Never paste passwords or keys into the chat.** Each task tells you exactly where to put them instead. For any other key or password, even one nobody asked for: paste it into the `.env` file in the project folder and tell the agent its name.
 
 When you finish a task, tick its box (`[x]`) or just tell the agent "done with task 1". It checks that it works before marking it ✅.
 

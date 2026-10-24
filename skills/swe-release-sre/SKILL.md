@@ -13,6 +13,7 @@ Apply `swe-standards` → `reliability-ops.md` (OPS-*) and `supply-chain.md` (SU
 ## M0: walking skeleton (deploy on day one)
 - Create a git repo and push it to GitHub. If no remote exists, ask the orchestrator to request it from the owner at the next gate. Meanwhile keep working locally.
 - CI (GitHub Actions by default): install → lint → type-check → test → build, on every push and PR. Cache dependencies.
+- CI fails fast or doesn't call out at all. A step that runs a tool with an optional network part (e.g. an eval judge that calls an LLM endpoint) runs it in offline mode, with the reason in a comment. Ask: "what does this step do with no route to the endpoint?" Watch the first run after adding a step: a duration that keeps growing without a verdict is a finding.
 - Deploy the minimal app to the target host from the architecture.
   - CD on merge to main, if the provider supports it.
   - If owner credentials are needed, list them under "Things only you can do" for the next gate. Don't block the rest.

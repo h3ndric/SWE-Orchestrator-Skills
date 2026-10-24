@@ -77,7 +77,7 @@ When a toolbox skill would stop to ask the owner a technical question (superpowe
 A whole project won't fit in one session's context. Treat the context window as a scratchpad that can be wiped at any moment, and treat `docs/` as the real memory.
 
 1. **Stay a thin coordinator.** Read `docs/STATUS.md` in full, but only the sections of the other docs you need right now: the REQs for this milestone, not the whole PRD. Don't read source files yourself when a sub-agent can do it and report back.
-2. **Delegate the heavy work.** Research, implementation, review and security run as sub-agents with fresh context whenever the harness supports them. Ask each one for a report of at most 15 lines, with details written to files: plans, review notes, eval reports.
+2. **Delegate the heavy work.** Research, implementation, review and security run as sub-agents with fresh context whenever the harness supports them. Ask each one for a report of at most 15 lines, with details written to files: plans, review notes, eval reports. Never repeat a child's findings until you have read its file or tool result (see [references/subagents.md](references/subagents.md) → Reading a child's results).
 3. **Checkpoint before you need to.** Update `docs/STATUS.md` after every completed task, not just every phase. Include the exact next step, e.g. "M2 task 4 of 9: write test for REQ-014". Commit code at each task. If the context is compressed or the session dies, nothing is lost.
 4. **Keep STATUS short.** Under about 60 lines, holding only the current state. Move finished history to `docs/STATUS-HISTORY.md`.
 5. **Session boundaries.**
