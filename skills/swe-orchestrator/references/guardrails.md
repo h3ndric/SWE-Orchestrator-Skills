@@ -16,6 +16,8 @@ Principle: **scripts measure, agents judge.** Scripts give fast pass/fail. Agent
 
 Record these commands in the project `AGENTS.md` → Commands.
 
+**One gate, not two.** The hook and `check.sh` must run the same tools at the same versions, or `check.sh` passes while the commit is refused. The simplest way: have `check.sh` call `pre-commit run --all-files` (or your hook tool's equivalent) instead of re-running each tool itself. When you bump a tool's dependency version, bump its hook pin in the same commit.
+
 ## Architecture boundaries as tests
 
 The module register (`docs/MODULES.md`) says which module may depend on which. Turn that into a check:
@@ -43,6 +45,8 @@ The agent that built something must not be the one that marks it `pass`. The ver
 ## Verify your own writes
 
 A file-write tool can report success while the file on disk is unchanged. Before you build on a write to a tracked file that matters (a review record, STATUS, a plan), run `git diff --stat <path>` and confirm the change landed. Never stack an edit on top of an unverified write. If a write silently didn't land, retry with a different method (e.g. an edit, or a script that writes and reads back), and log it in `docs/HARNESS-FEEDBACK.md`.
+
+The same goes for commits: a commit exists only once it appears in `git log`. If it doesn't, read the full hook output (no `-q`) before retrying. Never conclude the tree is clean from an exit status alone.
 
 ## Read-only access to the owner's live systems
 
