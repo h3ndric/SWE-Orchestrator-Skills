@@ -45,7 +45,9 @@ Use superpowers `subagent-driven-development` / `executing-plans` and `test-driv
   - after 3 failed attempts, stop and report with your evidence
 - **You never mark requirements `pass`.** Report what you believe is done. A separate verifier confirms it.
 - Run `scripts/check.sh` before every commit. Never bypass hooks (`--no-verify`). If a check is wrong, report it instead.
-- **Done means verified:** paste the actual test output summary. Never say "should work".
+- **Done means verified:** paste the actual test output summary. Never say "should work", and never say "ran locally" without the pasted output.
+- **Test the happy path through the real contract.** Every LLM or external-service path gets at least one test that goes through the production client (or the shared fake that runs its validation) and asserts that the content arrived, not only that a failure was handled.
+- **Run every check your kind of change can break,** not just `check.sh`. For example, a migration or a deploy/compose change also needs the rollback rehearsal. A branch that CI skips (say, one that needs a live endpoint) needs its documented command, and you must run it. Test fixtures for secrets include quotes, `$` and `#`, so parsing bugs show up.
 
 ## Report (to the orchestrator)
 - the module(s) touched (`MOD-NN`), with test pass/total per module
@@ -54,4 +56,5 @@ Use superpowers `subagent-driven-development` / `executing-plans` and `test-driv
 - commits
 - test summary line
 - REQs now passing
+- **paths I could not exercise** (e.g. ones that need a real external system or endpoint you may not touch): "built, not verified". The orchestrator runs these before marking the task done.
 - deviations and blockers

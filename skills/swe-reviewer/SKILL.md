@@ -40,6 +40,8 @@ Every finding cites a rule ID, e.g. `[CQ-06] empty catch swallows the DB error â
    - Do they cover edge and error cases from the criteria?
    - Do they all pass?
    - Are there tests that can never fail?
+   - For each new function: which test fails if it always returned failure or nothing? If none, the happy path is untested. That's important, or critical if it's the deliverable.
+   - For each branch CI skips: what command runs it, and is its output pasted? A claim like "ran locally" with no pasted result is a question, not a fact.
    - **Test tampering (critical if found):** check the diff for deleted, skipped or commented-out tests, weakened assertions, changed expected values, lowered coverage thresholds, disabled lint or type rules, and swallowed errors. Each one needs an explicit, REQ-cited justification in the commit message; otherwise it's a critical finding.
 4. **Architecture fit:** respects the module boundaries, uses the chosen stack and patterns, no secret new dependencies, config not hardcoded.
 5. **Simplicity and maintainability:**
