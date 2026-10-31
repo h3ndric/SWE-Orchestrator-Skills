@@ -82,6 +82,6 @@ Research found that tasks needing more than about 4 handoffs between agents usua
 - **Kimi Code:** use agent profiles or sub-agents if available. Otherwise run in sequence.
 - **Antigravity:** use its agent manager / parallel agents if available.
 - **Cursor:** use its sub-agents if available. Otherwise run in sequence.
-- **pi:** typically single-agent. Run roles in sequence by loading each role skill in turn.
+- **pi:** the role skills are not agent names: `agent: "swe-implementer"` fails with "Unknown agent". Map each role to a builtin agent: implement → `worker`, review → `reviewer`, security → `reviewer` with the security checklist in the brief, research → `researcher`. Put the role skill in the task text ("Read `<path>/swe-implementer/SKILL.md` and follow it"), never in `agent:`. List the available agents once per session before the first dispatch, and grep a workflow script for `agent: "swe-` before launching it. Without a sub-agent tool, run roles in sequence by loading each role skill in turn.
 
 Always verify sub-agent claims yourself: re-run the tests, and read the diff summary. Trust, but verify.

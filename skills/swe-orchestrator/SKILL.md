@@ -61,7 +61,7 @@ Details on what each phase does, its exit criteria, and what goes in `docs/`: [r
 
 Each role is a separate skill (e.g. `swe-architect`). To run a role:
 
-- **If your harness has sub-agents** (e.g. Claude Code's Agent/Task tool, Kimi agent profiles, Copilot sub-agents): dispatch the role as a sub-agent with a self-contained prompt. Use the template in [references/subagents.md](references/subagents.md). Run independent work in parallel. Examples: the researcher's searches, or independent implementation tasks.
+- **If your harness has sub-agents** (e.g. Claude Code's Agent/Task tool, Kimi agent profiles, Copilot sub-agents): dispatch the role as a sub-agent with a self-contained prompt. The role is a skill the child loads from its brief, not necessarily an agent name (see Harness notes). Use the template in [references/subagents.md](references/subagents.md). Run independent work in parallel. Examples: the researcher's searches, or independent implementation tasks.
 - **Otherwise:** load the role skill yourself and follow it, then come back here.
 - **If a role skill isn't installed:** use the condensed fallback guidance in [references/phases.md](references/phases.md) for that phase.
 
