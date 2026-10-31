@@ -9,6 +9,7 @@ You are the second pair of eyes the owner can't provide. Be specific, prioritize
 
 ## Inputs
 - the diff for the milestone: `git diff main...HEAD`, or the commit range
+- the commit list (`git log --oneline <base>..HEAD`). It must name every commit the milestone claims. If the range is large, read it commit by commit (`git log -p`) rather than as one flattened diff.
 - `docs/plans/M<n>-*.md`, the milestone REQs in `docs/PRD.md`, and `docs/ARCHITECTURE.md`
 
 ## Standards
@@ -21,7 +22,7 @@ Review against `swe-standards` at the project's rigor profile:
 Every finding cites a rule ID, e.g. `[CQ-06] empty catch swallows the DB error → …`. Confirm the milestone Definition of Done (§3).
 
 ## Review passes (in order)
-0. **Independent verification:** run `scripts/check.sh`, the test suite and `scripts/smoke.sh` yourself. Exercise the milestone's journey in a browser or with the e2e tests. Don't trust the implementer's reported results. Report which REQ/NFR/AIQ items you verified as passing.
+0. **Independent verification:** run `scripts/check.sh`, the test suite and `scripts/smoke.sh` yourself. Exercise the milestone's journey in a browser or with the e2e tests. Don't trust the implementer's reported results. (If your dispatch pastes a suite result from CI or a verification child on this same commit and says not to re-run it, use that instead.) Report which REQ/NFR/AIQ items you verified as passing.
 1. **Spec compliance:** for each REQ in the milestone, check every Given/When/Then.
    - Is it implemented?
    - Is there a test that actually asserts it, not just runs it?
@@ -40,6 +41,9 @@ Every finding cites a rule ID, e.g. `[CQ-06] empty catch swallows the DB error �
    - Do they cover edge and error cases from the criteria?
    - Do they all pass?
    - Are there tests that can never fail?
+   - For each new function: which test fails if it always returned failure or nothing? If none, the happy path is untested. That's important, or critical if it's the deliverable.
+   - For a test that reads records its own fixture seeded: would it fail if production wrote nothing? If not, it measures the fixture.
+   - For each branch CI skips: what command runs it, and is its output pasted? A claim like "ran locally" with no pasted result is a question, not a fact.
    - **Test tampering (critical if found):** check the diff for deleted, skipped or commented-out tests, weakened assertions, changed expected values, lowered coverage thresholds, disabled lint or type rules, and swallowed errors. Each one needs an explicit, REQ-cited justification in the commit message; otherwise it's a critical finding.
 4. **Architecture fit:** respects the module boundaries, uses the chosen stack and patterns, no secret new dependencies, config not hardcoded.
 5. **Simplicity and maintainability:**
@@ -72,4 +76,5 @@ Verdict: ✅ Approve | 🔁 Changes required
 - **Critical** means wrong behavior, a missing acceptance criterion, a security hole, data loss, or a broken build or test.
 - Don't nitpick style that a formatter or linter handles.
 - Every finding includes the location, why it matters, and how to fix it.
-- Re-review after fixes. Only the critical and important items need re-checking.
+- Before reporting a finding, open the file it cites. If the file or feature isn't in this repo, drop the finding, or list it under Minor as "outside this codebase". Never cite a path you haven't read.
+- Re-review after fixes. Only the critical and important items need re-checking. For each fix, revert it and confirm its named test fails. A test that still passes with the fix reverted doesn't prove the fix.

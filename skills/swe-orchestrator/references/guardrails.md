@@ -9,12 +9,14 @@ Principle: **scripts measure, agents judge.** Scripts give fast pass/fail. Agent
 | File | Purpose | Speed target |
 |---|---|---|
 | `scripts/init.sh` | Idempotent: install deps, prepare the env, start the app (dev server and DB), print the URL. Every session uses it, so no agent wastes time working out how to run the app. | < 1 min |
-| `scripts/smoke.sh` | Fast end-to-end check of the core journey on the running app: an HTTP check plus one Playwright happy path once a UI exists. Exit non-zero on failure. | < 1 min |
+| `scripts/smoke.sh` | Fast end-to-end check of the core journey on the running app: an HTTP check plus one Playwright happy path once a UI exists. Exit non-zero on failure. If the app isn't running, start it or print exactly what to start: preconditions belong in the output, not a comment. | < 1 min |
 | `scripts/check.sh` | Everything a commit must pass: format check, lint, type-check, unit tests, coverage threshold (`TST-04`), secret scan, SAST (semgrep), dependency audit (`SEC-11`, `SUP-03`). For UI, axe checks run in e2e (`A11Y-01`). | < 2 min |
 | git `pre-commit` hook | Runs the fast parts of `check.sh`: format, lint, secret scan on staged files. Install it via a tool (`lefthook`, `husky`, or `pre-commit`) whose config is committed, so it survives fresh clones. | seconds |
 | CI workflow | `check.sh`, the full test suite, the e2e suite, and the build. Merges to main require it to be green. | — |
 
 Record these commands in the project `AGENTS.md` → Commands.
+
+**One gate, not two.** The hook and `check.sh` must run the same tools at the same versions, or `check.sh` passes while the commit is refused. The simplest way: have `check.sh` call `pre-commit run --all-files` (or your hook tool's equivalent) instead of re-running each tool itself. When you bump a tool's dependency version, bump its hook pin in the same commit.
 
 ## Architecture boundaries as tests
 
@@ -39,6 +41,22 @@ The agent that built something must not be the one that marks it `pass`. The ver
 - re-runs the tests itself
 - exercises the journey
 - only then reports the item as passing, which lets the orchestrator set `status: "pass"` and `verified_by` in `docs/traceability.json`
+
+## Verify your own writes
+
+A file-write tool can report success while the file on disk is unchanged. Before you build on a write to a tracked file that matters (a review record, STATUS, a plan), run `git diff --stat <path>` and confirm the change landed. Never stack an edit on top of an unverified write. If a write silently didn't land, retry with a different method (e.g. an edit, or a script that writes and reads back), and log it in `docs/HARNESS-FEEDBACK.md`.
+
+The same goes for commits: a commit exists only once it appears in `git log`. If it doesn't, read the full hook output (no `-q`) before retrying. Never conclude the tree is clean from an exit status alone.
+
+Evidence must outlive its file. When a tech-debt row, gate brief or STATUS cites a report or run output, quote the relevant lines into the citing document: a later run can rewrite the file. Tools that write evidence name files so that another mode or run can't overwrite them (e.g. `<date>-judge.md` vs `<date>.md`).
+
+## Read-only access to the owner's live systems
+
+When the work has to query the owner's real database or business system (in Discovery or later):
+- **Set it up early:** one wrapper script that is the only way in, plus one permission rule in the agent's settings that allows that script. Give the owner plain steps for adding the rule.
+- **Allow-list, never deny-list.** The gate accepts ASCII only, one statement, a known first keyword (e.g. `SELECT`), and no client commands (no backslash). Add client-side hardening (e.g. `--binary-mode` for mysql) and use a read-only session or user where you can. Deny-lists of comment and keyword tricks keep getting bypassed: executable comments (`/*! */`), Unicode whitespace, client escape commands.
+- **Break it before trusting it.** Have a security child try to bypass the gate before anything relies on it. After 2 failed fixes of a security control, switch approach instead of patching again.
+- **Tests can't reach the real system.** The gate takes an env-file override from day one, and an override must win over the project's `.env`. Its tests name only TEST-NET addresses (`192.0.2.x`) or stubs, for every target the gate serves. Before a TDD "red" run against an older version of the script, check what that version connects to: it may ignore the override and use the real `.env`.
 
 ## Parallel work isolation (when running several implementers)
 - Give each one its own git worktree, its own port (e.g. `PORT=30xx`), and its own database or schema.

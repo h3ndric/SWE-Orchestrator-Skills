@@ -111,6 +111,7 @@ For milestone M:
    - Actually run the app and exercise the milestone's user journey in a browser, as a user would. Add or extend the Playwright e2e test for it.
    - Verification is done by the reviewer or a fresh-context verifier, **not the implementer**. Only then set items to `pass` in `docs/traceability.json`.
    - Run AI evals if the milestone touched AI.
+   - **Spec-coverage check** before the Gate 3 brief. A diff review can't see what was never written. Dispatch one fresh-context, read-only child per requirement group, with one question: "for each acceptance criterion, name the test whose assertions prove it, or say none." It judges assertions, not test names, and runs nothing. A criterion is `UNMET` until a named test asserts it.
    - Update `docs/traceability.json`.
 7. **Register:** update `docs/MODULES.md`:
    - status, test counts and the reviewed/security dates for each module touched

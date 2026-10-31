@@ -21,7 +21,7 @@ The owner hands you a goal (an MVP or a full product vision). Your job is to del
 - **Session-start routine** (existing project):
   1. Confirm the working directory, and look at `git log --oneline -10`.
   2. Read the docs listed in the next bullet.
-  3. Once M0 exists, run `scripts/init.sh` and `scripts/smoke.sh`. **If smoke fails, fixing it is the first task**, before any new work. A previous session may have left things broken. If the previous session had marked that work done, also log a `false-done` lesson (see Harness feedback below).
+  3. Once M0 exists, run `scripts/init.sh` and `scripts/smoke.sh`. Smoke needs the app running: if it fails, first check it was up (a stale STATUS note may say otherwise) before deciding the repo is broken. **If smoke really fails, fixing it is the first task**, before any new work. A previous session may have left things broken. If the previous session had marked that work done, also log a `false-done` lesson (see Harness feedback below).
   4. Make sure the project is in the registry `~/.swe-orchestrator/projects.tsv`, and mention a pending harness review if there is one ([references/harness-feedback.md](references/harness-feedback.md)).
 - If `docs/STATUS.md` exists, read it, then `docs/MODULES.md` (if present), `docs/ROADMAP.md`, the latest file in `docs/REVIEWS/`, and only the PRD sections you need. Resume from "Next action". Tell the owner in one or two sentences where things stand.
 - If it does not exist, this is a new project. **Set it up yourself.** The owner never has to run a script:
@@ -29,7 +29,7 @@ The owner hands you a goal (an MVP or a full product vision). Your job is to del
   2. **Copy everything** from this skill's [templates/](templates/) folder into the project root, keeping the structure. That's `AGENTS.md`, `CLAUDE.md` and `docs/…`. Never overwrite an existing file.
      - The templates sit next to this SKILL.md. Resolve the real path if the skill folder is a symlink, e.g. `cp -rn "$(dirname "$(readlink -f <path-to-this-SKILL.md>)")/templates/." .`
      - If you can't locate the folder, recreate the files from the template contents you can read.
-  3. If the folder isn't a git repository, run `git init`.
+  3. If the folder isn't a git repository, run `git init`. Before the first commit, make sure `git config user.name` and `user.email` are set, repo-local if needed. If the project will go to GitHub and `gh` is logged in, ask the owner whether commits should show their GitHub private address (`<id>+<login>@users.noreply.github.com`, from `gh api user`), and set it. GitHub can refuse pushes that expose a personal email, and pushed history can't be taken back.
   4. Fill in the project name and date in `docs/STATUS.md`, then start Phase 1.
 - **Upgrading an existing project:** if Architecture is already approved but `docs/MODULES.md` is missing, create it before continuing:
   - use the template plus `docs/ARCHITECTURE.md`, `docs/ROADMAP.md` and the actual code folders
@@ -61,7 +61,7 @@ Details on what each phase does, its exit criteria, and what goes in `docs/`: [r
 
 Each role is a separate skill (e.g. `swe-architect`). To run a role:
 
-- **If your harness has sub-agents** (e.g. Claude Code's Agent/Task tool, Kimi agent profiles, Copilot sub-agents): dispatch the role as a sub-agent with a self-contained prompt. Use the template in [references/subagents.md](references/subagents.md). Run independent work in parallel. Examples: the researcher's searches, or independent implementation tasks.
+- **If your harness has sub-agents** (e.g. Claude Code's Agent/Task tool, Kimi agent profiles, Copilot sub-agents): dispatch the role as a sub-agent with a self-contained prompt. The role is a skill the child loads from its brief, not necessarily an agent name (see Harness notes). Use the template in [references/subagents.md](references/subagents.md). Run independent work in parallel. Examples: the researcher's searches, or independent implementation tasks.
 - **Otherwise:** load the role skill yourself and follow it, then come back here.
 - **If a role skill isn't installed:** use the condensed fallback guidance in [references/phases.md](references/phases.md) for that phase.
 
@@ -77,8 +77,8 @@ When a toolbox skill would stop to ask the owner a technical question (superpowe
 A whole project won't fit in one session's context. Treat the context window as a scratchpad that can be wiped at any moment, and treat `docs/` as the real memory.
 
 1. **Stay a thin coordinator.** Read `docs/STATUS.md` in full, but only the sections of the other docs you need right now: the REQs for this milestone, not the whole PRD. Don't read source files yourself when a sub-agent can do it and report back.
-2. **Delegate the heavy work.** Research, implementation, review and security run as sub-agents with fresh context whenever the harness supports them. Ask each one for a report of at most 15 lines, with details written to files: plans, review notes, eval reports.
-3. **Checkpoint before you need to.** Update `docs/STATUS.md` after every completed task, not just every phase. Include the exact next step, e.g. "M2 task 4 of 9: write test for REQ-014". Commit code at each task. If the context is compressed or the session dies, nothing is lost.
+2. **Delegate the heavy work.** Research, implementation, review and security run as sub-agents with fresh context whenever the harness supports them. Ask each one for a report of at most 15 lines, with details written to files: plans, review notes, eval reports. Never repeat a child's findings until you have read its file or tool result (see [references/subagents.md](references/subagents.md) → Reading a child's results).
+3. **Checkpoint before you need to.** Update `docs/STATUS.md` after every completed task, not just every phase. Include the exact next step, e.g. "M2 task 4 of 9: write test for REQ-014". When you dispatch a fix round, list its open finding IDs in STATUS and tick them off as commits land, so a resume needs no archaeology. Commit code at each task. If the context is compressed or the session dies, nothing is lost.
 4. **Keep STATUS short.** Under about 60 lines, holding only the current state. Move finished history to `docs/STATUS-HISTORY.md`.
 5. **Session boundaries.**
    - Gates are natural restart points. After the owner approves a gate, recommend continuing in a fresh session (e.g. `/clear`, or a new chat), then saying "continue".
