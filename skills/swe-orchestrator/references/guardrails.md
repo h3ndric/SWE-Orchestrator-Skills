@@ -9,7 +9,7 @@ Principle: **scripts measure, agents judge.** Scripts give fast pass/fail. Agent
 | File | Purpose | Speed target |
 |---|---|---|
 | `scripts/init.sh` | Idempotent: install deps, prepare the env, start the app (dev server and DB), print the URL. Every session uses it, so no agent wastes time working out how to run the app. | < 1 min |
-| `scripts/smoke.sh` | Fast end-to-end check of the core journey on the running app: an HTTP check plus one Playwright happy path once a UI exists. Exit non-zero on failure. | < 1 min |
+| `scripts/smoke.sh` | Fast end-to-end check of the core journey on the running app: an HTTP check plus one Playwright happy path once a UI exists. Exit non-zero on failure. If the app isn't running, start it or print exactly what to start: preconditions belong in the output, not a comment. | < 1 min |
 | `scripts/check.sh` | Everything a commit must pass: format check, lint, type-check, unit tests, coverage threshold (`TST-04`), secret scan, SAST (semgrep), dependency audit (`SEC-11`, `SUP-03`). For UI, axe checks run in e2e (`A11Y-01`). | < 2 min |
 | git `pre-commit` hook | Runs the fast parts of `check.sh`: format, lint, secret scan on staged files. Install it via a tool (`lefthook`, `husky`, or `pre-commit`) whose config is committed, so it survives fresh clones. | seconds |
 | CI workflow | `check.sh`, the full test suite, the e2e suite, and the build. Merges to main require it to be green. | — |
@@ -47,6 +47,8 @@ The agent that built something must not be the one that marks it `pass`. The ver
 A file-write tool can report success while the file on disk is unchanged. Before you build on a write to a tracked file that matters (a review record, STATUS, a plan), run `git diff --stat <path>` and confirm the change landed. Never stack an edit on top of an unverified write. If a write silently didn't land, retry with a different method (e.g. an edit, or a script that writes and reads back), and log it in `docs/HARNESS-FEEDBACK.md`.
 
 The same goes for commits: a commit exists only once it appears in `git log`. If it doesn't, read the full hook output (no `-q`) before retrying. Never conclude the tree is clean from an exit status alone.
+
+Evidence must outlive its file. When a tech-debt row, gate brief or STATUS cites a report or run output, quote the relevant lines into the citing document: a later run can rewrite the file. Tools that write evidence name files so that another mode or run can't overwrite them (e.g. `<date>-judge.md` vs `<date>.md`).
 
 ## Read-only access to the owner's live systems
 
