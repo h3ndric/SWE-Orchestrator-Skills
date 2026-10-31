@@ -29,7 +29,7 @@ The owner hands you a goal (an MVP or a full product vision). Your job is to del
   2. **Copy everything** from this skill's [templates/](templates/) folder into the project root, keeping the structure. That's `AGENTS.md`, `CLAUDE.md` and `docs/…`. Never overwrite an existing file.
      - The templates sit next to this SKILL.md. Resolve the real path if the skill folder is a symlink, e.g. `cp -rn "$(dirname "$(readlink -f <path-to-this-SKILL.md>)")/templates/." .`
      - If you can't locate the folder, recreate the files from the template contents you can read.
-  3. If the folder isn't a git repository, run `git init`.
+  3. If the folder isn't a git repository, run `git init`. Before the first commit, make sure `git config user.name` and `user.email` are set, repo-local if needed. If the project will go to GitHub and `gh` is logged in, ask the owner whether commits should show their GitHub private address (`<id>+<login>@users.noreply.github.com`, from `gh api user`), and set it. GitHub can refuse pushes that expose a personal email, and pushed history can't be taken back.
   4. Fill in the project name and date in `docs/STATUS.md`, then start Phase 1.
 - **Upgrading an existing project:** if Architecture is already approved but `docs/MODULES.md` is missing, create it before continuing:
   - use the template plus `docs/ARCHITECTURE.md`, `docs/ROADMAP.md` and the actual code folders
