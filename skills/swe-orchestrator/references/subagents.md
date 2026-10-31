@@ -32,6 +32,10 @@ summary line), anything left undone or risky.
 
 **Size the brief, not the clock.** Children given a whole milestone task explore until they time out and leave nothing behind. Give one child one part: about one file plus its tests. Split bigger work into at most 3 numbered children, each ending in its own commit. If a check takes minutes, say how long, so the child runs it while it still has time.
 
+- **Aim for about 20 minutes of child work.** When in doubt, split a plan task at its checkboxes ("checkboxes 1–2 only; a second child does 3"). If the full `check.sh` takes minutes, the brief can say: run only your own test file before committing, and the orchestrator runs `check.sh` when it reviews your commits.
+- **Document children** (a plan, a report) name the file to create first, within ~5 tool calls, and re-save it after each section, so a timeout loses a section, not the whole file. List what *not* to read when STATUS or the plan already summarizes it.
+- **Deciding how to split a milestone into tasks is your job,** not a child's. Write the task list yourself. Children verify paths, migrations and test names against the real code, one section each.
+
 ## Review and security children: pin the scope
 
 A review child told to "review this diff" wanders the repo and can time out; one given a short, pinned list finishes. Scope is the reliability knob, not the time limit. For every reviewer or security dispatch, add to the template:
@@ -49,6 +53,8 @@ Tell the child: "If you run short of budget, report a partial verdict rather tha
 
 - **A background child dies with its session.** Don't end a session while one is running. In STATUS, phrase the next action as "run X; done when `<file>` exists", never "running as sub-agents". A claim in MODULES.md with no output file and no commits is stale: re-dispatch it.
 - **While a child shares your working tree, never use `git commit -a`.** Commit only the paths you changed (`git commit <paths>`), or give the child its own worktree.
+- **When a child returns, check its artifact first.** `ls` the promised file. A report without the artifact is a failure, not a summary.
+- **A timed-out child may have done most of the work.** Run `git status` and `git diff --stat` before anything else. Uncommitted files are an unreviewed pull request: review them as your own code, finish the rest (yourself, or one child for the missing part only), then commit. Never re-dispatch the same brief over the same files: it throws that work away.
 
 ## Reading a child's results
 
