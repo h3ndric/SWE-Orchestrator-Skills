@@ -42,7 +42,9 @@ Every finding cites a rule ID, e.g. `[CQ-06] empty catch swallows the DB error â
    - Are there tests that can never fail?
    - **Test tampering (critical if found):** check the diff for deleted, skipped or commented-out tests, weakened assertions, changed expected values, lowered coverage thresholds, disabled lint or type rules, and swallowed errors. Each one needs an explicit, REQ-cited justification in the commit message; otherwise it's a critical finding.
 4. **Architecture fit:** respects the module boundaries, uses the chosen stack and patterns, no secret new dependencies, config not hardcoded.
-5. **Simplicity and maintainability:**
+5. **Simplicity, scope and maintainability:**
+   - **Change fits the task:** is the diff size proportionate to the plan? Unrelated edits (reformatting, renames, "improvements" to untouched code, deleted comments) and unrequested features, options or abstractions are **important** findings, not style nits. Ask for them to be reverted or removed.
+   - **Assumptions:** are the plan's assumptions recorded, and still sensible? A silent guess that changed behaviour the PRD didn't specify is an important finding.
    - duplication
    - dead code
    - over-engineering

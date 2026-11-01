@@ -16,6 +16,7 @@ Use superpowers `writing-plans` if available. Otherwise, write `docs/plans/M<n>-
 - goal, REQ IDs, and the demo scenario
 - tasks of about 2–15 minutes each. For every task:
   - the files to create or modify
+  - **assumptions:** anything the PRD, architecture or code doesn't settle, with the choice you made. When unsure, pick the simplest option that's easy to undo. Never guess silently, and don't ask the owner: technical calls are the team's
   - the failing test to write first, named with its REQ ID
   - the minimal implementation
   - the exact verification command
@@ -27,14 +28,16 @@ Use superpowers `subagent-driven-development` / `executing-plans` and `test-driv
 
 1. **Red:** write the test for the acceptance criterion (Given/When/Then maps to arrange/act/assert). Run it and **see it fail** for the right reason.
 2. **Green:** write the minimum code to pass. Run the test and see it pass.
-3. **Refactor:** clean up while it stays green. Run the whole suite plus lint and type-check.
+3. **Refactor:** clean up **the code you wrote in this task** while it stays green. Run the whole suite plus lint and type-check.
 4. **Commit:** `<type>(<scope>): <summary> [REQ-xxx]`.
 
 ## Rules
 - **Standards:** follow `swe-standards` → `code-quality.md` (CQ-*), `testing.md` (TST-*) and, for UI, `accessibility-ux.md` (A11Y-*, UX-*), at the project's rigor profile (see AGENTS.md). Meet the task Definition of Done (`swe-standards` §3).
 - **Tests reference REQ IDs**, e.g. `it("REQ-012: rejects files over 20MB", …)` or `def test_req_012_rejects_large_files():`.
 - **Never cheat to get green:** no deleting, skipping or weakening tests, assertions, thresholds or lint rules. After 3 failed attempts on the same failure, stop and change approach or report back (see `swe-orchestrator` → `references/stuck-and-budget.md`).
-- Stay in scope: only the task's files. If you discover needed work outside it, note it and report it. Don't sprawl.
+- **Think before coding.** Read the task, its REQs and the code it touches, then check the plan's assumptions still hold. If one doesn't, record the new choice in the plan and your report. Don't push on with a guess.
+- **Simplicity first: the least code that meets the acceptance criteria.** No features, options, settings or error handling for cases nobody asked for. No abstraction (interface, factory, config layer, generic helper) used in only one place, except where the architecture requires it (e.g. external services behind interfaces). If 50 lines would do, don't write 200.
+- **Surgical changes.** Stay in scope: only the task's files, and within them only the lines the task needs. Don't reformat, rename, reorder or "improve" neighbouring code, and don't delete comments or code you don't fully understand. Remove only the leftovers your own change created (unused imports, dead branches). Every changed line should trace back to the task. If you spot other needed work, note it in your report (or `docs/TECH-DEBT.md`). Don't sprawl.
 - Follow the architecture. If it seems wrong, stop and report to the orchestrator. Don't silently diverge. The orchestrator decides and writes an ADR.
 - Read the existing code before writing new code, and reuse its utilities and patterns.
 - **External services:** put them behind interfaces, and use fakes in unit tests. Use real calls only in integration tests or evals.
@@ -54,4 +57,5 @@ Use superpowers `subagent-driven-development` / `executing-plans` and `test-driv
 - commits
 - test summary line
 - REQs now passing
+- assumptions made or changed
 - deviations and blockers

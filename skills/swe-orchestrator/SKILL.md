@@ -72,6 +72,17 @@ Toolbox skills you should use when installed (they're optional, and you degrade 
 
 When a toolbox skill would stop to ask the owner a technical question (superpowers' brainstorming does this, for example), **you answer it yourself** as tech lead, based on the PRD and the architecture. Only gate-level questions go to the owner.
 
+## Build lean: plan first, minimal and surgical code
+
+AI coders tend to guess silently, over-build and edit code they weren't asked to touch. Hold the build team to four rules (after Andrej Karpathy's observations on LLM coding):
+
+1. **Think before coding.** Every milestone has a written plan before any code. Each task lists its assumptions. You check the plan before the build starts: every task traces to a milestone REQ, and nothing extra is planned. Unclear technical points are decided by the team (simplest reversible option, recorded in the plan or an ADR), never silently guessed and never asked of the owner.
+2. **Simplicity first.** The least code that meets the acceptance criteria. No speculative features, options or single-use abstractions.
+3. **Surgical changes.** Each task touches only the lines it needs. Clean-ups of other code go to `docs/TECH-DEBT.md` and are scheduled on purpose, not slipped in.
+4. **Goal-driven.** Success is defined up front (REQ acceptance criteria, a failing test first, a verification command) and proven with evidence before anything is called done.
+
+`swe-implementer` applies these and `swe-reviewer` enforces them: unrequested features and unrelated edits are important findings.
+
 ## Context management (long projects outlive one context window)
 
 A whole project won't fit in one session's context. Treat the context window as a scratchpad that can be wiped at any moment, and treat `docs/` as the real memory.

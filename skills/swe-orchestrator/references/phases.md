@@ -96,8 +96,10 @@ For milestone M:
 
 1. **Plan:** write `docs/plans/M<n>-<slug>.md`. Make it a bite-sized task list where each task has:
    - the files involved
+   - its assumptions (choices the PRD and architecture don't settle)
    - the test to write first
    - the verification command
+   - Before building, check the plan as tech lead: every task traces to a milestone REQ, nothing extra is planned, and each task is the smallest that meets its criteria.
    - Use superpowers `writing-plans` if available.
    - Record the plan's size (task count and expected sessions) in STATUS → Budget.
 2. **Branch:** tag `m<n>-start` on main, then create `m<n>-<slug>`. Use superpowers `using-git-worktrees` if available.

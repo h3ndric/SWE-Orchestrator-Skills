@@ -42,12 +42,14 @@ These come from Anthropic's long-running-agent harness, OpenAI's harness enginee
 | Garbage collection: recurring doc-drift and tech-debt sweeps | OpenAI | Doc gardening in every increment review, plus `docs/TECH-DEBT.md` |
 | Build the harness in reaction to failures, and test it like code | Survey, OpenAI | `docs/HARNESS-LOG.md` plus planned harness evals |
 | Fewer, shorter instructions; context is finite | Survey (ETH Zurich), OpenAI | Progressive disclosure: short SKILL.md files, with details in `references/` |
+| Think before coding, simplicity first, surgical changes, goal-driven execution (LLM coders guess silently, over-build and edit code they weren't asked to touch) | Andrej Karpathy's observations, as condensed by the community (`forrestchang/andrej-karpathy-skills`) | "Build lean" rules in swe-orchestrator; per-task assumptions in plans; minimal and surgical rules in swe-implementer; scope-fit check in swe-reviewer. Adapted: unclear points are decided and recorded by the team, not asked of the non-technical owner |
 
 Sources:
 - [Anthropic: Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
 - [OpenAI harness engineering (mirror)](https://github.com/celesteanders/harness/blob/main/docs/research/260211_openai_harness_engineering_codex.md)
 - [The State of AI Harness Engineering 2026 (marmelab)](https://marmelab.com/blog/2026/09/24/the-state-of-ai-harness-engineering-2026.html)
 - [Context engineering guide (latitude)](https://latitude.so/blog/context-engineering-guide-coding-agents)
+- [forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills)
 
 ## Standards embedded in `swe-standards`
 
