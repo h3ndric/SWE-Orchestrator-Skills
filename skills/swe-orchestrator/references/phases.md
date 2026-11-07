@@ -9,7 +9,7 @@ Each phase also ends with a short **fallback** section. Use it when the role ski
 
 **Goal:** know exactly what to build and why, precisely enough that "done" is testable.
 
-1. **Research** (`swe-researcher`). This runs *before* the first question to the owner. Wait for the owner's initial idea message first, or ask for it in one line if it's empty.
+1. **Research** (`swe-researcher`). This runs *before* the first question to the owner. Wait for the owner's initial idea message first, or ask for it in one line if it's empty. If STATUS lists Discovery inputs (the owner's own documents or data), read those first.
    - Output: `docs/discovery/RESEARCH.md`, covering competitors and alternatives, user pain points, common features (table stakes vs differentiators), feasibility, AI options and rough costs.
 2. **Interview** (`swe-business-analyst`). Ask one question at a time, multiple-choice with a recommendation, informed by the research.
    - Output: `docs/discovery/INTERVIEW.md`, a running Q&A log, plus a final "Here's what I heard" playback the owner confirms.

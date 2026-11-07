@@ -31,6 +31,7 @@ The owner hands you a goal (an MVP or a full product vision). Your job is to del
      - If you can't locate the folder, recreate the files from the template contents you can read.
   3. If the folder isn't a git repository, run `git init`. Before the first commit, make sure `git config user.name` and `user.email` are set, repo-local if needed. If the project will go to GitHub and `gh` is logged in, ask the owner whether commits should show their GitHub private address (`<id>+<login>@users.noreply.github.com`, from `gh api user`), and set it. GitHub can refuse pushes that expose a personal email, and pushed history can't be taken back.
   4. Fill in the project name and date in `docs/STATUS.md`, then start Phase 1.
+  - **The owner already has material** (spec documents, notes, data, earlier feedback) but there's no STATUS: put it in `docs/discovery/inputs/` (or list where it lives) and record it in STATUS as Discovery inputs. Research reads it first, and the interview skips questions it already answers.
 - **Upgrading an existing project:** if Architecture is already approved but `docs/MODULES.md` is missing, create it before continuing:
   - use the template plus `docs/ARCHITECTURE.md`, `docs/ROADMAP.md` and the actual code folders
   - set statuses from the real state: run the tests and check `git log`

@@ -13,6 +13,7 @@ All of them live in `docs/OWNER-TODO.md` (template). It's the single list the ow
   - a mock LLM client
   
   Only the step that really needs the real service waits.
+- **Only what only the owner can do:** accounts, money, keys, legal acceptance, business judgement. Before adding a task, ask: could the team draft this from material it already has (loaded documents, data, the interview)? If so, draft it and make the owner task a short review ("spot-check these 10 answers"), not a blank assignment. Re-check open owner tasks against this at each gate.
 - Add a task the moment you discover it. Update the "Blockers / needs from owner" line in STATUS to point at it.
 
 ## 2. Write each task so a non-engineer can finish it alone
@@ -27,7 +28,8 @@ Use the template's format. Every task has:
 
 Before writing steps for a third-party site, **check its current docs or signup page.** Screens and plan names change, and wrong steps are worse than none. If you can't verify, say "the screen may look slightly different" and describe what to look for.
 
-- **Commands:** check that every command in the owner's steps exists on their machine (`command -v <cmd>`) before you promise it.
+- **Commands:** check that every command in the owner's steps exists on their machine (`command -v <cmd>`) before you promise it. A step that needs a password (`sudo`) says "open a separate terminal window": commands run from inside the agent (e.g. Claude Code's `!`) can't prompt for one.
+- **`.env` keys:** a task that names an `.env` variable ships with that variable already in `.env.example`. Whoever writes the task, a child included, may edit `.env.example`.
 - **Token scopes:** derive them from the exact API calls you'll make (your provisioning script), not from memory. A missing scope costs the owner another round trip.
 - **Anything billed:** right before creating a paid resource, ask one yes/no question that states the cost, even if an earlier task hand-back implied it. This is a business question, not a technical one.
 
