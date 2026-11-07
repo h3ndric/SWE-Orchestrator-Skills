@@ -24,7 +24,9 @@ Constraints:
 - Make your first file write within your first ~8 tool calls; read more only as you need it.
 - Commit the failing test before you run new tests, then commit the code, so a timeout
   leaves a checkpoint. A failing command is something to fix, not a reason to stop.
-- Commit your work with message "<type>(<scope>): <summary> [REQ-xxx]".
+- Commit your work with message "<type>(<scope>): <summary> [REQ-xxx]". In a fix round,
+  commit after each finding once its tests pass; never leave finished fixes uncommitted.
+- Reviewers: write findings to the report path before replying.
 
 Report back (max 15 lines): what you did, files changed, test results (paste the
 summary line), anything left undone or risky.
@@ -55,6 +57,7 @@ Tell the child: "If you run short of budget, report a partial verdict rather tha
 - **One writer per checkout.** Two writing children never share a checkout: give each its own worktree, or run them one after another. A read-only reviewer may run alongside one writer. "One file each" in a brief is not a lock: children owning tests in the same test module or fixture serialize, or one child is named the fixture's only writer and the others call only what exists at dispatch time.
 - **While a child shares your working tree, commit by explicit path:** `git commit -- docs/STATUS.md docs/MODULES.md`. Never `git add <dir>`, `-a` or `-am`: they sweep in the child's unfinished files. Never `--amend` a commit unless you just made it for that purpose; make a new commit.
 - **A worktree isolates files, not state.** Before starting parallel work, yours included (a background `check.sh` plus a foreground test run), list the shared state: test databases, compose services, ports, the model server, fixture seeds. Give each job its own copy, or run them in sequence. A long measurement (an eval run) gets that state to itself.
+- **Merge a worktree child's branch as soon as it finishes,** and record the commit in STATUS. Run the merge on its own and check its result before any cleanup: never chain `worktree remove` or `branch -D` after it with `&&`, and don't pipe a merge or cherry-pick into `tail`, which hides its exit code.
 - **When a child returns, check its artifact first.** `ls` the promised file. A report without the artifact is a failure, not a summary.
 - **A timed-out child may have done most of the work.** Run `git status` and `git diff --stat` before anything else. Uncommitted files are an unreviewed pull request: review them as your own code, finish the rest (yourself, or one child for the missing part only), then commit. Never re-dispatch the same brief over the same files: it throws that work away.
 
