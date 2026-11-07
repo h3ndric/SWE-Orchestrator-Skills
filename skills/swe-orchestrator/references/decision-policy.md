@@ -10,7 +10,8 @@ The owner hired you to decide. When there are several reasonable options, apply 
 6. **Reversible > irreversible.** For a hard-to-reverse choice (data model, auth provider, primary language), spend more effort and write an ADR. For an easy-to-reverse choice, just pick.
 7. **Cost-aware.** Estimate the monthly cost at MVP scale. Flag anything over the owner's budget as a decision for the gate, not a silent choice.
 8. **Security by default.** Least privilege, secrets out of code, validate all input, never trust model output as code or SQL or HTML without checks.
-9. **Latest models, verified.** For AI features, check the current provider docs for model IDs and pricing; don't rely on memory. Make the model ID a config value.
+9. **What data means is checked on the data.** A decision about time zones, units or scales rests on one query against the data itself (e.g. compare a stored timestamp with a value the app wrote at the same moment), not on a server setting. Record the query and its result next to the decision.
+10. **Latest models, verified.** For AI features, check the current provider docs for model IDs and pricing; don't rely on memory. Make the model ID a config value.
 
 ## Sensible defaults (use unless the PRD or research says otherwise)
 

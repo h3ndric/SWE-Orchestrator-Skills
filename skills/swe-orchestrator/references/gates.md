@@ -8,6 +8,7 @@ The owner is not technical. A gate brief must be readable in **under 3 minutes**
 - In chat: a 5–10 line summary plus the file path. Then **stop**. Do not start the next phase in the same turn.
 - Lead with what the owner cares about: what it does for users, what it costs, what's risky, and what you need from them.
 - Put technical detail in the linked docs, not in the brief.
+- **Every number states its period and source,** and sits only next to numbers of the same period. A figure copied from a plan or an earlier fact is re-run for the period the brief shows. Before sending, list each number and the query or doc it came from.
 - Always end with the exact options: **Approve** / **Approve with changes (list them)** / **Rethink (say what's wrong)**.
 
 ## Brief template
