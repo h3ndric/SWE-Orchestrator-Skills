@@ -52,7 +52,9 @@ Tell the child: "If you run short of budget, report a partial verdict rather tha
 ## While children run
 
 - **A background child dies with its session.** Don't end a session while one is running. In STATUS, phrase the next action as "run X; done when `<file>` exists", never "running as sub-agents". A claim in MODULES.md with no output file and no commits is stale: re-dispatch it.
-- **While a child shares your working tree, never use `git commit -a`.** Commit only the paths you changed (`git commit <paths>`), or give the child its own worktree.
+- **One writer per checkout.** Two writing children never share a checkout: give each its own worktree, or run them one after another. A read-only reviewer may run alongside one writer. "One file each" in a brief is not a lock: children owning tests in the same test module or fixture serialize, or one child is named the fixture's only writer and the others call only what exists at dispatch time.
+- **While a child shares your working tree, commit by explicit path:** `git commit -- docs/STATUS.md docs/MODULES.md`. Never `git add <dir>`, `-a` or `-am`: they sweep in the child's unfinished files. Never `--amend` a commit unless you just made it for that purpose; make a new commit.
+- **A worktree isolates files, not state.** Before starting parallel work, yours included (a background `check.sh` plus a foreground test run), list the shared state: test databases, compose services, ports, the model server, fixture seeds. Give each job its own copy, or run them in sequence. A long measurement (an eval run) gets that state to itself.
 - **When a child returns, check its artifact first.** `ls` the promised file. A report without the artifact is a failure, not a summary.
 - **A timed-out child may have done most of the work.** Run `git status` and `git diff --stat` before anything else. Uncommitted files are an unreviewed pull request: review them as your own code, finish the rest (yourself, or one child for the missing part only), then commit. Never re-dispatch the same brief over the same files: it throws that work away.
 
@@ -67,7 +69,7 @@ Tell the child: "If you run short of budget, report a partial verdict rather tha
 | Safe in parallel | Keep sequential |
 |---|---|
 | Researcher web searches on different topics | Interview (one owner, one question at a time) |
-| Implementation tasks touching disjoint files | Tasks touching the same files or the DB schema |
+| Implementation tasks touching disjoint files, each in its own worktree | Tasks touching the same files (a shared test module or fixture counts), the DB schema, or a shared database or service |
 | Reviewer + security review of the same diff | Merge → deploy |
 | Writing tests for separate modules | Architecture decisions that depend on each other |
 

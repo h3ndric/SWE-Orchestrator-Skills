@@ -59,8 +59,10 @@ When the work has to query the owner's real database or business system (in Disc
 - **Tests can't reach the real system.** The gate takes an env-file override from day one, and an override must win over the project's `.env`. Its tests name only TEST-NET addresses (`192.0.2.x`) or stubs, for every target the gate serves. Before a TDD "red" run against an older version of the script, check what that version connects to: it may ignore the override and use the real `.env`.
 
 ## Parallel work isolation (when running several implementers)
-- Give each one its own git worktree, its own port (e.g. `PORT=30xx`), and its own database or schema.
+- Give each one its own git worktree, its own port (e.g. `PORT=30xx`), and its own database or schema. A worktree alone shares the database and services.
 - A module claim in `docs/MODULES.md` must be held before starting. Never put two agents on one module.
+- **Check:** `check.sh` takes a lock before its database tests (e.g. `flock -n` on a file named after the test database) and refuses to start while another run holds it, saying which. The pre-commit hook lints staged files only, so one agent's half-written files don't block another's commit.
+- Stop your own background jobs by job id or saved PID, never `pkill -f <pattern>`: a pattern also matches other projects' processes and the shell running the command.
 
 ## Turning failures into checks
 
