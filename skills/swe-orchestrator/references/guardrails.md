@@ -18,6 +18,10 @@ Record these commands in the project `AGENTS.md` → Commands.
 
 **One gate, not two.** The hook and `check.sh` must run the same tools at the same versions, or `check.sh` passes while the commit is refused. The simplest way: have `check.sh` call `pre-commit run --all-files` (or your hook tool's equivalent) instead of re-running each tool itself. When you bump a tool's dependency version, bump its hook pin in the same commit.
 
+**The whole-tree `check.sh` is the last step before any milestone or task commit,** never a targeted test run: a run of one file stays silent about leftovers elsewhere (debug prints, scratch helpers).
+
+**A check must prove it measured something.** When a fix touches a measurement (an eval, a gate, a smoke test), its test asserts the evidence that the measurement happened (e.g. which model answered, the case count, the call count), not only that the reported symptom is gone. Ask: "how could this run pass while measuring nothing?"
+
 ## Architecture boundaries as tests
 
 The module register (`docs/MODULES.md`) says which module may depend on which. Turn that into a check:

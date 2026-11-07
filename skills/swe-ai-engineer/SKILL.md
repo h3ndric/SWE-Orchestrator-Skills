@@ -44,6 +44,8 @@ For each AI capability (AIQ IDs in the PRD), decide:
 ## 2. Evals (the AI test suite)
 
 - **Golden set:** `evals/<capability>/cases.jsonl`, built from the interview examples plus edge cases (empty, huge, adversarial, off-topic, other languages). Start with ≥ 10 cases per AIQ; grow to 30–50 before launch.
+- **Shapes that can break each AIQ:** for each AIQ, list the data shapes that could break it (e.g. a multi-page document stored as one chunk, tables, mixed languages). Give each a fixture in the first retrieval or answer-path task, not after the model adapter. Fakes shaped like the happy path hide these.
+- **One real question early:** as soon as the answer path exists, run one end-to-end question against a real model, even before the eval suite is complete.
 - **Scoring:**
   - deterministic checks first: schema-valid, contains or excludes, citation exists in the source
   - then an LLM-as-judge with a written rubric derived from the AIQ "good vs bad" examples
