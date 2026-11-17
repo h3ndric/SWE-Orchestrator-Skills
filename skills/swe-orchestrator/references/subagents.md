@@ -65,6 +65,13 @@ Tell the child: "If you run short of budget, report a partial verdict rather tha
 
 - **A child's findings exist only once you have read them**, from the file it wrote or the tool result it returned. Before you repeat, summarize or act on a delegated finding, name that file or tool result. If you can't, you haven't read it.
 - Async children often return only a stub at first. While a child is still running, say so and do work you can verify. Never narrate what its report "will say", and never write such numbers or claims into code, comments or docs.
+- **A report is a claim, not evidence.** Before writing "done", "clean" or "fixed" into STATUS:
+  - check that the commit hashes it names are in `git log`
+  - check that its artifacts (logs, screenshots, reports) exist, with modification times after its last commit
+  - re-run `check.sh` yourself
+  - distrust "no test needed" and "covered by X" the most: open the code or run the revert check
+- **Name your check for what it is.** Your own re-run is a "suite re-run", not "verified". Independent verification needs at least one adversarial probe per task against the REQ text: a failure path, a second run, or a later date.
+- A claim that CI "blocks merge" needs two things: `gh run list` showing that CI ran for HEAD on the remote, and a protected branch or PR flow. Without both, reword it, or make it an owner task.
 - Check that every file a finding cites exists in this repo. A finding about a file or feature that isn't here was pattern-matched from somewhere else: drop it, or log it as "outside this codebase".
 
 ## What to parallelize

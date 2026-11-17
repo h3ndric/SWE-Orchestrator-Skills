@@ -46,6 +46,12 @@ Use superpowers `subagent-driven-development` / `executing-plans` and `test-driv
 - **You never mark requirements `pass`.** Report what you believe is done. A separate verifier confirms it.
 - Run `scripts/check.sh` before every commit. Never bypass hooks (`--no-verify`). If a check is wrong, report it instead.
 - **Done means verified:** paste the actual test output summary. Never say "should work", and never say "ran locally" without the pasted output.
+  - A suite result counts only if you ran it **after your last commit**. Paste its final line.
+  - Send gate output to a file and read the exit code (`scripts/check.sh > /tmp/check.log 2>&1; echo $?`). Never judge a gate through `| tail`: the pipe returns tail's status.
+  - Before committing a test you added or changed, run that exact test and paste its pass line. This applies to e2e tests too.
+  - "Covered by test X" is allowed only if you saw X go red with your change reverted. Otherwise write "no test".
+  - After a scripted edit of a test file, compare its test count with the committed version (`pytest --collect-only -q`, or `grep -c "def test_"` against `git show HEAD:<file>`). A green run over fewer tests proves nothing.
+  - A deploy artifact (Dockerfile, deploy config) is done only when it has been built and started, or CI builds it. If you can't build it, report it as "built, not verified".
 - **Test the happy path through the real contract.** Every LLM or external-service path gets at least one test that goes through the production client (or the shared fake that runs its validation) and asserts that the content arrived, not only that a failure was handled.
 - **Run every check your kind of change can break,** not just `check.sh`. For example, a migration or a deploy/compose change also needs the rollback rehearsal. A branch that CI skips (say, one that needs a live endpoint) needs its documented command, and you must run it. Test fixtures for secrets include quotes, `$` and `#`, so parsing bugs show up. A flake fix covers every place the same check runs: grep for its callers across the unit, database and e2e tests.
 
