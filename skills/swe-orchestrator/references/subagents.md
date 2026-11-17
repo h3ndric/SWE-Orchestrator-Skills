@@ -14,6 +14,7 @@ Read first: docs/STATUS.md, docs/PRD.md<, docs/ARCHITECTURE.md, docs/plans/M<n>-
 Task: <one clear, bounded task: about one file plus its tests>
 Scope: <files/dirs you may change; what you must NOT touch>
 Requirements covered: <REQ-IDs>
+Owner decision (verbatim, if any): "<the owner's exact words>"
 Definition of done: <tests to pass / file to produce / checks to run, and how long each check takes>
 
 Constraints:

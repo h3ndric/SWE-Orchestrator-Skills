@@ -40,6 +40,7 @@ Date: <YYYY-MM-DD> · Status: ⏳ Waiting for owner
 
 ## Owner feedback
 <!-- Write "approved" or your comments here, or reply in chat -->
+awaiting owner
 ```
 
 ## Gate-specific content
@@ -82,7 +83,7 @@ Date: <YYYY-MM-DD> · Status: ⏳ Waiting for owner
 
 ## Processing owner feedback (change requests)
 
-1. Copy the feedback verbatim into the gate file under "Owner feedback" if they replied in chat.
+1. Copy the feedback verbatim into the gate file under "Owner feedback" if they replied in chat: their exact words in quotes, with the date. **Never write an approval in your own words,** not even as a draft or an expansion of a short reply like "1. a, 2. b". Anything still open reads "awaiting owner". When a decision goes into a child's brief, quote the owner's words there too. The reviewer checks the work against that quote, not just against your summary of it.
 2. Classify each comment:
    - **clarification:** answer it, no change needed
    - **change to scope or requirements:** load `swe-business-analyst` to clarify if needed (ask at most 1–3 focused questions), then have `swe-requirements-engineer` update the PRD with new or changed REQ IDs and a changelog entry
