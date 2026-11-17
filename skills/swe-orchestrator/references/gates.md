@@ -59,6 +59,7 @@ awaiting owner
   - where it runs
   - monthly cost estimate (low / expected / high usage)
   - which AI model and why
+  - for a product with a user interface: the link to the UX walkthrough prototype, with the journeys to click through
   - **the rigor profile** (P1/P2/P3), in plain words. For example: "Production level: real users and personal data, so full security baseline, backups and accessibility"
   - top risks
   - the roadmap preview (milestone list)
@@ -66,7 +67,7 @@ awaiting owner
   - **two budgets to confirm:** build budget (AI agent usage) and running budget (monthly hosting, database and AI APIs). See [stuck-and-budget.md](stuck-and-budget.md) §5
 - **Gate 3: Milestone demo.** Include the module "Health at a glance" block from `docs/MODULES.md`. Every 2–3 milestones, also include the increment review result and any proposed roadmap change. Also include:
   - what you can try now, with exact steps or a URL
-  - a screenshot or terminal output if possible
+  - a screenshot or terminal output if possible. For a user interface, show one whole journey step by step, not only separate pages
   - a REQ table (REQ → built? → test passing?)
   - test, eval and security summary, including the lines `Security pass: <report file>` and `Last increment review: <date, milestone>`. Neither may be blank. If the security pass is missing, or the increment review is more than 2 milestones old, run it before sending the brief
   - known issues, including anything marked blocked after the attempt limit

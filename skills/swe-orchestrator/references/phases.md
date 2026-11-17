@@ -63,6 +63,7 @@ Each phase also ends with a short **fallback** section. Use it when the role ski
   - guardrails
   - token cost and latency budget
 - Write one ADR per significant decision in `docs/adr/NNNN-title.md`.
+- **For any product with a user interface, build a UX walkthrough prototype:** a clickable mock-up (static HTML is enough) of the main daily journey for each role ("what does a <role> do first thing in the morning?"). If the product has more than one channel (web plus chat, say), ask the owner what job each channel does that the others don't. Written requirements and per-feature screenshots don't show the product's overall shape; a prototype does, before it is built.
 - List every owner task the design implies (accounts, keys, domains, payment, app stores) in `docs/OWNER-TODO.md`, each with a "needed by" milestone. See `references/owner-tasks.md`.
 - Propose the build and running budgets for the owner to confirm (`references/stuck-and-budget.md` §5).
 
