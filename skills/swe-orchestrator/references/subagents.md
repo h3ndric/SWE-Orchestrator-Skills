@@ -39,6 +39,13 @@ summary line), anything left undone or risky.
 - **Document children** (a plan, a report) name the file to create first, within ~5 tool calls, and re-save it after each section, so a timeout loses a section, not the whole file. List what *not* to read when STATUS or the plan already summarizes it.
 - **Deciding how to split a milestone into tasks is your job,** not a child's. Write the task list yourself. Children verify paths, migrations and test names against the real code, one section each.
 
+## Runs that must fit the cap
+
+- **Know the real time limit.** The timeout you request may be silently ignored. The limit is whatever the runtime reports (for example "timed out after 1800000ms"). Record it in STATUS, and plan against it.
+- **Every child run ends on a commit, never mid-file:** test → commit → code → commit → proof. If coding plus its proof won't fit the limit, split it. The child does the code, a focused test and the commit. You run the long suite (full e2e, rollback rehearsal) in your own session. Two long suites must never run at once, because they fight over ports and databases.
+- **You create and prepare implementer worktrees.** Set up the secrets file, dependencies and data. The dispatch names the absolute worktree path and forbids creating another. It gives an absolute `/tmp/<task>/` path for scratch files. And it says in the dispatch text itself, not only in a file the child may not open: "never delete tracked files, `.git` or the worktree to restore a state; if the tree looks broken, stop and report." Repair damage yourself (`git worktree repair`, `git checkout -- <path>`).
+- **Check the brief before it leaves.** Each claim about file state must rest on lines you read, never on a count (`grep -c` says how many, not which). Check each number against its source (a PRD line or a code constant). Check each command against the rules above. If a mistake surfaces after launch, send the child a correction right away and fix the brief file.
+
 ## Review and security children: pin the scope
 
 A review child told to "review this diff" wanders the repo and can time out; one given a short, pinned list finishes. Scope is the reliability knob, not the time limit. For every reviewer or security dispatch, add to the template:
@@ -60,7 +67,7 @@ Tell the child: "If you run short of budget, report a partial verdict rather tha
 - **A worktree isolates files, not state.** Before starting parallel work, yours included (a background `check.sh` plus a foreground test run), list the shared state: test databases, compose services, ports, the model server, fixture seeds. Give each job its own copy, or run them in sequence. A long measurement (an eval run) gets that state to itself.
 - **Merge a worktree child's branch as soon as it finishes,** and record the commit in STATUS. Run the merge on its own and check its result before any cleanup: never chain `worktree remove` or `branch -D` after it with `&&`, and don't pipe a merge or cherry-pick into `tail`, which hides its exit code.
 - **When a child returns, check its artifact first.** `ls` the promised file. A report without the artifact is a failure, not a summary.
-- **A timed-out child may have done most of the work.** Run `git status` and `git diff --stat` before anything else. Uncommitted files are an unreviewed pull request: review them as your own code, finish the rest (yourself, or one child for the missing part only), then commit. Never re-dispatch the same brief over the same files: it throws that work away. Its handover report lists what it noticed, not what its code silently assumed: after finishing the listed items, run the brief's checks and the full `check.sh` before calling it complete.
+- **A timed-out child may have done most of the work.** Run `git status` and `git diff --stat` before anything else. Uncommitted files are an unreviewed pull request: review them as your own code, finish the rest (yourself, or one child for the missing part only), then commit. Never re-dispatch the same brief over the same files: it throws that work away. A follow-up brief names the uncommitted files it inherits, the focused test commands to re-run first, and the real time limit. Its handover report lists what it noticed, not what its code silently assumed: after finishing the listed items, run the brief's checks and the full `check.sh` before calling it complete.
 
 ## Reading a child's results
 
