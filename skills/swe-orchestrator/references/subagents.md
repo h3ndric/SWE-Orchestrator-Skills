@@ -80,6 +80,7 @@ Tell the child: "If you run short of budget, report a partial verdict rather tha
   - distrust "no test needed" and "covered by X" the most: open the code or run the revert check
 - **Name your check for what it is.** Your own re-run is a "suite re-run", not "verified". Independent verification needs at least one adversarial probe per task against the REQ text: a failure path, a second run, or a later date.
 - A claim that CI "blocks merge" needs two things: `gh run list` showing that CI ran for HEAD on the remote, and a protected branch or PR flow. Without both, reword it, or make it an owner task.
+- **Triage every "gap", "known issue" or "for later" line** against the REQ text before accepting the task. A gap that lets a gate, approval or permission be bypassed is critical and gets fixed in this task, even if it "predates" the task.
 - Check that every file a finding cites exists in this repo. A finding about a file or feature that isn't here was pattern-matched from somewhere else: drop it, or log it as "outside this codebase".
 
 ## What to parallelize

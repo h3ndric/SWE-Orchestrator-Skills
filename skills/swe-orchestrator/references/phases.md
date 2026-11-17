@@ -100,6 +100,7 @@ For milestone M:
    - the verification command
    - Use superpowers `writing-plans` if available.
    - Record the plan's size (task count and expected sessions) in STATUS → Budget.
+   - Write the milestone's closeout queue from the milestone items of the Definition of Done (`swe-standards` §3), pasted in as a checklist, not from memory. The security pass and the spec-coverage check are in it from the start.
 2. **Branch:** tag `m<n>-start` on main, then create `m<n>-<slug>`. Use superpowers `using-git-worktrees` if available.
 3. **Implement** (`swe-implementer`): TDD per task (red → green → refactor), commit per task.
    - Run independent tasks in parallel sub-agents if your harness supports it. Use superpowers `subagent-driven-development` if available.

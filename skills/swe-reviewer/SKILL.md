@@ -27,6 +27,7 @@ Every finding cites a rule ID, e.g. `[CQ-06] empty catch swallows the DB error â
    - Is it implemented?
    - Is there a test that actually asserts it, not just runs it?
    - Missing or partial criteria are **critical**.
+   - Read the implementer's "gaps" and "for later" lines, and any ADR consequences it deferred. One that lets a gate, approval or permission be bypassed is **critical**, never "inherited".
 2. **Correctness:**
    - logic errors and off-by-ones
    - null and empty handling

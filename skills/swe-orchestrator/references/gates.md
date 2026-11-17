@@ -68,7 +68,7 @@ awaiting owner
   - what you can try now, with exact steps or a URL
   - a screenshot or terminal output if possible
   - a REQ table (REQ → built? → test passing?)
-  - test, eval and security summary
+  - test, eval and security summary, including the lines `Security pass: <report file>` and `Last increment review: <date, milestone>`. Neither may be blank. If the security pass is missing, or the increment review is more than 2 milestones old, run it before sending the brief
   - known issues, including anything marked blocked after the attempt limit
   - budget: sessions used versus planned for this milestone, if it ran over
   - the next milestone
