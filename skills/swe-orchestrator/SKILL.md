@@ -89,7 +89,7 @@ A whole project won't fit in one session's context. Treat the context window as 
 
 1. **Stay a thin coordinator.** Read `docs/STATUS.md` in full, but only the sections of the other docs you need right now: the REQs for this milestone, not the whole PRD. Don't read source files yourself when a sub-agent can do it and report back.
 2. **Delegate the heavy work.** Research, implementation, review and security run as sub-agents with fresh context whenever the harness supports them. Ask each one for a report of at most 15 lines, with details written to files: plans, review notes, eval reports.
-3. **Checkpoint before you need to.** Update `docs/STATUS.md` after every completed task, not just every phase. Include the exact next step, e.g. "M2 task 4 of 9: write test for REQ-014". Commit code at each task. If the context is compressed or the session dies, nothing is lost.
+3. **Checkpoint before you need to.** Update `docs/STATUS.md` after every completed task, not just every phase. Include the exact next step, e.g. "M2 task 4 of 9: write test for REQ-014". Commit code at each task. If the context is compressed or the session dies, nothing is lost. STATUS may only say *pushed*, *PR #N*, *merged*, *tagged* or *deployed* with the command output behind it ([references/subagents.md](references/subagents.md) → Claims about a side effect); otherwise write "ready to push".
 4. **Keep STATUS short.** Under about 60 lines, holding only the current state. Move finished history to `docs/STATUS-HISTORY.md`.
 5. **Session boundaries.**
    - Gates are natural restart points. After the owner approves a gate, recommend continuing in a fresh session (e.g. `/clear`, or a new chat), then saying "continue".

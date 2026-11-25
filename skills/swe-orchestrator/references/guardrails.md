@@ -16,6 +16,10 @@ Principle: **scripts measure, agents judge.** Scripts give fast pass/fail. Agent
 
 Record these commands in the project `AGENTS.md` → Commands.
 
+**A probe identifies its own app, never "the port answered".** Several projects on one machine share `:8000` and `:3000`, and an unrelated dev server answers `200` happily. So `/healthz` (or a `/version` route) returns something only this project has, plus the release commit, and `smoke.sh` starts its own app unless that identity matches. After a deploy, the smoke check compares the public address's release commit with the one it expected: a green health check proves the host is alive, not that it serves your build.
+
+**Say where a green suite ran.** "All 197 tests pass" is only true for the machine it ran on: a step that needs the network, a warm cache, a package store or a licence file passes at home and fails on a clean clone. Until CI runs on a remote, once per milestone run the whole `check.sh` from a fresh clone with empty caches (or offline), state in the Gate 3 brief where the numbers came from, and keep the steps independent so one blocked step can't stop the rest.
+
 ## Architecture boundaries as tests
 
 The module register (`docs/MODULES.md`) says which module may depend on which. Turn that into a check:

@@ -30,6 +30,20 @@ Report back (max 15 lines): what you did, files changed, test results (paste the
 summary line), anything left undone or risky.
 ```
 
+## Claims about a side effect
+
+A claim that something happened *outside the repo* is treated like a suite result: it needs the command output, from this session, after the last commit.
+
+| Claim | Evidence to paste |
+|---|---|
+| "pushed" | `git log --oneline origin/<branch> -1` showing your commit |
+| "PR #N opened" | the URL `gh pr create` printed, never the number you expected |
+| "merged" / "approved" | `gh pr view <n> --json state,mergedAt` |
+| "tagged" | `git tag -l <tag>` after the push |
+| "deployed" | the run or job id, plus what answers the public address |
+
+If no command ran, write "ready to push" or "not yet pushed". A tag, PR number or deploy you did not read out of a command is a guess, and it is the kind of claim the owner acts on: "PR #7 exists" sends them to GitHub. Before saying anything about merge order for stacked PRs, `gh pr list` that those branches are still open.
+
 ## What to parallelize
 
 | Safe in parallel | Keep sequential |
