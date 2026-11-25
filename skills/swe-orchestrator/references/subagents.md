@@ -30,6 +30,28 @@ Report back (max 15 lines): what you did, files changed, test results (paste the
 summary line), anything left undone or risky.
 ```
 
+## Before you launch
+
+- **No launch without a window.** The default run window is usually 30 minutes and it fits only a read-only review. Set the timeout (or the equivalent) *on the first launch*, since it cannot be extended later; a resume that reports a timeout in milliseconds is the runtime's problem, not your brief's. Record the real limit you observed in STATUS, and size the brief to it.
+- **One bounded change per child.** About one file plus its tests, or one finding, never "three items and read the plan". If a brief lists more than four items, split it.
+- **Check the child can do what the brief asks.** A child with no file or command tools can read neither the diff nor the plan, and its report is worthless however well shaped. Read its reply for a line like "no tools" before spending the clock, and never accept it as a review: a reviewer that cannot run the red-before check cannot discharge a red-before claim. When dispatching a read-only child by design, ask for the report inline and write the file yourself.
+- **A child's first write is its report file,** with a `started` line, before the first edit; commit it with every round. A killed session then leaves a trace instead of silence.
+- **A child ends on a commit,** even a red test or a half-finished round: an empty commit log is the only signal the next session reads. Around two-thirds of the window, tell a running child to wrap up and commit rather than waiting for it to die.
+
+## Claims about a side effect
+
+A claim that something happened *outside the repo* is treated like a suite result: it needs the command output, from this session, after the last commit.
+
+| Claim | Evidence to paste |
+|---|---|
+| "pushed" | `git log --oneline origin/<branch> -1` showing your commit |
+| "PR #N opened" | the URL `gh pr create` printed, never the number you expected |
+| "merged" / "approved" | `gh pr view <n> --json state,mergedAt` |
+| "tagged" | `git tag -l <tag>` after the push |
+| "deployed" | the run or job id, plus what answers the public address |
+
+If no command ran, write "ready to push" or "not yet pushed". A tag, PR number or deploy you did not read out of a command is a guess, and it is the kind of claim the owner acts on: "PR #7 exists" sends them to GitHub. Before saying anything about merge order for stacked PRs, `gh pr list` that those branches are still open.
+
 ## What to parallelize
 
 | Safe in parallel | Keep sequential |

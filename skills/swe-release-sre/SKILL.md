@@ -65,9 +65,16 @@ Then the orchestrator writes the Gate 4 brief. After approval:
 3. Watch the errors and metrics for the first hour, if the session allows.
 4. Set STATUS to "Live", and record the version and URL.
 
+## What is actually live
+
+Before a brief, a hand-off or an incident note says what a merge deploys, verify what *serves* the address today, in this order: DNS or tunnel → host → release id (a `/version` route, a release-commit header, the provider's current release) → feature flags. A `200` from `/healthz` only says something answered. Hosts move, deploys fail quietly, and a dev stack on someone's laptop can answer on the production domain.
+
 ## Incidents (post-launch)
+
 Follow this order:
 1. **Stabilize:** roll back first, debug second.
 2. **Communicate:** a status line in `docs/STATUS.md` plus a message to the owner.
 3. **Fix:** with a regression test, through the normal review path.
 4. **Postmortem:** a blameless one in `docs/incidents/<date>.md`, covering timeline, cause, fix and prevention.
+
+A refused login or an unreachable service is triaged cheapest-cause-first, and the cheapest cause is usually ours: ① our own credential or `.env` value is stale or wrong, ② the account or key exists at all, ③ a host / IP / firewall rule, ④ the server or provider really changed. Read the error literally before reading it as a hint: `user 'app'@'SOMEWHERE'` often names the connecting client, not a rule to change. Name the cheapest cause first and say what is still unverified. Never ask the owner to recreate an account, reset a password or open a firewall rule on a guess, and check our own config before their infrastructure.

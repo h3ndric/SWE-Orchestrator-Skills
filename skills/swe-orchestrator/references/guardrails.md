@@ -16,6 +16,10 @@ Principle: **scripts measure, agents judge.** Scripts give fast pass/fail. Agent
 
 Record these commands in the project `AGENTS.md` → Commands.
 
+**A probe identifies its own app, never "the port answered".** Several projects on one machine share `:8000` and `:3000`, and an unrelated dev server answers `200` happily. So `/healthz` (or a `/version` route) returns something only this project has, plus the release commit, and `smoke.sh` starts its own app unless that identity matches. After a deploy, the smoke check compares the public address's release commit with the one it expected: a green health check proves the host is alive, not that it serves your build.
+
+**Say where a green suite ran.** "All 197 tests pass" is only true for the machine it ran on: a step that needs the network, a warm cache, a package store or a licence file passes at home and fails on a clean clone. Until CI runs on a remote, once per milestone run the whole `check.sh` from a fresh clone with empty caches (or offline), state in the Gate 3 brief where the numbers came from, and keep the steps independent so one blocked step can't stop the rest.
+
 ## Architecture boundaries as tests
 
 The module register (`docs/MODULES.md`) says which module may depend on which. Turn that into a check:
@@ -43,6 +47,16 @@ The agent that built something must not be the one that marks it `pass`. The ver
 ## Parallel work isolation (when running several implementers)
 - Give each one its own git worktree, its own port (e.g. `PORT=30xx`), and its own database or schema.
 - A module claim in `docs/MODULES.md` must be held before starting. Never put two agents on one module.
+
+## ID registers and the traceability ledger
+
+`docs/TECH-DEBT.md`, `docs/HARNESS-FEEDBACK.md`, `docs/MODULES.md` and `docs/traceability.json` are registers: many agents add rows to them, and nothing reads them back. Both ways of failing have happened: two rows claiming one ID, and a ledger that said `todo` for seven milestones after the work was built. So:
+
+- **One file of record per register,** edited on one branch (usually the code branch). If registers must live on another branch, that branch is temporary staging, not a second file of record.
+- **A new ID is the maximum over every live ref, never "the next free number" in the file you happen to have:** `git fetch`, then take the highest ID on `origin/main`, every open branch and worktree, and grep the code and tests for the ID before you use it (a test name like `test_TD-064_…` reserves it).
+- **`scripts/check-ids.sh`, run from `check.sh`,** exits non-zero when the same ID carries different text on two live refs, or when an ID appears in code, tests or STATUS with no row in the register.
+- **The ledger is updated by a non-implementer before the Gate 3 brief,** and `check.sh` fails when an implemented milestone (its `gate-3-m<k>-approved` tag exists) still holds `todo` items, or a `pass` row is missing `tests`, `verified_by` or `verified_on`. A gate must not be sent with a stale ledger: the brief's REQ table is rendered from that file, so a stale ledger tells the owner something false.
+- **The review trail belongs on `main`.** When a gate is approved, its brief, its reviews and its security report are on `main` with the code they approve (`git merge-base --is-ancestor <review-commit> origin/main` must succeed); a review nobody can see on `main` is not a record.
 
 ## Turning failures into checks
 
