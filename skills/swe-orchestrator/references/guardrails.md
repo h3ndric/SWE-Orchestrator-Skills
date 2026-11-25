@@ -44,6 +44,16 @@ The agent that built something must not be the one that marks it `pass`. The ver
 - Give each one its own git worktree, its own port (e.g. `PORT=30xx`), and its own database or schema.
 - A module claim in `docs/MODULES.md` must be held before starting. Never put two agents on one module.
 
+## ID registers and the traceability ledger
+
+`docs/TECH-DEBT.md`, `docs/HARNESS-FEEDBACK.md`, `docs/MODULES.md` and `docs/traceability.json` are registers: many agents add rows to them, and nothing reads them back. Both ways of failing have happened: two rows claiming one ID, and a ledger that said `todo` for seven milestones after the work was built. So:
+
+- **One file of record per register,** edited on one branch (usually the code branch). If registers must live on another branch, that branch is temporary staging, not a second file of record.
+- **A new ID is the maximum over every live ref, never "the next free number" in the file you happen to have:** `git fetch`, then take the highest ID on `origin/main`, every open branch and worktree, and grep the code and tests for the ID before you use it (a test name like `test_TD-064_…` reserves it).
+- **`scripts/check-ids.sh`, run from `check.sh`,** exits non-zero when the same ID carries different text on two live refs, or when an ID appears in code, tests or STATUS with no row in the register.
+- **The ledger is updated by a non-implementer before the Gate 3 brief,** and `check.sh` fails when an implemented milestone (its `gate-3-m<k>-approved` tag exists) still holds `todo` items, or a `pass` row is missing `tests`, `verified_by` or `verified_on`. A gate must not be sent with a stale ledger: the brief's REQ table is rendered from that file, so a stale ledger tells the owner something false.
+- **The review trail belongs on `main`.** When a gate is approved, its brief, its reviews and its security report are on `main` with the code they approve (`git merge-base --is-ancestor <review-commit> origin/main` must succeed); a review nobody can see on `main` is not a record.
+
 ## Turning failures into checks
 
 When you see the same mistake twice (a wrong import, a missing validation, a forgotten migration, a leaked log of user data), don't add another sentence to a doc. Add a lint rule, a test, or a hook step, and note it in `docs/TECH-DEBT.md` → "Guardrails added".
