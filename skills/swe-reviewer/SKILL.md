@@ -44,6 +44,7 @@ Every finding cites a rule ID, e.g. `[CQ-06] empty catch swallows the DB error â
 4. **Architecture fit:** respects the module boundaries, uses the chosen stack and patterns, no secret new dependencies, config not hardcoded.
 5. **Simplicity, scope and maintainability:**
    - **Change fits the task:** is the diff size proportionate to the plan? Unrelated edits (reformatting, renames, "improvements" to untouched code, deleted comments) and unrequested features, options or abstractions are **important** findings, not style nits. Ask for them to be reverted or removed.
+   - **Unapproved scope:** a new route, menu entry or permission with no REQ or approved change request behind it, or a test-list edit marked like `CR-x pending`, is an unapproved change: **important**, and **critical** if it widens who can see or do something.
    - **Assumptions:** are the plan's assumptions recorded, and still sensible? A silent guess that changed behaviour the PRD didn't specify is an important finding.
    - duplication
    - dead code
