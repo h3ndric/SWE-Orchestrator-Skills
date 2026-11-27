@@ -22,6 +22,7 @@ Use superpowers `writing-plans` if available. Otherwise, write `docs/plans/M<n>-
   - the exact verification command
   - the commit message
 - Mark which tasks are independent (they can run in parallel) and which depend on others.
+- **Test data copies the real data's shape.** If the owner's real data exists, fixtures and the acceptance pack mirror its shape (several tables, column names shared between tables, junk sentinel values), not just single-table edge cases. A run against the real data is a task *before* the milestone review, not a demo step after it: a bug found only at demo time has already passed every review.
 
 ## Executing
 Use superpowers `subagent-driven-development` / `executing-plans` and `test-driven-development` if available. Otherwise, for each task:
@@ -38,6 +39,7 @@ Use superpowers `subagent-driven-development` / `executing-plans` and `test-driv
 - **Think before coding.** Read the task, its REQs and the code it touches, then check the plan's assumptions still hold. If one doesn't, record the new choice in the plan and your report. Don't push on with a guess.
 - **Simplicity first: the least code that meets the acceptance criteria.** No features, options, settings or error handling for cases nobody asked for. No abstraction (interface, factory, config layer, generic helper) used in only one place, except where the architecture requires it (e.g. external services behind interfaces). If 50 lines would do, don't write 200.
 - **Surgical changes.** Stay in scope: only the task's files, and within them only the lines the task needs. Don't reformat, rename, reorder or "improve" neighbouring code, and don't delete comments or code you don't fully understand. Remove only the leftovers your own change created (unused imports, dead branches). Every changed line should trace back to the task. If you spot other needed work, note it in your report (or `docs/TECH-DEBT.md`). Don't sprawl.
+- **No requirement, no new surface.** A new route, page, menu entry or permission traces to a REQ or an *approved* change request before it lands. While a change request is only pending, keep the code behind a flag or on its branch. Never edit a security-relevant test list (role menus, permission matrices, anything labelled "verbatim" from a REQ) to make room for unapproved scope.
 - Follow the architecture. If it seems wrong, stop and report to the orchestrator. Don't silently diverge. The orchestrator decides and writes an ADR.
 - Read the existing code before writing new code, and reuse its utilities and patterns.
 - **External services:** put them behind interfaces, and use fakes in unit tests. Use real calls only in integration tests or evals.
@@ -59,3 +61,4 @@ Use superpowers `subagent-driven-development` / `executing-plans` and `test-driv
 - REQs now passing
 - assumptions made or changed
 - deviations and blockers
+- **the verification record, in the report itself:** commit hash, command, exit code and counts. Never "see the PR description" or any other artifact that doesn't exist yet: a report whose evidence points elsewhere has no evidence. For proof only CI can give, list the CI run id and the head commit it ran on.

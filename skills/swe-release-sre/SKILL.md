@@ -17,6 +17,8 @@ Apply `swe-standards` → `reliability-ops.md` (OPS-*) and `supply-chain.md` (SU
   - CD on merge to main, if the provider supports it.
   - If owner credentials are needed, list them under "Things only you can do" for the next gate. Don't block the rest.
 - Envs: `.env.example`, provider env vars for production, no secrets in CI logs.
+- **"CI is green" is a claim about one head commit on one PR.** Record the run id with the head commit it ran on. A PR with *no* run is a finding, not a pass: `on: pull_request: branches: [main]` filters by the PR's *base*, so a PR stacked on another open branch never starts CI and only looks green through the one below it. Drop that filter, or merge the stack bottom-up and let each PR run against `main`.
+- **A green gate has a shelf life.** A new vulnerability advisory can turn an untouched branch red overnight. Re-run the gate before you rely on a green result from an earlier day (before a merge or a gate brief), and say when it ran.
 
 ## Phase 5: production readiness → `docs/LAUNCH.md`
 Work through each item. For each one, mark ✅, or ⚠️ with a reason.

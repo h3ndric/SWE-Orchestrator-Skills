@@ -54,6 +54,8 @@ For each AI capability (AIQ IDs in the PRD), decide:
   - a score below an AIQ target counts as a failing test
   - report the scores in Gate 3 and Gate 4 briefs
 - **Regression:** every AI bug found becomes a new golden case.
+- **Triage before you report.** Before an eval score goes into a brief, read every failed case and label it: *model error*, *test-design error* (e.g. the case lists one valid citation but a second page also holds the answer) or *infrastructure error*. Report the model-error count next to the raw score, and fix test-design errors in the case with a changelog line. A raw score alone can steer the owner to the wrong model or a paid provider.
+- **One report per run.** Name reports so repeated runs never overwrite each other (`evals/reports/<date>-<provider>-<run>.md`): a cited report must still exist when the owner reads it.
 
 ## 3. Implementation guidance
 - Wrap the LLM client behind an interface, so unit tests use a fake and evals use the real model.

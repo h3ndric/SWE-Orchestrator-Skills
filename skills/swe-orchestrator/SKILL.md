@@ -121,6 +121,8 @@ Follow [references/guardrails.md](references/guardrails.md). M0 sets up:
 
 User-facing requirements get Playwright end-to-end tests, and they're actually exercised in a browser. **Anything that must always hold gets a script or hook, not just a sentence in a doc.** A mistake seen twice becomes a check.
 
+**Land the guard before the work it guards.** A check written to stop a recurring mistake (an ID-clash check, a CI time cap) is the first PR of its milestone. Get it merged, asking the owner if their approval is needed, before dispatching lanes that can make that mistake: a guard sitting green and unmerged stops nothing. Order the merge queue by risk removed, not by task number. When a check scans "every live ref", that means local branches and other worktrees too (`git for-each-ref refs/heads refs/remotes`, `git worktree list`), not only `origin/*`: unpushed lanes are where clashes start.
+
 ## Owner tasks, limits and undo
 
 - **Owner tasks** ([references/owner-tasks.md](references/owner-tasks.md)): everything only the owner can do (accounts, payments, keys, domains) goes in `docs/OWNER-TODO.md` as click-by-click steps. List them all at Gate 2 with a "needed by" milestone, keep building against fakes until they're done, and **never let secrets pass through chat**.
